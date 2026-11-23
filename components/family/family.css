@@ -1,0 +1,78 @@
+cc-family {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  background: var(--color-surface-core-top);
+  border-radius: var(--radius-8);
+  overflow: clip;
+  clip-path: inset(0 round var(--radius-8));
+}
+
+cc-family:has(> cc-subgroup) {
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+  clip-path: none;
+}
+
+.is-narrow cc-family:not(:has(> cc-subgroup)) {
+  clip-path: none;
+}
+
+cc-family > .cc-family-head,
+cc-family > .cc-family-title {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-radius: var(--radius-8) var(--radius-8) 0 0;
+  background: var(--color-surface-core-top);
+}
+
+cc-family > .cc-family-head::before,
+cc-family > .cc-family-head::after,
+cc-family > .cc-family-title::before,
+cc-family > .cc-family-title::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  width: var(--radius-8);
+  height: var(--radius-8);
+  pointer-events: none;
+}
+
+cc-family > .cc-family-head::before,
+cc-family > .cc-family-title::before {
+  left: 0;
+  background: radial-gradient(circle at 100% 100%, transparent var(--radius-8), var(--color-surface-core-base) var(--radius-8));
+}
+
+cc-family > .cc-family-head::after,
+cc-family > .cc-family-title::after {
+  right: 0;
+  background: radial-gradient(circle at 0 100%, transparent var(--radius-8), var(--color-surface-core-base) var(--radius-8));
+}
+
+cc-family > .cc-family-head {
+  flex: 0 0 auto;
+}
+
+.cc-family-title {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--spacing-16);
+  color: var(--color-text-core-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-subtitle-2-size);
+  font-weight: var(--font-subtitle-2-weight);
+  line-height: var(--font-subtitle-2-line);
+  letter-spacing: var(--font-subtitle-2-tracking);
+}
+
+cc-family > .cc-family-head > .cc-family-title {
+  position: static;
+  background: transparent;
+}

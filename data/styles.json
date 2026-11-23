@@ -1,0 +1,97 @@
+{
+  "fontFamily": "Roboto",
+  "fontFiles": [
+    { "weight": 400, "style": "normal", "file": "fonts/roboto-regular.woff2" },
+    { "weight": 500, "style": "normal", "file": "fonts/roboto-medium.woff2" }
+  ],
+  "typography": {
+    "body-2": { "size": 14, "lineHeight": 18, "letterSpacing": 0.25, "weight": 400 },
+    "caption-regular": { "size": 12, "lineHeight": 16, "letterSpacing": 0.14, "weight": 400 },
+    "caption-medium": { "size": 12, "lineHeight": 16, "letterSpacing": 0, "weight": 500 },
+    "subtitle-2": { "size": 16, "lineHeight": 20, "letterSpacing": 0.25, "weight": 500 }
+  },
+  "spacing": {
+    "0": 0,
+    "2": 2,
+    "4": 4,
+    "6": 6,
+    "8": 8,
+    "16": 16,
+    "24": 24,
+    "32": 32,
+    "40": 40,
+    "48": 48,
+    "64": 64,
+    "80": 80
+  },
+  "radius": {
+    "4": 4,
+    "8": 8,
+    "pill": 1000
+  },
+  "stroke": {
+    "1": 1,
+    "2": 2,
+    "8": 8
+  },
+  "shadow": {
+    "mode-selected": "0 0 2px rgba(0,0,0,0.15)",
+    "6": "0 2px 6px rgba(0, 0, 0, 0.16)"
+  },
+  "layout": {
+    "breakpoint-narrow": 480,
+    "family-width": 328,
+    "family-min-width": 240,
+    "swatch-size": 48,
+    "select-width": 160,
+    "select-height": 32,
+    "select-option-height": {
+      "value": 32,
+      "guess": true,
+      "because": "Open select list is not in the mock; nearest row height is the select plate at 32"
+    },
+    "header-padding-wide": 24,
+    "header-padding-narrow": 16,
+    "header-height-wide": 80,
+    "header-height-narrow": 64,
+    "header-gap": 16,
+    "icon-button-size": 36,
+    "icon-size": 24,
+    "mode-icon-size": 16,
+    "mode-switcher-width": 64,
+    "mode-switcher-height": 32,
+    "mode-cell-size": 28,
+    "menu-row-height": 40,
+    "menu-indent": 40,
+    "scrollbar-size": 8,
+    "sidebar-width": 312,
+    "sidebar-header-height": 64,
+    "chevron-slot": 32
+  },
+  "colorRoles": [
+    "surface/neutral/transparent/default",
+    "text/core/primary",
+    "icon-shape/core/default",
+    "surface/core/undertone",
+    "surface/core/base",
+    "surface/core/scrim",
+    "surface/core/raised",
+    "border/core/subtle",
+    "surface/core/inverse-strong",
+    "surface/core/inverse-subtle",
+    "icon-shape/core/inverse",
+    "icon-shape/core/disabled",
+    "border/core/strong",
+    "border/core/focus-outline",
+    "decorative/red/100",
+    "text/core/tertiary",
+    "text/core/secondary",
+    "surface/core/top",
+    "text/core/inverse",
+    {
+      "value": "surface/neutral/transparent/hover",
+      "guess": true,
+      "because": "Open select list is not in the mock; nearest hover surface above the closed plate is surface/neutral/transparent/hover"
+    }
+  ]
+}

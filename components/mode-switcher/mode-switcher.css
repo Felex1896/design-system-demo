@@ -1,0 +1,45 @@
+cc-mode-switcher {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--layout-mode-switcher-width);
+  height: var(--layout-mode-switcher-height);
+  padding: var(--spacing-2);
+  gap: var(--spacing-4);
+  border: var(--stroke-1) solid var(--color-border-core-subtle);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-core-undertone);
+}
+
+cc-mode-switcher button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--layout-mode-cell-size);
+  height: var(--layout-mode-cell-size);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background-color: transparent;
+  box-shadow: none;
+  color: var(--color-icon-shape-core-disabled);
+  cursor: pointer;
+}
+
+cc-mode-switcher button[aria-pressed="true"] {
+  background-color: var(--color-surface-core-inverse-strong);
+  box-shadow: var(--shadow-mode-selected);
+  color: var(--color-icon-shape-core-inverse);
+}
+
+cc-mode-switcher svg {
+  display: block;
+  flex: none;
+  width: var(--layout-mode-icon-size);
+  height: var(--layout-mode-icon-size);
+}
