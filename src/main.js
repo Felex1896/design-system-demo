@@ -295,7 +295,10 @@ function renderFamilies(families) {
         group.setAttribute("label", section.middle);
         card.append(group);
         for (const item of rows) group.append(item);
-        if (light) group.dataset.tone = "light";
+        if (light) {
+          group.dataset.tone = "light";
+          applyColors(styles, collections, "brand-blue", "light", group);
+        }
       } else {
         for (const item of rows) card.append(item);
       }
@@ -308,6 +311,12 @@ function renderFamilies(families) {
       const panel = group.querySelector(".cc-subgroup__panel");
       panel.classList.add("tone-light");
       applyColors(styles, collections, "brand-blue", "light", panel);
+      group.style.cssText = "";
+      for (const row of panel.querySelectorAll("cc-color-row")) {
+        const swatch = row.getAttribute("swatch");
+        row.removeAttribute("swatch");
+        if (swatch != null) row.setAttribute("swatch", swatch);
+      }
     }
     const title = card.querySelector(":scope > .cc-family-title");
     if (title) cell.append(title);
