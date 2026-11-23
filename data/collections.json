@@ -1,7 +1,9 @@
 {
   "collectionOrder": [
     "primitives",
-    "semantic"
+    "semantic",
+    "size",
+    "typography"
   ],
   "brandOrder": [
     "brand-blue",
@@ -12,7 +14,7 @@
     "light"
   ],
   "defaults": {
-    "collection": "semantic",
+    "collection": "primitives",
     "brand": "brand-blue",
     "theme": "dark"
   },

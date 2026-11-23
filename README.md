@@ -1,3 +1,4 @@
 # Token collections
 
-Clickable page of color tokens. The site is this folder.
+Clickable page of color, size, and type tokens. The site is this folder.
+

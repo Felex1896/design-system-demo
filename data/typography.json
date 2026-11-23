@@ -1,0 +1,214 @@
+{
+  "families": [
+    {
+      "id": "headline",
+      "title": "headline",
+      "tokens": [
+        {
+          "name": "headline/h1",
+          "sample": "h1",
+          "caption": "Roboto Light — 96 / 120",
+          "weight": 300,
+          "size": 96,
+          "lineHeight": 120,
+          "letterSpacing": -1.5
+        },
+        {
+          "name": "headline/h2",
+          "sample": "h2",
+          "caption": "Roboto Medium — 56 / 80",
+          "weight": 500,
+          "size": 56,
+          "lineHeight": 80,
+          "letterSpacing": -0.5
+        },
+        {
+          "name": "headline/h3",
+          "sample": "h3",
+          "caption": "Roboto Medium — 48 / 56",
+          "weight": 500,
+          "size": 48,
+          "lineHeight": 56,
+          "letterSpacing": 0
+        },
+        {
+          "name": "headline/h4",
+          "sample": "h4",
+          "caption": "Roboto Medium — 32 / 40",
+          "weight": 500,
+          "size": 32,
+          "lineHeight": 40,
+          "letterSpacing": 0.25
+        },
+        {
+          "name": "headline/h5",
+          "sample": "h5",
+          "caption": "Roboto Medium — 24 / 32",
+          "weight": 500,
+          "size": 24,
+          "lineHeight": 32,
+          "letterSpacing": 0
+        },
+        {
+          "name": "headline/h6",
+          "sample": "h6",
+          "caption": "Roboto Medium — 20 / 24",
+          "weight": 500,
+          "size": 20,
+          "lineHeight": 24,
+          "letterSpacing": 0.15
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "title": "title",
+      "tokens": [
+        {
+          "name": "title/1",
+          "sample": "t1",
+          "caption": "Roboto Medium — 18 / 24",
+          "weight": 500,
+          "size": 18,
+          "lineHeight": 24,
+          "letterSpacing": 0
+        }
+      ]
+    },
+    {
+      "id": "subtitle",
+      "title": "subtitle",
+      "tokens": [
+        {
+          "name": "subtitle/1",
+          "sample": "s1",
+          "caption": "Roboto Bold — 16 / 24",
+          "weight": 700,
+          "size": 16,
+          "lineHeight": 24,
+          "letterSpacing": 0.25
+        },
+        {
+          "name": "subtitle/2",
+          "sample": "s2",
+          "caption": "Roboto Medium — 16 / 20",
+          "weight": 500,
+          "size": 16,
+          "lineHeight": 20,
+          "letterSpacing": 0.25
+        },
+        {
+          "name": "subtitle/3",
+          "sample": "s3",
+          "caption": "Roboto Medium — 14 / 20",
+          "weight": 500,
+          "size": 14,
+          "lineHeight": 20,
+          "letterSpacing": 0.1
+        }
+      ]
+    },
+    {
+      "id": "body",
+      "title": "body",
+      "tokens": [
+        {
+          "name": "body/1",
+          "sample": "b1",
+          "caption": "Roboto Regular — 16 / 24",
+          "weight": 400,
+          "size": 16,
+          "lineHeight": 24,
+          "letterSpacing": 0.25
+        },
+        {
+          "name": "body/2",
+          "sample": "b2",
+          "caption": "Roboto Regular — 14 / 18",
+          "weight": 400,
+          "size": 14,
+          "lineHeight": 18,
+          "letterSpacing": 0.25
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "title": "caption",
+      "tokens": [
+        {
+          "name": "caption/medium",
+          "sample": "medium",
+          "caption": "Roboto Medium — 12 / 16",
+          "weight": 500,
+          "size": 12,
+          "lineHeight": 16,
+          "letterSpacing": 0
+        },
+        {
+          "name": "caption/regular",
+          "sample": "regular",
+          "caption": "Roboto Regular — 12 / 16",
+          "weight": 400,
+          "size": 12,
+          "lineHeight": 16,
+          "letterSpacing": 0.14
+        }
+      ]
+    },
+    {
+      "id": "button",
+      "title": "button",
+      "tokens": [
+        {
+          "name": "button/base",
+          "sample": "base",
+          "caption": "Roboto Medium — 16 / 24",
+          "weight": 500,
+          "size": 16,
+          "lineHeight": 24,
+          "letterSpacing": 0
+        },
+        {
+          "name": "button/small",
+          "sample": "small",
+          "caption": "Roboto Medium — 14 / 16",
+          "weight": 500,
+          "size": 14,
+          "lineHeight": 16,
+          "letterSpacing": 0
+        }
+      ]
+    },
+    {
+      "id": "overline",
+      "title": "overline",
+      "tokens": [
+        {
+          "name": "overline",
+          "sample": "overline",
+          "caption": "Roboto Medium — 10 / 16",
+          "weight": 500,
+          "size": 10,
+          "lineHeight": 16,
+          "letterSpacing": 1.5
+        }
+      ]
+    },
+    {
+      "id": "additional",
+      "title": "additional",
+      "tokens": [
+        {
+          "name": "additional",
+          "sample": "additional",
+          "caption": "Roboto Medium — 10 / 12",
+          "weight": 500,
+          "size": 10,
+          "lineHeight": 12,
+          "letterSpacing": 0
+        }
+      ]
+    }
+  ]
+}

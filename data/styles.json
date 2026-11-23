@@ -1,8 +1,10 @@
 {
   "fontFamily": "Roboto",
   "fontFiles": [
+    { "weight": 300, "style": "normal", "file": "fonts/roboto-light.woff2" },
     { "weight": 400, "style": "normal", "file": "fonts/roboto-regular.woff2" },
-    { "weight": 500, "style": "normal", "file": "fonts/roboto-medium.woff2" }
+    { "weight": 500, "style": "normal", "file": "fonts/roboto-medium.woff2" },
+    { "weight": 700, "style": "normal", "file": "fonts/roboto-bold.woff2" }
   ],
   "typography": {
     "body-2": { "size": 14, "lineHeight": 18, "letterSpacing": 0.25, "weight": 400 },
@@ -69,7 +71,9 @@
     "scrollbar-size": 8,
     "sidebar-width": 312,
     "sidebar-header-height": 64,
-    "chevron-slot": 32
+    "chevron-slot": 32,
+    "measure-min-width": 320,
+    "measure-max-width": 400
   },
   "colorRoles": [
     "surface/neutral/transparent/default",

@@ -1,0 +1,108 @@
+cc-size-row {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  position: relative;
+  z-index: 0;
+  transform-origin: center center;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+  cursor: default;
+}
+
+cc-size-row:hover,
+cc-size-row:focus-visible,
+cc-size-row.is-held {
+  z-index: 1;
+  transform: scale(1.05);
+  box-shadow: var(--shadow-color-row);
+}
+
+@media (hover: none) {
+  cc-size-row:hover {
+    z-index: 0;
+    transform: none;
+    box-shadow: none;
+  }
+
+  cc-size-row.is-held {
+    z-index: 1;
+    transform: scale(1.05);
+    box-shadow: var(--shadow-color-row);
+  }
+}
+
+.is-touch cc-size-row:hover {
+  z-index: 0;
+  transform: none;
+  box-shadow: none;
+}
+
+.is-touch cc-size-row.is-held,
+.is-touch cc-size-row:focus-visible {
+  z-index: 1;
+  transform: scale(1.05);
+  box-shadow: var(--shadow-color-row);
+}
+
+.cc-size-row__plate {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: var(--layout-swatch-size);
+  background: var(--color-surface-core-raised);
+}
+
+.cc-size-row__specimen {
+  position: absolute;
+  pointer-events: none;
+}
+
+cc-size-row[kind="spacing"] .cc-size-row__specimen {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+  background: color-mix(in srgb, var(--color-text-core-primary) 22%, transparent);
+}
+
+cc-size-row[kind="rounding"] .cc-size-row__plate {
+  overflow: hidden;
+}
+
+cc-size-row[kind="rounding"] .cc-size-row__specimen {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: color-mix(in srgb, var(--color-text-core-primary) 22%, transparent);
+}
+
+cc-size-row[kind="stroke"] .cc-size-row__specimen {
+  top: 50%;
+  right: 0;
+  left: var(--spacing-24);
+  transform: translateY(-50%);
+  background: color-mix(in srgb, var(--color-text-core-primary) 18%, transparent);
+}
+
+.cc-size-row__label {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: var(--spacing-8);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  font-family: var(--font-family);
+  font-size: var(--font-body-2-size);
+  font-weight: var(--font-body-2-weight);
+  line-height: var(--font-body-2-line);
+  letter-spacing: var(--font-body-2-tracking);
+  color: var(--color-text-core-primary);
+  white-space: nowrap;
+}

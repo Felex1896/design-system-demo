@@ -42,8 +42,10 @@ customElements.define("cc-tooltip", CcTooltip);
 const tip = document.createElement("cc-tooltip");
 document.body.append(tip);
 
+const ROW = "cc-color-row, cc-size-row, cc-type-row";
+
 function rowFrom(event) {
-  return event.target instanceof Element ? event.target.closest("cc-color-row") : null;
+  return event.target instanceof Element ? event.target.closest(ROW) : null;
 }
 
 function descriptionText(row) {
@@ -96,7 +98,7 @@ function placeHold(row) {
 
 function rowUnder(event) {
   const under = document.elementFromPoint(event.clientX, event.clientY);
-  return under instanceof Element ? under.closest("cc-color-row") : null;
+  return under instanceof Element ? under.closest(ROW) : null;
 }
 
 document.addEventListener("pointerover", (event) => {

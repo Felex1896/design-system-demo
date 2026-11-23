@@ -15,8 +15,10 @@ const scrollY = document.querySelector("#scroll-y");
 const scrollX = document.querySelector("#scroll-x");
 const sidebarScroll = document.querySelector("#sidebar-scroll");
 
-const styles = await fetch(new URL("../data/styles.json?v=3", import.meta.url)).then((response) => response.json());
-const collections = await fetch(new URL("../data/collections.json?v=3", import.meta.url)).then((response) => response.json());
+const styles = await fetch(new URL("../data/styles.json?v=4", import.meta.url)).then((response) => response.json());
+const collections = await fetch(new URL("../data/collections.json?v=5", import.meta.url)).then((response) => response.json());
+const sizeDoc = await fetch(new URL("../data/size.json?v=1", import.meta.url)).then((response) => response.json());
+const typeDoc = await fetch(new URL("../data/typography.json?v=1", import.meta.url)).then((response) => response.json());
 const copy = await fetch(new URL("../data/copy.json", import.meta.url)).then((response) => response.json());
 
 applyStyles(styles);
@@ -69,7 +71,19 @@ function rowId(name) {
 }
 
 function activeTokens() {
-  return collection === "primitives" ? collections.primitives : collections.semantic;
+  if (collection === "primitives") return collections.primitives;
+  if (collection === "semantic") return collections.semantic;
+  return [];
+}
+
+function measureDoc() {
+  if (collection === "size") return sizeDoc;
+  if (collection === "typography") return typeDoc;
+  return null;
+}
+
+function stackedLayout() {
+  return root.classList.contains("is-narrow") || collection === "size" || collection === "typography";
 }
 
 function familyHead(parts) {
@@ -81,14 +95,15 @@ function groupTokens(tokens) {
   const families = new Map();
   for (const token of tokens) {
     const parts = token.name.split("/").filter(Boolean);
+    const nest = parts[0] === "white" || parts[0] === "black";
     const head = familyHead(parts);
     const core = parts[0] === "surface" && parts[1] === "core";
-    const familyName = core ? "surface/neutral" : parts.slice(0, head).join("/") || token.name;
+    const familyName = nest ? "neutral" : core ? "surface/neutral" : parts.slice(0, head).join("/") || token.name;
     if (!families.has(familyName)) {
       families.set(familyName, { name: familyName, sections: [], byMiddle: new Map() });
     }
     const family = families.get(familyName);
-    const rest = core ? ["core", parts[parts.length - 1]] : parts.slice(head);
+    const rest = nest ? [parts[0], parts[parts.length - 1]] : core ? ["core", parts[parts.length - 1]] : parts.slice(head);
     const middle = rest.length >= 2 ? rest.slice(0, -1).join("/") : "";
     let section = family.byMiddle.get(middle);
     if (!section) {
@@ -112,7 +127,7 @@ function groupTokens(tokens) {
 
 function orderPrimitives(families) {
   if (collection !== "primitives") return families;
-  const order = ["white", "black", "neutral", "status", "brand-blue", "brand-cyan", "additional"];
+  const order = ["neutral", "status", "brand-blue", "brand-cyan", "additional"];
   const rank = (name) => {
     const index = order.indexOf(name);
     return index < 0 ? order.length : index;
@@ -182,6 +197,7 @@ function menuTarget(parts, families) {
 }
 
 function menuPath(parts) {
+  if (parts[0] === "white" || parts[0] === "black") return ["neutral", parts[0]];
   if (parts[0] === "surface" && parts[1] === "core") return ["surface", "neutral", "core"];
   const head = familyHead(parts);
   const rest = parts.slice(head);
@@ -307,11 +323,59 @@ function renderFamilies(families) {
   placeFamilyTitles();
 }
 
+function sizeRow(family, token) {
+  const item = document.createElement("cc-size-row");
+  item.id = rowId(token.name);
+  item.label = token.label;
+  item.kind = family.kind;
+  item.amount = String(token.value);
+  return item;
+}
+
+function typeRow(token) {
+  const item = document.createElement("cc-type-row");
+  item.id = rowId(token.name);
+  item.sample = token.sample;
+  item.caption = token.caption;
+  item.weight = String(token.weight);
+  item.size = String(token.size);
+  item.line = String(token.lineHeight);
+  item.tracking = String(token.letterSpacing);
+  return item;
+}
+
+function renderMeasure(doc) {
+  familyRow.parentElement.querySelectorAll(".family-titles").forEach((node) => node.remove());
+  familyRow.replaceChildren();
+  for (const family of doc.families) {
+    const card = document.createElement("cc-family");
+    card.setAttribute("title", family.title);
+    card.setAttribute("heading-id", familyId(family.id));
+    for (const token of family.tokens) {
+      card.append(collection === "size" ? sizeRow(family, token) : typeRow(token));
+    }
+    familyRow.append(card);
+  }
+}
+
+function buildMeasureMenu(doc) {
+  menuSlot.replaceChildren();
+  for (const family of doc.families) {
+    const item = document.createElement("cc-menu-item");
+    item.setAttribute("label", family.title);
+    item.setAttribute("depth", "0");
+    item.setAttribute("expanded", "true");
+    item.setAttribute("leaf", "");
+    item.dataset.target = familyId(family.id);
+    menuSlot.append(item);
+  }
+}
+
 function placeFamilyTitles() {
   const titles = familyRow.previousElementSibling;
   if (!titles || !titles.classList.contains("family-titles")) return;
 
-  const narrow = root.classList.contains("is-narrow");
+  const narrow = stackedLayout();
   const cards = [...familyRow.querySelectorAll(":scope > cc-family")];
   const cells = [...titles.querySelectorAll(":scope > .family-title-cell")];
   cards.forEach((card, index) => {
@@ -369,7 +433,7 @@ function syncNarrow() {
 }
 
 function stickFamilies() {
-  const narrow = root.classList.contains("is-narrow");
+  const narrow = stackedLayout();
   const inset = Number.parseFloat(getComputedStyle(scrollRoot).paddingBottom) || 0;
   const view = scrollRoot.clientHeight;
   for (const card of familyRow.querySelectorAll(":scope > cc-family")) {
@@ -401,13 +465,20 @@ function stickCarousels() {
 
 function paint(fade) {
   const draw = () => {
-    const chromeBrand = collection === "primitives" ? "brand-blue" : brand;
-    const chromeTheme = collection === "primitives" ? "dark" : theme;
+    const chromeBrand = collection === "semantic" ? brand : "brand-blue";
+    const chromeTheme = collection === "semantic" ? theme : "dark";
     applyColors(styles, collections, chromeBrand, chromeTheme);
-    const tokens = activeTokens();
-    const families = groupTokens(tokens);
-    renderFamilies(families);
-    buildMenu(tokens, families);
+    page.dataset.collection = collection;
+    const doc = measureDoc();
+    if (doc) {
+      renderMeasure(doc);
+      buildMeasureMenu(doc);
+    } else {
+      const tokens = activeTokens();
+      const families = groupTokens(tokens);
+      renderFamilies(families);
+      buildMenu(tokens, families);
+    }
     placeChrome();
     scrollY.target = scrollRoot;
     scrollX.target = scrollRoot;
@@ -557,6 +628,8 @@ sidebar.querySelector("cc-icon-button").setAttribute("label", copyText("menu.clo
 const collectionLabels = {
   primitives: "colors-primitive",
   semantic: "colors-semantic",
+  size: "size",
+  typography: "typography",
 };
 collectionSelect.options = collections.collectionOrder.map((id) => ({
   value: id,

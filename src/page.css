@@ -261,3 +261,48 @@ cc-sidebar[open] {
 .page:has(cc-sidebar[open]) .cc-family-title {
   pointer-events: none;
 }
+
+.page[data-collection="size"] .family-row,
+.page[data-collection="typography"] .family-row {
+  flex-direction: column;
+  width: 100%;
+  min-width: var(--layout-measure-min-width);
+  max-width: var(--layout-measure-max-width);
+}
+
+.page[data-collection="size"] .family-titles,
+.page[data-collection="size"] .family-row-end,
+.page[data-collection="typography"] .family-titles,
+.page[data-collection="typography"] .family-row-end {
+  display: none;
+}
+
+.page[data-collection="size"] .family-row cc-family,
+.page[data-collection="typography"] .family-row cc-family {
+  position: static;
+  flex: none;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+.page[data-collection="size"] cc-family + cc-family,
+.page[data-collection="typography"] cc-family + cc-family {
+  margin-top: var(--spacing-24);
+}
+
+.is-narrow .page[data-collection="size"] .family-row,
+.is-narrow .page[data-collection="typography"] .family-row {
+  width: auto;
+  min-width: 0;
+  max-width: none;
+}
+
+.is-narrow .page[data-collection="typography"] .family-row cc-family,
+.is-narrow .page[data-collection="typography"] .family-title-cell,
+.is-narrow .page[data-collection="size"] .family-row cc-family {
+  flex: none;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
