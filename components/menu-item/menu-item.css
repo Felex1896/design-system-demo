@@ -33,6 +33,10 @@ cc-menu-item[expanded="false"] > :not(.cc-menu-item-row) {
   display: none;
 }
 
+cc-menu-item[leaf][depth="0"] > .cc-menu-item-row {
+  padding-inline-start: var(--layout-menu-indent);
+}
+
 .cc-menu-item-chevron,
 .cc-menu-item-label {
   margin: 0;

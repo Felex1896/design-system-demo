@@ -12,6 +12,7 @@ class CcMenuItem extends HTMLElement {
   #glyph = null;
 
   connectedCallback() {
+    if (this.closest("[data-ghost]")) return;
     this.#ensure();
     this.#sync();
   }

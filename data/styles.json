@@ -96,6 +96,7 @@
       "value": "surface/neutral/transparent/hover",
       "guess": true,
       "because": "Open select list is not in the mock; nearest hover surface above the closed plate is surface/neutral/transparent/hover"
-    }
+    },
+    "surface/neutral/transparent/active"
   ]
 }

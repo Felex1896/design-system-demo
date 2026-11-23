@@ -16,6 +16,7 @@ class CcModeSwitcher extends HTMLElement {
   #light = null;
 
   connectedCallback() {
+    if (this.closest("[data-ghost]")) return;
     this.#ensure();
     this.#sync();
   }

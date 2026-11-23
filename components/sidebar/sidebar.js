@@ -9,6 +9,7 @@ class CcSidebar extends HTMLElement {
   #close = null;
 
   connectedCallback() {
+    if (this.closest("[data-ghost]")) return;
     if (this.#mounted) return;
     this.#mounted = true;
     this.#mount();

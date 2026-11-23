@@ -18,6 +18,10 @@ body {
   display: none;
 }
 
+[data-ghost] {
+  pointer-events: none;
+}
+
 .page {
   position: relative;
   display: flex;
@@ -204,6 +208,22 @@ cc-color-row {
   flex: none;
   width: 100%;
   min-width: 0;
+}
+
+.is-narrow cc-family + cc-family {
+  margin-top: var(--spacing-24);
+}
+
+.is-narrow cc-family > .cc-family-title {
+  padding-bottom: var(--spacing-4);
+}
+
+.is-narrow cc-family > cc-subgroup:not([hidden]) > .cc-subgroup__head:not(:has(cc-color-carousel)) {
+  padding-top: var(--spacing-4);
+}
+
+.is-narrow cc-family > cc-subgroup:not([hidden]) ~ cc-subgroup:not([hidden]) > .cc-subgroup__head:not(:has(cc-color-carousel)) {
+  padding-top: var(--spacing-16);
 }
 
 .is-narrow .family-titles {

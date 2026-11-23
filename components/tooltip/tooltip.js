@@ -58,24 +58,20 @@ function staysInside(row, event) {
   return next instanceof Node && row.contains(next);
 }
 
-const HOLD_MS = 400;
 const HOLD_SLOP = 8;
-let holdTimer = 0;
 let holdPointer = null;
 let heldRow = null;
+let keyboardNav = false;
 
-function narrowPage() {
-  return document.documentElement.classList.contains("is-narrow");
-}
-
-function clearHoldTimer() {
-  window.clearTimeout(holdTimer);
-  holdTimer = 0;
+function touchPointer(event) {
+  return event.pointerType === "touch" || event.pointerType === "pen";
 }
 
 function dropHold() {
-  clearHoldTimer();
-  if (heldRow) heldRow.classList.remove("is-held");
+  if (heldRow) {
+    heldRow.classList.remove("is-held");
+    if (document.activeElement === heldRow) heldRow.blur();
+  }
   heldRow = null;
   holdPointer = null;
   tip.hide();
@@ -92,8 +88,14 @@ function placeHold(row) {
   showRow(row);
 }
 
+function rowUnder(event) {
+  const under = document.elementFromPoint(event.clientX, event.clientY);
+  return under instanceof Element ? under.closest("cc-color-row") : null;
+}
+
 document.addEventListener("pointerover", (event) => {
   if (event.pointerType !== "mouse") return;
+  document.documentElement.classList.remove("is-touch");
   const row = rowFrom(event);
   if (!row) return;
   showRow(row);
@@ -106,50 +108,37 @@ document.addEventListener("pointerout", (event) => {
   tip.hide();
 });
 
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Tab") keyboardNav = true;
+});
+
 document.addEventListener("pointerdown", (event) => {
-  if (!narrowPage() || event.pointerType === "mouse") return;
-  clearHoldTimer();
+  keyboardNav = false;
+  if (!touchPointer(event)) return;
+  document.documentElement.classList.add("is-touch");
   const row = rowFrom(event);
-  holdPointer = {
-    id: event.pointerId,
-    x: event.clientX,
-    y: event.clientY,
-    row,
-  };
   if (!row) {
     dropHold();
     return;
   }
-  holdTimer = window.setTimeout(() => {
-    holdTimer = 0;
-    if (!holdPointer || holdPointer.row !== row) return;
-    placeHold(row);
-  }, HOLD_MS);
+  holdPointer = {
+    id: event.pointerId,
+    x: event.clientX,
+    y: event.clientY,
+  };
+  placeHold(row);
 });
 
 document.addEventListener("pointermove", (event) => {
   if (!holdPointer || event.pointerId !== holdPointer.id) return;
   const dx = event.clientX - holdPointer.x;
   const dy = event.clientY - holdPointer.y;
-  if (!heldRow) {
-    if (dx * dx + dy * dy > HOLD_SLOP * HOLD_SLOP) clearHoldTimer();
-    return;
-  }
-  const under = document.elementFromPoint(event.clientX, event.clientY);
-  const row = under instanceof Element ? under.closest("cc-color-row") : null;
-  if (row !== heldRow) dropHold();
+  if (dx * dx + dy * dy > HOLD_SLOP * HOLD_SLOP || rowUnder(event) !== heldRow) dropHold();
 });
 
 document.addEventListener("pointerup", (event) => {
   if (!holdPointer || event.pointerId !== holdPointer.id) return;
-  const row = heldRow;
-  clearHoldTimer();
-  holdPointer = null;
-  if (!row) return;
-  row.classList.remove("is-held");
-  heldRow = null;
-  row.focus({ preventScroll: true });
-  showRow(row);
+  dropHold();
 });
 
 document.addEventListener("pointercancel", (event) => {
@@ -158,10 +147,11 @@ document.addEventListener("pointercancel", (event) => {
 });
 
 document.addEventListener("contextmenu", (event) => {
-  if (rowFrom(event) && narrowPage()) event.preventDefault();
+  if (rowFrom(event) && document.documentElement.classList.contains("is-touch")) event.preventDefault();
 });
 
 document.addEventListener("focusin", (event) => {
+  if (!keyboardNav) return;
   const row = rowFrom(event);
   if (!row) return;
   showRow(row);
@@ -170,7 +160,11 @@ document.addEventListener("focusin", (event) => {
 document.addEventListener("focusout", (event) => {
   const row = rowFrom(event);
   if (!row || staysInside(row, event)) return;
+  if (heldRow === row) return;
   tip.hide();
 });
 
-document.addEventListener("scroll", () => tip.hide(), true);
+document.addEventListener("scroll", () => {
+  if (holdPointer || heldRow) dropHold();
+  else tip.hide();
+}, true);

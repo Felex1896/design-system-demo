@@ -35,6 +35,19 @@ cc-color-row.is-held {
   }
 }
 
+.is-touch cc-color-row:hover {
+  z-index: 0;
+  transform: none;
+  box-shadow: none;
+}
+
+.is-touch cc-color-row.is-held,
+.is-touch cc-color-row:focus-visible {
+  z-index: 1;
+  transform: scale(1.05);
+  box-shadow: var(--shadow-color-row);
+}
+
 .cc-color-row__swatch {
   display: flex;
   flex-direction: column;

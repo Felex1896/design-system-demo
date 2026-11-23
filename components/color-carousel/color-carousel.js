@@ -98,6 +98,7 @@ class CcColorCarousel extends HTMLElement {
   }
 
   connectedCallback() {
+    if (this.closest("[data-ghost]")) return;
     ensureSwiperCss();
     this.#ensure();
     this.#watch();

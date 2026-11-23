@@ -4,6 +4,7 @@ class CcFamily extends HTMLElement {
   #title = null;
 
   connectedCallback() {
+    if (this.closest("[data-ghost]")) return;
     this.#ensureTitle();
     this.#syncTitle();
   }

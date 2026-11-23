@@ -9,6 +9,7 @@ class CcSubgroup extends HTMLElement {
   #observer = null;
 
   connectedCallback() {
+    if (this.closest("[data-ghost]")) return;
     this.#ensure();
     this.#sync();
   }

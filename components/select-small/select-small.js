@@ -2,7 +2,7 @@
   const script = document.currentScript;
   if (!script || !script.src) return;
   const href = script.src.replace(/select-small\.js(?:[?#].*)?$/, "select-small.css");
-  if (document.querySelector(`link[href="${href}"]`)) return;
+  if (document.querySelector('link[href*="select-small.css"]')) return;
   const link = document.createElement("link");
   link.rel = "stylesheet";
   link.href = href;
@@ -76,6 +76,7 @@ class CcSelectSmall extends HTMLElement {
   }
 
   connectedCallback() {
+    if (this.closest("[data-ghost]")) return;
     if (!this._ready) {
       this._ready = true;
       this._build();
@@ -199,11 +200,45 @@ class CcSelectSmall extends HTMLElement {
     if (open) this.setAttribute("open", "");
     else this.removeAttribute("open");
     if (this._plate) this._plate.setAttribute("aria-expanded", open ? "true" : "false");
-    if (this._list) this._list.hidden = !open;
+    this._playList(open);
     this._bindDismiss(open);
     if (open) {
       this.dispatchEvent(new CustomEvent("cc-open", { bubbles: true }));
     }
+  }
+
+  _playList(open) {
+    const list = this._list;
+    if (!list) return;
+    const motion = window.ccMotion;
+    const run = {};
+    this._listRun = run;
+    const finish = () => {
+      if (this._listRun !== run) return;
+      if (!this._open) list.hidden = true;
+      list.style.opacity = "";
+    };
+    const fade = { duration: 0.12, ease: "easeOut" };
+    if (!motion || motion.reduce()) {
+      list.hidden = !open;
+      list.style.opacity = "";
+      return;
+    }
+    if (open) {
+      list.hidden = false;
+      list.style.opacity = "0";
+      motion.animate(list, { opacity: [0, 1] }, fade);
+    } else {
+      motion.animate(list, { opacity: 0 }, fade);
+    }
+    requestAnimationFrame(() => {
+      const running = [...list.getAnimations()];
+      if (!running.length) {
+        finish();
+        return;
+      }
+      Promise.all(running.map((item) => item.finished.then(() => {}, () => {}))).then(finish);
+    });
   }
 
   _bindDismiss(active) {

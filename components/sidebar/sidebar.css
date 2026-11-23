@@ -20,6 +20,24 @@ cc-sidebar .scrim {
   background: var(--color-surface-core-scrim);
 }
 
+cc-sidebar[open] .scrim {
+  opacity: 0;
+}
+
+cc-sidebar[open] .panel {
+  transform: translateX(-100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  cc-sidebar[open] .scrim {
+    opacity: 1;
+  }
+
+  cc-sidebar[open] .panel {
+    transform: none;
+  }
+}
+
 cc-sidebar .panel {
   position: absolute;
   top: 0;

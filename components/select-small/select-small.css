@@ -107,6 +107,7 @@ cc-select-small[open] .cc-select-small__plate:not(:disabled) {
   width: 100%;
   height: var(--layout-select-option-height);
   padding-inline: var(--spacing-8);
+  padding-inline-start: calc(var(--spacing-8) + var(--spacing-4));
 }
 
 .cc-select-small__option .cc-select-small__label {

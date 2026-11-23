@@ -1,6 +1,8 @@
 import { applyColors, applyStyles, swatchColor } from "./apply-styles.js";
+import { animate, calm, reduceMotion, crossfade, playNumber, whenSettled } from "./motion.js?v=4";
 
 const root = document.documentElement;
+const page = document.querySelector(".page");
 const scrollRoot = document.querySelector(".page-scroll");
 const familyRow = document.querySelector(".family-row");
 const collectionSelect = document.querySelector("#collection-select");
@@ -13,7 +15,7 @@ const scrollY = document.querySelector("#scroll-y");
 const scrollX = document.querySelector("#scroll-x");
 const sidebarScroll = document.querySelector("#sidebar-scroll");
 
-const styles = await fetch(new URL("../data/styles.json?v=2", import.meta.url)).then((response) => response.json());
+const styles = await fetch(new URL("../data/styles.json?v=3", import.meta.url)).then((response) => response.json());
 const collections = await fetch(new URL("../data/collections.json?v=3", import.meta.url)).then((response) => response.json());
 const copy = await fetch(new URL("../data/copy.json", import.meta.url)).then((response) => response.json());
 
@@ -105,35 +107,17 @@ function groupTokens(tokens) {
     if (leftSurface === rightSurface) return 0;
     return leftSurface ? -1 : 1;
   });
-  return foldPrimitives(ordered);
+  return orderPrimitives(ordered);
 }
 
-function foldPrimitives(families) {
+function orderPrimitives(families) {
   if (collection !== "primitives") return families;
-  const list = [...families];
-  const neutral = list.find((item) => item.name === "neutral");
-  if (!neutral) return list;
-  const folded = [];
-  for (const name of ["white", "black"]) {
-    const index = list.findIndex((item) => item.name === name);
-    if (index < 0) continue;
-    const [family] = list.splice(index, 1);
-    folded.push({
-      middle: name,
-      rows: family.sections.flatMap((section) => section.rows),
-    });
-  }
-  for (const section of folded.reverse()) {
-    neutral.byMiddle.set(section.middle, section);
-    neutral.sections.unshift(section);
-  }
-  const order = ["neutral", "status", "brand-blue", "brand-cyan", "additional"];
+  const order = ["white", "black", "neutral", "status", "brand-blue", "brand-cyan", "additional"];
   const rank = (name) => {
     const index = order.indexOf(name);
     return index < 0 ? order.length : index;
   };
-  list.sort((left, right) => rank(left.name) - rank(right.name));
-  return list;
+  return [...families].sort((left, right) => rank(left.name) - rank(right.name));
 }
 
 function familyTitle(name) {
@@ -175,18 +159,6 @@ function lightPrefix(family, middle) {
 }
 
 function menuTarget(parts, families) {
-  if (collection === "primitives" && (parts[0] === "white" || parts[0] === "black")) {
-    const neutral = families.find((item) => item.name === "neutral");
-    if (!neutral) return "";
-    if (parts.length === 1) return subgroupId(neutral.name, parts[0]);
-    const joined = parts.join("/");
-    for (const section of neutral.sections) {
-      for (const row of section.rows) {
-        if (row.token.name === joined) return rowId(row.token.name);
-      }
-    }
-    return subgroupId(neutral.name, parts[0]);
-  }
   if (parts[0] === "surface" && parts.length === 1) {
     const first = families.find((item) => item.name.startsWith("surface/"));
     return first ? familyId(first.name) : "";
@@ -427,25 +399,153 @@ function stickCarousels() {
   }
 }
 
-function paint() {
-  const chromeBrand = collection === "primitives" ? "brand-blue" : brand;
-  const chromeTheme = collection === "primitives" ? "dark" : theme;
-  applyColors(styles, collections, chromeBrand, chromeTheme);
-  const tokens = activeTokens();
-  const families = groupTokens(tokens);
-  renderFamilies(families);
-  buildMenu(tokens, families);
-  placeChrome();
-  scrollY.target = scrollRoot;
-  scrollX.target = scrollRoot;
-  const menu = sidebar.querySelector(".menu");
-  if (menu) sidebarScroll.target = menu;
-  stickFamilies();
+function paint(fade) {
+  const draw = () => {
+    const chromeBrand = collection === "primitives" ? "brand-blue" : brand;
+    const chromeTheme = collection === "primitives" ? "dark" : theme;
+    applyColors(styles, collections, chromeBrand, chromeTheme);
+    const tokens = activeTokens();
+    const families = groupTokens(tokens);
+    renderFamilies(families);
+    buildMenu(tokens, families);
+    placeChrome();
+    scrollY.target = scrollRoot;
+    scrollX.target = scrollRoot;
+    const menu = sidebar.querySelector(".menu");
+    if (menu) sidebarScroll.target = menu;
+    stickFamilies();
+  };
+  if (fade === "page") crossfade(page, draw);
+  else if (fade === "content") crossfade(scrollRoot, draw);
+  else draw();
+}
+
+let sidebarToken = 0;
+
+function sidebarParts() {
+  return {
+    scrim: sidebar.querySelector(".scrim"),
+    panel: sidebar.querySelector(".panel"),
+  };
+}
+
+function stopSidebarMotion() {
+  const { scrim, panel } = sidebarParts();
+  for (const node of [scrim, panel]) {
+    if (!node) continue;
+    node.getAnimations().forEach((animation) => animation.cancel());
+  }
+}
+
+function clearSidebarMotion() {
+  stopSidebarMotion();
+  const { scrim, panel } = sidebarParts();
+  if (scrim) scrim.style.opacity = "";
+  if (panel) panel.style.transform = "";
+}
+
+function whenSidebarSettles() {
+  const { scrim, panel } = sidebarParts();
+  return Promise.all([whenSettled(scrim), whenSettled(panel)]);
+}
+
+function openSidebar() {
+  const token = ++sidebarToken;
+  sidebar.setAttribute("open", "");
+  scrollRoot.classList.add("is-locked");
+  stopSidebarMotion();
+  const { scrim, panel } = sidebarParts();
+  if (!scrim || !panel || reduceMotion()) return;
+  animate(scrim, { opacity: [0, 1] }, calm);
+  animate(panel, { x: ["-100%", "0%"] }, calm);
+  whenSidebarSettles().then(() => {
+    if (token !== sidebarToken) return;
+  });
 }
 
 function closeSidebar() {
-  sidebar.removeAttribute("open");
+  const token = ++sidebarToken;
   scrollRoot.classList.remove("is-locked");
+  if (!sidebar.hasAttribute("open")) return;
+  stopSidebarMotion();
+  const { scrim, panel } = sidebarParts();
+  if (!scrim || !panel || reduceMotion()) {
+    sidebar.removeAttribute("open");
+    clearSidebarMotion();
+    return;
+  }
+  animate(scrim, { opacity: 0 }, calm);
+  animate(panel, { x: "-100%" }, calm);
+  whenSidebarSettles().then(() => {
+    if (token !== sidebarToken) return;
+    sidebar.removeAttribute("open");
+    clearSidebarMotion();
+  });
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function flowPoint(node) {
+  let top = 0;
+  let left = 0;
+  let current = node;
+  while (current && current !== scrollRoot) {
+    top += current.offsetTop;
+    left += current.offsetLeft;
+    const parent = current.offsetParent;
+    if (!(parent instanceof HTMLElement)) break;
+    current = parent;
+  }
+  return { top, left, width: node.offsetWidth };
+}
+
+function scrollAnchor(target) {
+  if (!target.classList.contains("cc-family-title") || !target.id) return target;
+  const card = familyRow.querySelector(`cc-family[heading-id="${CSS.escape(target.id)}"]`);
+  return card || target;
+}
+
+function scrollCover(target, anchor) {
+  if (anchor === target) return Number.parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+  const narrow = root.classList.contains("is-narrow");
+  if (narrow) return Number.parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+  const bar = familyRow.previousElementSibling;
+  return bar && bar.classList.contains("family-titles") ? bar.offsetHeight : 0;
+}
+
+function scrollDuration(fromTop, toTop, fromLeft, toLeft) {
+  const distance = Math.abs(toTop - fromTop) + Math.abs(toLeft - fromLeft);
+  return Math.min(1.2, Math.max(0.85, 0.55 + distance / 2200));
+}
+
+function scrollToTarget(target) {
+  const anchor = scrollAnchor(target);
+  const point = flowPoint(anchor);
+  const cover = scrollCover(target, anchor);
+  const maxTop = Math.max(0, scrollRoot.scrollHeight - scrollRoot.clientHeight);
+  const top = clamp(point.top - cover, 0, maxTop);
+  let left = scrollRoot.scrollLeft;
+  const view = scrollRoot.clientWidth;
+  const start = point.left - left;
+  const end = start + point.width;
+  if (start < 0) left += start;
+  else if (end > view) left += end - view;
+  const maxLeft = Math.max(0, scrollRoot.scrollWidth - scrollRoot.clientWidth);
+  left = clamp(left, 0, maxLeft);
+  if (reduceMotion()) {
+    scrollRoot.scrollTop = top;
+    scrollRoot.scrollLeft = left;
+    return;
+  }
+  const glide = { ease: "easeInOut", duration: scrollDuration(scrollRoot.scrollTop, top, scrollRoot.scrollLeft, left) };
+  playNumber("scroll-top", scrollRoot.scrollTop, top, (value) => {
+    scrollRoot.scrollTop = value;
+  }, glide);
+  playNumber("scroll-left", scrollRoot.scrollLeft, left, (value) => {
+    scrollRoot.scrollLeft = value;
+  }, glide);
 }
 
 menuButton.setAttribute("label", copyText("menu.open"));
@@ -474,25 +574,24 @@ collectionSelect.addEventListener("cc-change", (event) => {
     brandSelect.value = brand;
     themeSwitch.setAttribute("mode", theme);
   }
-  paint();
+  paint("content");
 });
 
 brandSelect.addEventListener("cc-change", (event) => {
   brand = event.detail.value;
   remembered.brand = brand;
-  paint();
+  paint("page");
 });
 
 themeSwitch.addEventListener("cc-change", (event) => {
   theme = event.detail.mode;
   remembered.theme = theme;
   themeSwitch.setAttribute("mode", theme);
-  paint();
+  paint("page");
 });
 
 menuButton.addEventListener("cc-press", () => {
-  sidebar.setAttribute("open", "");
-  scrollRoot.classList.add("is-locked");
+  openSidebar();
 });
 
 sidebar.addEventListener("cc-close", closeSidebar);
@@ -518,7 +617,7 @@ menuSlot.addEventListener("cc-navigate", (event) => {
       carousel.setAttribute("value", id);
       showHue(card, id);
     }
-    target.scrollIntoView({ block: "start", inline: "nearest" });
+    scrollToTarget(target);
   }
   closeSidebar();
 });

@@ -65,6 +65,7 @@ class CcColorRow extends HTMLElement {
   }
 
   connectedCallback() {
+    if (this.closest("[data-ghost]")) return;
     this._ensure();
     this._sync();
   }

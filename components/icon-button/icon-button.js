@@ -16,6 +16,7 @@ class CcIconButton extends HTMLElement {
   #glyph = "";
 
   connectedCallback() {
+    if (this.closest("[data-ghost]")) return;
     this.#ensure();
     this.#sync();
   }

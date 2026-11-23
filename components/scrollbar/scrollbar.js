@@ -26,6 +26,7 @@ class CcScrollbar extends HTMLElement {
   }
 
   connectedCallback() {
+    if (this.closest("[data-ghost]")) return;
     this.#ensure();
     this.#bind();
   }

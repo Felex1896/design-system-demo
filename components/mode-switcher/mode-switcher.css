@@ -31,6 +31,21 @@ cc-mode-switcher button {
   cursor: pointer;
 }
 
+@media (hover: hover) {
+  cc-mode-switcher:hover {
+    background-image: linear-gradient(var(--color-surface-neutral-transparent-hover), var(--color-surface-neutral-transparent-hover));
+  }
+}
+
+cc-mode-switcher:active {
+  background-image: linear-gradient(var(--color-surface-neutral-transparent-active), var(--color-surface-neutral-transparent-active));
+}
+
+cc-mode-switcher button:focus,
+cc-mode-switcher button:focus-visible {
+  outline: 0;
+}
+
 cc-mode-switcher button[aria-pressed="true"] {
   background-color: var(--color-surface-core-inverse-strong);
   box-shadow: var(--shadow-mode-selected);
