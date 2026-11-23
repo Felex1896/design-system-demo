@@ -13,8 +13,8 @@ const scrollY = document.querySelector("#scroll-y");
 const scrollX = document.querySelector("#scroll-x");
 const sidebarScroll = document.querySelector("#sidebar-scroll");
 
-const styles = await fetch(new URL("../data/styles.json", import.meta.url)).then((response) => response.json());
-const collections = await fetch(new URL("../data/collections.json?v=2", import.meta.url)).then((response) => response.json());
+const styles = await fetch(new URL("../data/styles.json?v=2", import.meta.url)).then((response) => response.json());
+const collections = await fetch(new URL("../data/collections.json?v=3", import.meta.url)).then((response) => response.json());
 const copy = await fetch(new URL("../data/copy.json", import.meta.url)).then((response) => response.json());
 
 applyStyles(styles);
@@ -80,12 +80,13 @@ function groupTokens(tokens) {
   for (const token of tokens) {
     const parts = token.name.split("/").filter(Boolean);
     const head = familyHead(parts);
-    const familyName = parts.slice(0, head).join("/") || token.name;
+    const core = parts[0] === "surface" && parts[1] === "core";
+    const familyName = core ? "surface/neutral" : parts.slice(0, head).join("/") || token.name;
     if (!families.has(familyName)) {
       families.set(familyName, { name: familyName, sections: [], byMiddle: new Map() });
     }
     const family = families.get(familyName);
-    const rest = parts.slice(head);
+    const rest = core ? ["core", parts[parts.length - 1]] : parts.slice(head);
     const middle = rest.length >= 2 ? rest.slice(0, -1).join("/") : "";
     let section = family.byMiddle.get(middle);
     if (!section) {
@@ -93,7 +94,9 @@ function groupTokens(tokens) {
       family.byMiddle.set(middle, section);
       family.sections.push(section);
     }
-    section.rows.push({ token, rowName: rest[rest.length - 1] || token.name });
+    const step = rest[rest.length - 1] || token.name;
+    const hueStep = (familyName === "decorative" || familyName === "additional") && middle;
+    section.rows.push({ token, rowName: hueStep ? `${middle}/${step}` : step });
   }
   const ordered = [...families.values()];
   ordered.sort((left, right) => {
@@ -124,13 +127,12 @@ function foldPrimitives(families) {
     neutral.byMiddle.set(section.middle, section);
     neutral.sections.unshift(section);
   }
-  const neutralIndex = list.findIndex((item) => item.name === "neutral");
-  const blueIndex = list.findIndex((item) => item.name === "blue");
-  if (neutralIndex >= 0 && blueIndex >= 0 && neutralIndex !== blueIndex + 1) {
-    const [column] = list.splice(neutralIndex, 1);
-    const insertAt = list.findIndex((item) => item.name === "blue") + 1;
-    list.splice(insertAt, 0, column);
-  }
+  const order = ["neutral", "status", "brand-blue", "brand-cyan", "additional"];
+  const rank = (name) => {
+    const index = order.indexOf(name);
+    return index < 0 ? order.length : index;
+  };
+  list.sort((left, right) => rank(left.name) - rank(right.name));
   return list;
 }
 
@@ -156,7 +158,7 @@ function primitiveNameFor(swatch) {
   }
   const names = primitiveByColor.get(colorKey(swatch)) || [];
   if (!names.length) return "";
-  const prefix = brand === "brand-cyan" ? "cyan/" : "blue/";
+  const prefix = brand === "brand-cyan" ? "brand-cyan/" : "brand-blue/";
   return names.find((name) => name.startsWith(prefix)) || names[0];
 }
 
@@ -208,6 +210,7 @@ function menuTarget(parts, families) {
 }
 
 function menuPath(parts) {
+  if (parts[0] === "surface" && parts[1] === "core") return ["surface", "neutral", "core"];
   const head = familyHead(parts);
   const rest = parts.slice(head);
   if (rest.length < 2) return parts.slice(0, head);
@@ -247,17 +250,21 @@ function buildMenu(tokens, families) {
 }
 
 function renderFamilies(families) {
+  familyRow.parentElement.querySelectorAll(".family-titles").forEach((node) => node.remove());
+  const titles = document.createElement("div");
+  titles.className = "family-titles";
+  familyRow.before(titles);
   familyRow.replaceChildren();
   for (const family of families) {
     const card = document.createElement("cc-family");
     card.setAttribute("title", familyTitle(family.name));
     card.setAttribute("heading-id", familyId(family.name));
     if (family.name === "decorative" || family.name === "additional") {
-      const hues = family.sections.filter((section) => section.middle && section.rows.some((row) => row.rowName === "100"));
+      const hues = family.sections.filter((section) => section.middle && section.rows.some((row) => row.token.name.endsWith("/100")));
       if (hues.length) {
         const carousel = document.createElement("cc-color-carousel");
         carousel.colors = hues.map((section) => {
-          const sample = section.rows.find((row) => row.rowName === "100");
+          const sample = section.rows.find((row) => row.token.name.endsWith("/100"));
           return {
             id: section.middle,
             color: swatchColor(sample.token, collection, brand, theme),
@@ -302,14 +309,14 @@ function renderFamilies(families) {
         for (const item of rows) host.append(item);
       }
     });
+    const cell = document.createElement("div");
+    cell.className = "family-title-cell";
+    titles.append(cell);
     familyRow.append(card);
     const title = card.querySelector(":scope > .cc-family-title");
+    if (title) cell.append(title);
     const carousel = card.querySelector(":scope > cc-color-carousel");
-    if (title && carousel) {
-      const head = document.createElement("div");
-      head.className = "cc-family-head";
-      card.insertBefore(head, title);
-      head.append(title, carousel);
+    if (carousel) {
       const show = () => showHue(card, carousel.getAttribute("value"));
       carousel.addEventListener("cc-change", show);
       show();
@@ -319,11 +326,35 @@ function renderFamilies(families) {
   end.className = "family-row-end";
   end.setAttribute("aria-hidden", "true");
   familyRow.append(end);
+  titles.append(end.cloneNode(true));
+  placeFamilyTitles();
+}
+
+function placeFamilyTitles() {
+  const titles = familyRow.previousElementSibling;
+  if (!titles || !titles.classList.contains("family-titles")) return;
+
+  const narrow = root.classList.contains("is-narrow");
+  const cards = [...familyRow.querySelectorAll(":scope > cc-family")];
+  const cells = [...titles.querySelectorAll(":scope > .family-title-cell")];
+  cards.forEach((card, index) => {
+    const id = card.getAttribute("heading-id");
+    const title = id ? document.getElementById(id) : null;
+    const home = narrow ? card : cells[index];
+    if (!title || !home || title.parentElement === home) return;
+    if (narrow) home.prepend(title);
+    else home.append(title);
+  });
 }
 
 function showHue(card, id) {
+  const carousel = card.querySelector("cc-color-carousel");
   for (const group of card.querySelectorAll("cc-subgroup")) {
     const match = group.getAttribute("label") === id;
+    if (match && carousel) {
+      const head = group.querySelector(".cc-subgroup__head");
+      if (head && carousel.parentElement !== head) head.append(carousel);
+    }
     group.hidden = !match;
     const rows = [...group.querySelectorAll("cc-color-row")];
     rows.forEach((row, index) => {
@@ -356,6 +387,7 @@ function placeChrome() {
 function syncNarrow() {
   const limit = Number.parseFloat(getComputedStyle(root).getPropertyValue("--layout-breakpoint-narrow"));
   root.classList.toggle("is-narrow", window.innerWidth < limit);
+  placeFamilyTitles();
   placeChrome();
 }
 
@@ -369,7 +401,24 @@ function stickFamilies() {
       continue;
     }
     const room = view - card.offsetHeight - inset;
-    card.style.top = `${Math.min(0, room)}px`;
+    const bar = familyRow.previousElementSibling;
+    const barHeight = bar && bar.classList.contains("family-titles") ? bar.offsetHeight : 0;
+    card.style.top = `${Math.min(barHeight, room)}px`;
+  }
+  stickCarousels();
+}
+
+function stickCarousels() {
+  const narrow = root.classList.contains("is-narrow");
+  const bar = familyRow.previousElementSibling;
+  const wideTop = !narrow && bar && bar.classList.contains("family-titles") ? bar.offsetHeight : 0;
+  for (const card of familyRow.querySelectorAll(":scope > cc-family")) {
+    const title = card.querySelector(":scope > .cc-family-title");
+    const top = narrow && title ? title.offsetHeight : wideTop;
+    for (const head of card.querySelectorAll(".cc-subgroup__head")) {
+      if (!head.querySelector("cc-color-carousel")) continue;
+      head.style.top = `${top}px`;
+    }
   }
 }
 

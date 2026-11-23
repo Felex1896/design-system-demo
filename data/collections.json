@@ -6627,114 +6627,6 @@
       "value": "rgba(253, 253, 253, 0.02)"
     },
     {
-      "name": "blue/blue-base/130-black",
-      "alias": "",
-      "description": "",
-      "value": "#204ba0"
-    },
-    {
-      "name": "blue/blue-light/130-black",
-      "alias": "",
-      "description": "",
-      "value": "#4f6da7"
-    },
-    {
-      "name": "blue/blue-light/120-black",
-      "alias": "",
-      "description": "",
-      "value": "#5a7cbe"
-    },
-    {
-      "name": "blue/blue-light/100",
-      "alias": "",
-      "description": "",
-      "value": "#719bee"
-    },
-    {
-      "name": "blue/blue-light/60",
-      "alias": "",
-      "description": "",
-      "value": "rgba(113, 155, 238, 0.6)"
-    },
-    {
-      "name": "blue/blue-light/50",
-      "alias": "",
-      "description": "",
-      "value": "rgba(113, 155, 238, 0.5)"
-    },
-    {
-      "name": "blue/blue-light/40",
-      "alias": "",
-      "description": "",
-      "value": "rgba(113, 155, 238, 0.4)"
-    },
-    {
-      "name": "blue/blue-light/30",
-      "alias": "",
-      "description": "",
-      "value": "rgba(113, 155, 238, 0.3)"
-    },
-    {
-      "name": "blue/blue-light/20",
-      "alias": "",
-      "description": "",
-      "value": "rgba(113, 155, 238, 0.2)"
-    },
-    {
-      "name": "blue/blue-light/10",
-      "alias": "",
-      "description": "",
-      "value": "rgba(113, 155, 238, 0.1)"
-    },
-    {
-      "name": "blue/blue-base/120-black",
-      "alias": "",
-      "description": "",
-      "value": "#2556b7"
-    },
-    {
-      "name": "blue/blue-base/100",
-      "alias": "",
-      "description": "",
-      "value": "#2e6be5"
-    },
-    {
-      "name": "blue/blue-base/60",
-      "alias": "",
-      "description": "",
-      "value": "rgba(46, 107, 229, 0.6)"
-    },
-    {
-      "name": "blue/blue-base/50",
-      "alias": "",
-      "description": "",
-      "value": "rgba(46, 107, 229, 0.5)"
-    },
-    {
-      "name": "blue/blue-base/40",
-      "alias": "",
-      "description": "",
-      "value": "rgba(46, 107, 229, 0.4)"
-    },
-    {
-      "name": "blue/blue-base/30",
-      "alias": "",
-      "description": "",
-      "value": "rgba(46, 107, 229, 0.3)"
-    },
-    {
-      "name": "blue/blue-base/20",
-      "alias": "",
-      "description": "",
-      "value": "rgba(46, 107, 229, 0.2)"
-    },
-    {
-      "name": "blue/blue-base/10",
-      "alias": "",
-      "description": "",
-      "value": "rgba(46, 107, 229, 0.1)"
-    },
-    {
       "name": "status/red/130-black",
       "alias": "",
       "description": "",
@@ -6751,6 +6643,432 @@
       "alias": "",
       "description": "",
       "value": "#e34646"
+    },
+    {
+      "name": "status/red/60",
+      "alias": "",
+      "description": "",
+      "value": "rgba(227, 70, 70, 0.6)"
+    },
+    {
+      "name": "status/red/50",
+      "alias": "",
+      "description": "",
+      "value": "rgba(227, 70, 70, 0.5)"
+    },
+    {
+      "name": "status/red/40",
+      "alias": "",
+      "description": "",
+      "value": "rgba(227, 70, 70, 0.4)"
+    },
+    {
+      "name": "status/red/30",
+      "alias": "",
+      "description": "",
+      "value": "rgba(227, 70, 70, 0.3)"
+    },
+    {
+      "name": "status/green/130-black",
+      "alias": "",
+      "description": "",
+      "value": "#267838"
+    },
+    {
+      "name": "status/red/20",
+      "alias": "",
+      "description": "",
+      "value": "rgba(227, 70, 70, 0.2)"
+    },
+    {
+      "name": "status/green/120-black",
+      "alias": "",
+      "description": "",
+      "value": "#2b8a40"
+    },
+    {
+      "name": "status/red/10",
+      "alias": "",
+      "description": "",
+      "value": "rgba(227, 70, 70, 0.1)"
+    },
+    {
+      "name": "status/green/100",
+      "alias": "",
+      "description": "",
+      "value": "#36ac50"
+    },
+    {
+      "name": "status/green/60",
+      "alias": "",
+      "description": "",
+      "value": "rgba(54, 172, 80, 0.6)"
+    },
+    {
+      "name": "status/green/50",
+      "alias": "",
+      "description": "",
+      "value": "rgba(54, 172, 80, 0.5)"
+    },
+    {
+      "name": "status/green/40",
+      "alias": "",
+      "description": "",
+      "value": "rgba(54, 172, 80, 0.4)"
+    },
+    {
+      "name": "status/green/30",
+      "alias": "",
+      "description": "",
+      "value": "rgba(54, 172, 80, 0.3)"
+    },
+    {
+      "name": "status/green/20",
+      "alias": "",
+      "description": "",
+      "value": "rgba(54, 172, 80, 0.2)"
+    },
+    {
+      "name": "status/amber/130-black",
+      "alias": "",
+      "description": "",
+      "value": "#9a6d14"
+    },
+    {
+      "name": "status/green/10",
+      "alias": "",
+      "description": "",
+      "value": "rgba(54, 172, 80, 0.1)"
+    },
+    {
+      "name": "status/green/02",
+      "alias": "",
+      "description": "",
+      "value": "rgba(54, 172, 80, 0.02)"
+    },
+    {
+      "name": "status/amber/120-black",
+      "alias": "",
+      "description": "",
+      "value": "#b07c16"
+    },
+    {
+      "name": "status/amber/100",
+      "alias": "",
+      "description": "",
+      "value": "#dc9b1c"
+    },
+    {
+      "name": "status/amber/60",
+      "alias": "",
+      "description": "",
+      "value": "rgba(220, 155, 28, 0.6)"
+    },
+    {
+      "name": "status/amber/50",
+      "alias": "",
+      "description": "",
+      "value": "rgba(220, 155, 28, 0.5)"
+    },
+    {
+      "name": "status/amber/40",
+      "alias": "",
+      "description": "",
+      "value": "rgba(220, 155, 28, 0.4)"
+    },
+    {
+      "name": "status/amber/30",
+      "alias": "",
+      "description": "",
+      "value": "rgba(220, 155, 28, 0.3)"
+    },
+    {
+      "name": "status/amber/20",
+      "alias": "",
+      "description": "",
+      "value": "rgba(220, 155, 28, 0.2)"
+    },
+    {
+      "name": "status/amber/10",
+      "alias": "",
+      "description": "",
+      "value": "rgba(220, 155, 28, 0.1)"
+    },
+    {
+      "name": "status/cyan/130-black",
+      "alias": "",
+      "description": "",
+      "value": "#24789d"
+    },
+    {
+      "name": "status/amber/02",
+      "alias": "",
+      "description": "",
+      "value": "rgba(220, 155, 28, 0.02)"
+    },
+    {
+      "name": "status/cyan/120-black",
+      "alias": "",
+      "description": "",
+      "value": "#2a8ab3"
+    },
+    {
+      "name": "status/cyan/100",
+      "alias": "",
+      "description": "",
+      "value": "#34ace0"
+    },
+    {
+      "name": "status/cyan/60",
+      "alias": "",
+      "description": "",
+      "value": "rgba(52, 172, 224, 0.6)"
+    },
+    {
+      "name": "status/cyan/50",
+      "alias": "",
+      "description": "",
+      "value": "rgba(52, 172, 224, 0.5)"
+    },
+    {
+      "name": "status/cyan/40",
+      "alias": "",
+      "description": "",
+      "value": "rgba(52, 172, 224, 0.4)"
+    },
+    {
+      "name": "status/cyan/30",
+      "alias": "",
+      "description": "",
+      "value": "rgba(52, 172, 224, 0.3)"
+    },
+    {
+      "name": "status/cyan/20",
+      "alias": "",
+      "description": "",
+      "value": "rgba(52, 172, 224, 0.2)"
+    },
+    {
+      "name": "status/cyan/10",
+      "alias": "",
+      "description": "",
+      "value": "rgba(52, 172, 224, 0.1)"
+    },
+    {
+      "name": "brand-blue/base/130-black",
+      "alias": "",
+      "description": "",
+      "value": "#204ba0"
+    },
+    {
+      "name": "brand-blue/light/130-black",
+      "alias": "",
+      "description": "",
+      "value": "#4f6da7"
+    },
+    {
+      "name": "brand-blue/light/120-black",
+      "alias": "",
+      "description": "",
+      "value": "#5a7cbe"
+    },
+    {
+      "name": "brand-blue/light/100",
+      "alias": "",
+      "description": "",
+      "value": "#719bee"
+    },
+    {
+      "name": "brand-blue/light/60",
+      "alias": "",
+      "description": "",
+      "value": "rgba(113, 155, 238, 0.6)"
+    },
+    {
+      "name": "brand-blue/light/50",
+      "alias": "",
+      "description": "",
+      "value": "rgba(113, 155, 238, 0.5)"
+    },
+    {
+      "name": "brand-blue/light/40",
+      "alias": "",
+      "description": "",
+      "value": "rgba(113, 155, 238, 0.4)"
+    },
+    {
+      "name": "brand-blue/light/30",
+      "alias": "",
+      "description": "",
+      "value": "rgba(113, 155, 238, 0.3)"
+    },
+    {
+      "name": "brand-blue/light/20",
+      "alias": "",
+      "description": "",
+      "value": "rgba(113, 155, 238, 0.2)"
+    },
+    {
+      "name": "brand-blue/light/10",
+      "alias": "",
+      "description": "",
+      "value": "rgba(113, 155, 238, 0.1)"
+    },
+    {
+      "name": "brand-blue/base/120-black",
+      "alias": "",
+      "description": "",
+      "value": "#2556b7"
+    },
+    {
+      "name": "brand-blue/base/100",
+      "alias": "",
+      "description": "",
+      "value": "#2e6be5"
+    },
+    {
+      "name": "brand-blue/base/60",
+      "alias": "",
+      "description": "",
+      "value": "rgba(46, 107, 229, 0.6)"
+    },
+    {
+      "name": "brand-blue/base/50",
+      "alias": "",
+      "description": "",
+      "value": "rgba(46, 107, 229, 0.5)"
+    },
+    {
+      "name": "brand-blue/base/40",
+      "alias": "",
+      "description": "",
+      "value": "rgba(46, 107, 229, 0.4)"
+    },
+    {
+      "name": "brand-blue/base/30",
+      "alias": "",
+      "description": "",
+      "value": "rgba(46, 107, 229, 0.3)"
+    },
+    {
+      "name": "brand-blue/base/20",
+      "alias": "",
+      "description": "",
+      "value": "rgba(46, 107, 229, 0.2)"
+    },
+    {
+      "name": "brand-blue/base/10",
+      "alias": "",
+      "description": "",
+      "value": "rgba(46, 107, 229, 0.1)"
+    },
+    {
+      "name": "brand-cyan/base/130-black",
+      "alias": "",
+      "description": "",
+      "value": "#12748a"
+    },
+    {
+      "name": "brand-cyan/base/120-black",
+      "alias": "",
+      "description": "",
+      "value": "#15859e"
+    },
+    {
+      "name": "brand-cyan/base/100",
+      "alias": "",
+      "description": "",
+      "value": "#1aa6c5"
+    },
+    {
+      "name": "brand-cyan/base/60",
+      "alias": "",
+      "description": "",
+      "value": "rgba(26, 166, 197, 0.6)"
+    },
+    {
+      "name": "brand-cyan/base/50",
+      "alias": "",
+      "description": "",
+      "value": "rgba(26, 166, 197, 0.5)"
+    },
+    {
+      "name": "brand-cyan/base/40",
+      "alias": "",
+      "description": "",
+      "value": "rgba(26, 166, 197, 0.4)"
+    },
+    {
+      "name": "brand-cyan/base/30",
+      "alias": "",
+      "description": "",
+      "value": "rgba(26, 166, 197, 0.3)"
+    },
+    {
+      "name": "brand-cyan/base/20",
+      "alias": "",
+      "description": "",
+      "value": "rgba(26, 166, 197, 0.2)"
+    },
+    {
+      "name": "brand-cyan/base/10",
+      "alias": "",
+      "description": "",
+      "value": "rgba(26, 166, 197, 0.1)"
+    },
+    {
+      "name": "brand-cyan/light/130-black",
+      "alias": "",
+      "description": "",
+      "value": "#2e7685"
+    },
+    {
+      "name": "brand-cyan/light/120-black",
+      "alias": "",
+      "description": "",
+      "value": "#358698"
+    },
+    {
+      "name": "brand-cyan/light/100",
+      "alias": "",
+      "description": "",
+      "value": "#42a8be"
+    },
+    {
+      "name": "brand-cyan/light/60",
+      "alias": "",
+      "description": "",
+      "value": "rgba(66, 168, 190, 0.6)"
+    },
+    {
+      "name": "brand-cyan/light/50",
+      "alias": "",
+      "description": "",
+      "value": "rgba(66, 168, 190, 0.5)"
+    },
+    {
+      "name": "brand-cyan/light/40",
+      "alias": "",
+      "description": "",
+      "value": "rgba(66, 168, 190, 0.4)"
+    },
+    {
+      "name": "brand-cyan/light/30",
+      "alias": "",
+      "description": "",
+      "value": "rgba(66, 168, 190, 0.3)"
+    },
+    {
+      "name": "brand-cyan/light/20",
+      "alias": "",
+      "description": "",
+      "value": "rgba(66, 168, 190, 0.2)"
+    },
+    {
+      "name": "brand-cyan/light/10",
+      "alias": "",
+      "description": "",
+      "value": "rgba(66, 168, 190, 0.1)"
     },
     {
       "name": "additional/red/100",
@@ -7225,216 +7543,6 @@
       "alias": "",
       "description": "",
       "value": "rgba(238, 118, 47, 0.2)"
-    },
-    {
-      "name": "status/red/60",
-      "alias": "",
-      "description": "",
-      "value": "rgba(227, 70, 70, 0.6)"
-    },
-    {
-      "name": "status/red/50",
-      "alias": "",
-      "description": "",
-      "value": "rgba(227, 70, 70, 0.5)"
-    },
-    {
-      "name": "status/red/40",
-      "alias": "",
-      "description": "",
-      "value": "rgba(227, 70, 70, 0.4)"
-    },
-    {
-      "name": "status/red/30",
-      "alias": "",
-      "description": "",
-      "value": "rgba(227, 70, 70, 0.3)"
-    },
-    {
-      "name": "status/green/130-black",
-      "alias": "",
-      "description": "",
-      "value": "#267838"
-    },
-    {
-      "name": "status/red/20",
-      "alias": "",
-      "description": "",
-      "value": "rgba(227, 70, 70, 0.2)"
-    },
-    {
-      "name": "status/green/120-black",
-      "alias": "",
-      "description": "",
-      "value": "#2b8a40"
-    },
-    {
-      "name": "status/red/10",
-      "alias": "",
-      "description": "",
-      "value": "rgba(227, 70, 70, 0.1)"
-    },
-    {
-      "name": "status/green/100",
-      "alias": "",
-      "description": "",
-      "value": "#36ac50"
-    },
-    {
-      "name": "status/green/60",
-      "alias": "",
-      "description": "",
-      "value": "rgba(54, 172, 80, 0.6)"
-    },
-    {
-      "name": "status/green/50",
-      "alias": "",
-      "description": "",
-      "value": "rgba(54, 172, 80, 0.5)"
-    },
-    {
-      "name": "status/green/40",
-      "alias": "",
-      "description": "",
-      "value": "rgba(54, 172, 80, 0.4)"
-    },
-    {
-      "name": "status/green/30",
-      "alias": "",
-      "description": "",
-      "value": "rgba(54, 172, 80, 0.3)"
-    },
-    {
-      "name": "status/green/20",
-      "alias": "",
-      "description": "",
-      "value": "rgba(54, 172, 80, 0.2)"
-    },
-    {
-      "name": "status/amber/130-black",
-      "alias": "",
-      "description": "",
-      "value": "#9a6d14"
-    },
-    {
-      "name": "status/green/10",
-      "alias": "",
-      "description": "",
-      "value": "rgba(54, 172, 80, 0.1)"
-    },
-    {
-      "name": "status/green/02",
-      "alias": "",
-      "description": "",
-      "value": "rgba(54, 172, 80, 0.02)"
-    },
-    {
-      "name": "status/amber/120-black",
-      "alias": "",
-      "description": "",
-      "value": "#b07c16"
-    },
-    {
-      "name": "status/amber/100",
-      "alias": "",
-      "description": "",
-      "value": "#dc9b1c"
-    },
-    {
-      "name": "status/amber/60",
-      "alias": "",
-      "description": "",
-      "value": "rgba(220, 155, 28, 0.6)"
-    },
-    {
-      "name": "status/amber/50",
-      "alias": "",
-      "description": "",
-      "value": "rgba(220, 155, 28, 0.5)"
-    },
-    {
-      "name": "status/amber/40",
-      "alias": "",
-      "description": "",
-      "value": "rgba(220, 155, 28, 0.4)"
-    },
-    {
-      "name": "status/amber/30",
-      "alias": "",
-      "description": "",
-      "value": "rgba(220, 155, 28, 0.3)"
-    },
-    {
-      "name": "status/amber/20",
-      "alias": "",
-      "description": "",
-      "value": "rgba(220, 155, 28, 0.2)"
-    },
-    {
-      "name": "status/amber/10",
-      "alias": "",
-      "description": "",
-      "value": "rgba(220, 155, 28, 0.1)"
-    },
-    {
-      "name": "status/cyan/130-black",
-      "alias": "",
-      "description": "",
-      "value": "#24789d"
-    },
-    {
-      "name": "status/amber/02",
-      "alias": "",
-      "description": "",
-      "value": "rgba(220, 155, 28, 0.02)"
-    },
-    {
-      "name": "status/cyan/120-black",
-      "alias": "",
-      "description": "",
-      "value": "#2a8ab3"
-    },
-    {
-      "name": "status/cyan/100",
-      "alias": "",
-      "description": "",
-      "value": "#34ace0"
-    },
-    {
-      "name": "status/cyan/60",
-      "alias": "",
-      "description": "",
-      "value": "rgba(52, 172, 224, 0.6)"
-    },
-    {
-      "name": "status/cyan/50",
-      "alias": "",
-      "description": "",
-      "value": "rgba(52, 172, 224, 0.5)"
-    },
-    {
-      "name": "status/cyan/40",
-      "alias": "",
-      "description": "",
-      "value": "rgba(52, 172, 224, 0.4)"
-    },
-    {
-      "name": "status/cyan/30",
-      "alias": "",
-      "description": "",
-      "value": "rgba(52, 172, 224, 0.3)"
-    },
-    {
-      "name": "status/cyan/20",
-      "alias": "",
-      "description": "",
-      "value": "rgba(52, 172, 224, 0.2)"
-    },
-    {
-      "name": "status/cyan/10",
-      "alias": "",
-      "description": "",
-      "value": "rgba(52, 172, 224, 0.1)"
     },
     {
       "name": "additional/red/60",
@@ -8725,114 +8833,6 @@
       "alias": "",
       "description": "",
       "value": "rgba(208, 160, 145, 0.1)"
-    },
-    {
-      "name": "cyan/darker/130-black",
-      "alias": "",
-      "description": "",
-      "value": "#12748a"
-    },
-    {
-      "name": "cyan/darker/120-black",
-      "alias": "",
-      "description": "",
-      "value": "#15859e"
-    },
-    {
-      "name": "cyan/darker/100",
-      "alias": "",
-      "description": "",
-      "value": "#1aa6c5"
-    },
-    {
-      "name": "cyan/darker/60",
-      "alias": "",
-      "description": "",
-      "value": "rgba(26, 166, 197, 0.6)"
-    },
-    {
-      "name": "cyan/darker/50",
-      "alias": "",
-      "description": "",
-      "value": "rgba(26, 166, 197, 0.5)"
-    },
-    {
-      "name": "cyan/darker/40",
-      "alias": "",
-      "description": "",
-      "value": "rgba(26, 166, 197, 0.4)"
-    },
-    {
-      "name": "cyan/darker/30",
-      "alias": "",
-      "description": "",
-      "value": "rgba(26, 166, 197, 0.3)"
-    },
-    {
-      "name": "cyan/darker/20",
-      "alias": "",
-      "description": "",
-      "value": "rgba(26, 166, 197, 0.2)"
-    },
-    {
-      "name": "cyan/darker/10",
-      "alias": "",
-      "description": "",
-      "value": "rgba(26, 166, 197, 0.1)"
-    },
-    {
-      "name": "cyan/lighter/130-black",
-      "alias": "",
-      "description": "",
-      "value": "#2e7685"
-    },
-    {
-      "name": "cyan/lighter/120-black",
-      "alias": "",
-      "description": "",
-      "value": "#358698"
-    },
-    {
-      "name": "cyan/lighter/100",
-      "alias": "",
-      "description": "",
-      "value": "#42a8be"
-    },
-    {
-      "name": "cyan/lighter/60",
-      "alias": "",
-      "description": "",
-      "value": "rgba(66, 168, 190, 0.6)"
-    },
-    {
-      "name": "cyan/lighter/50",
-      "alias": "",
-      "description": "",
-      "value": "rgba(66, 168, 190, 0.5)"
-    },
-    {
-      "name": "cyan/lighter/40",
-      "alias": "",
-      "description": "",
-      "value": "rgba(66, 168, 190, 0.4)"
-    },
-    {
-      "name": "cyan/lighter/30",
-      "alias": "",
-      "description": "",
-      "value": "rgba(66, 168, 190, 0.3)"
-    },
-    {
-      "name": "cyan/lighter/20",
-      "alias": "",
-      "description": "",
-      "value": "rgba(66, 168, 190, 0.2)"
-    },
-    {
-      "name": "cyan/lighter/10",
-      "alias": "",
-      "description": "",
-      "value": "rgba(66, 168, 190, 0.1)"
     }
   ]
 }

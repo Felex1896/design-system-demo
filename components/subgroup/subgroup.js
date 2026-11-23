@@ -47,7 +47,8 @@ class CcSubgroup extends HTMLElement {
   #sync() {
     if (!this.#label) return;
     this.#adopt();
-    this.#label.textContent = this.getAttribute("label") || "";
+    const label = this.getAttribute("label") || "";
+    this.#label.textContent = label ? `/${label}` : "";
   }
 }
 

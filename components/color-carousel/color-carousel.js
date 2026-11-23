@@ -101,15 +101,24 @@ class CcColorCarousel extends HTMLElement {
     ensureSwiperCss();
     this.#ensure();
     this.#watch();
+    if (this.#swiper) return;
     this.#schedule();
   }
 
   disconnectedCallback() {
-    this.#generation += 1;
     this.#resize?.disconnect();
     this.#resize = null;
-    this.removeAttribute("ready");
-    this.#destroy();
+    const generation = this.#generation;
+    queueMicrotask(() => {
+      if (this.isConnected) {
+        this.#watch();
+        return;
+      }
+      if (generation !== this.#generation) return;
+      this.#generation += 1;
+      this.removeAttribute("ready");
+      this.#destroy();
+    });
   }
 
   attributeChangedCallback(name, oldValue, newValue) {

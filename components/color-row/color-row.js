@@ -1,10 +1,50 @@
 const REFLECTED = ["name", "alias", "description", "swatch"];
 
-const CHEVRON_DOWN = "M12 13.2L16.2 8.99998C16.5314 8.6686 17.0686 8.6686 17.4 8.99998C17.7314 9.33135 17.7314 9.8686 17.4 10.2L12 15.6L6.6 10.2C6.26863 9.8686 6.26863 9.33135 6.6 8.99998C6.93137 8.6686 7.46863 8.6686 7.8 8.99998L12 13.2Z";
-const CHEVRON_UP = "M12 10.7999L16.2 14.9999C16.5314 15.3313 17.0686 15.3313 17.4 14.9999C17.7314 14.6685 17.7314 14.1313 17.4 13.7999L12 8.3999L6.6 13.7999C6.26863 14.1313 6.26863 14.6685 6.6 14.9999C6.93137 15.3313 7.46863 15.3313 7.8 14.9999L12 10.7999Z";
-
 function blank(value) {
   return value.trim() === "";
+}
+
+function parseColor(input) {
+  const value = String(input || "").trim();
+  if (value.startsWith("#")) {
+    let body = value.slice(1);
+    if (body.length === 3 || body.length === 4) body = [...body].map((part) => part + part).join("");
+    if (body.length !== 6 && body.length !== 8) return null;
+    return {
+      r: Number.parseInt(body.slice(0, 2), 16),
+      g: Number.parseInt(body.slice(2, 4), 16),
+      b: Number.parseInt(body.slice(4, 6), 16),
+      a: body.length === 8 ? Number.parseInt(body.slice(6, 8), 16) / 255 : 1,
+    };
+  }
+  const parts = value.match(/[\d.]+/g);
+  if (!parts || parts.length < 3) return null;
+  const [r, g, b, a = 1] = parts.map(Number);
+  return { r, g, b, a: parts.length > 3 ? a : 1 };
+}
+
+function over(fg, bg) {
+  const a = fg.a + bg.a * (1 - fg.a);
+  if (a === 0) return { r: 0, g: 0, b: 0, a: 0 };
+  const mix = (front, back) => (front * fg.a + back * bg.a * (1 - fg.a)) / a;
+  return { r: mix(fg.r, bg.r), g: mix(fg.g, bg.g), b: mix(fg.b, bg.b), a };
+}
+
+function channel(value) {
+  const unit = value / 255;
+  return unit <= 0.04045 ? unit / 12.92 : ((unit + 0.055) / 1.055) ** 2.4;
+}
+
+function contrast(fg, bg) {
+  const paint = over(fg, bg);
+  const lum = (color) => 0.2126 * channel(color.r) + 0.7152 * channel(color.g) + 0.0722 * channel(color.b);
+  const hi = Math.max(lum(paint), lum(bg));
+  const lo = Math.min(lum(paint), lum(bg));
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+function readColor(styles, name) {
+  return parseColor(styles.getPropertyValue(name));
 }
 
 class CcColorRow extends HTMLElement {
@@ -14,7 +54,6 @@ class CcColorRow extends HTMLElement {
 
   constructor() {
     super();
-    this._expanded = false;
     this._ready = false;
     for (const key of REFLECTED) {
       if (Object.prototype.hasOwnProperty.call(this, key)) {
@@ -44,66 +83,42 @@ class CcColorRow extends HTMLElement {
     if (this._ready) return;
     this._ready = true;
     this.innerHTML = `
-      <div class="cc-color-row__title">
-        <span class="cc-color-row__swatch"></span>
-        <span class="cc-color-row__label">
-          <span class="cc-color-row__name"></span>
-          <span class="cc-color-row__alias" hidden></span>
-        </span>
-        <span class="cc-color-row__chevron" hidden>
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d=""></path>
-          </svg>
-        </span>
-      </div>
-      <div class="cc-color-row__description" hidden></div>
+      <span class="cc-color-row__swatch">
+        <span class="cc-color-row__name"></span>
+        <span class="cc-color-row__alias" hidden></span>
+      </span>
     `;
     this._name = this.querySelector(".cc-color-row__name");
     this._alias = this.querySelector(".cc-color-row__alias");
-    this._description = this.querySelector(".cc-color-row__description");
-    this._chevron = this.querySelector(".cc-color-row__chevron");
-    this._glyph = this._chevron.querySelector("path");
-    this.addEventListener("click", () => this._toggle());
-    this.addEventListener("keydown", (event) => this._onKeyDown(event));
-  }
-
-  _toggle() {
-    if (blank(this.description)) return;
-    this._expanded = !this._expanded;
-    this._sync();
-  }
-
-  _onKeyDown(event) {
-    if (event.key !== "Enter" && event.key !== " ") return;
-    if (blank(this.description)) return;
-    event.preventDefault();
-    this._toggle();
+    this._swatch = this.querySelector(".cc-color-row__swatch");
   }
 
   _sync() {
-    const hasDescription = !blank(this.description);
-    if (!hasDescription) this._expanded = false;
-
     this._name.textContent = this.name;
     this._alias.textContent = this.alias;
     this._alias.hidden = blank(this.alias);
-    this._description.textContent = this.description;
-    this._description.hidden = !hasDescription || !this._expanded;
-    this._chevron.hidden = !hasDescription;
-    if (this._glyph) this._glyph.setAttribute("d", this._expanded ? CHEVRON_UP : CHEVRON_DOWN);
+    const swatch = this.swatch.trim();
+    this._swatch.style.backgroundImage = swatch ? `linear-gradient(${swatch}, ${swatch})` : "";
+    this.toggleAttribute("data-invert", this._needsInverse(swatch));
 
-    const swatchElement = this.querySelector(".cc-color-row__swatch");
-    swatchElement.style.backgroundColor = this.swatch;
+    if (blank(this.description)) this.removeAttribute("tabindex");
+    else this.tabIndex = 0;
+  }
 
-    if (hasDescription) {
-      this.setAttribute("role", "button");
-      this.tabIndex = 0;
-      this.setAttribute("aria-expanded", this._expanded ? "true" : "false");
-    } else {
-      this.removeAttribute("role");
-      this.removeAttribute("tabindex");
-      this.removeAttribute("aria-expanded");
-    }
+  _needsInverse(swatch) {
+    const plateColor = parseColor(swatch);
+    if (!plateColor) return false;
+    const styles = getComputedStyle(this);
+    const base = readColor(styles, "--color-surface-core-base");
+    const primary = readColor(styles, "--color-text-core-primary");
+    const tertiary = readColor(styles, "--color-text-core-tertiary");
+    const inverse = readColor(styles, "--color-text-core-inverse");
+    if (!base || !primary || !tertiary || !inverse) return false;
+    const plate = over(plateColor, { ...base, a: 1 });
+    const inverseAlias = { ...inverse, a: inverse.a * 0.61 };
+    const themeScore = Math.min(contrast(primary, plate), contrast(tertiary, plate));
+    const inverseScore = Math.min(contrast(inverse, plate), contrast(inverseAlias, plate));
+    return inverseScore > themeScore;
   }
 }
 

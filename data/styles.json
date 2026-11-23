@@ -8,10 +8,12 @@
     "body-2": { "size": 14, "lineHeight": 18, "letterSpacing": 0.25, "weight": 400 },
     "caption-regular": { "size": 12, "lineHeight": 16, "letterSpacing": 0.14, "weight": 400 },
     "caption-medium": { "size": 12, "lineHeight": 16, "letterSpacing": 0, "weight": 500 },
-    "subtitle-2": { "size": 16, "lineHeight": 20, "letterSpacing": 0.25, "weight": 500 }
+    "subtitle-2": { "size": 16, "lineHeight": 20, "letterSpacing": 0.25, "weight": 500 },
+    "subtitle-3": { "size": 14, "lineHeight": 20, "letterSpacing": 0.1, "weight": 500 }
   },
   "spacing": {
     "0": 0,
+    "1": 1,
     "2": 2,
     "4": 4,
     "6": 6,
@@ -36,12 +38,13 @@
   },
   "shadow": {
     "mode-selected": "0 0 2px rgba(0,0,0,0.15)",
-    "6": "0 2px 6px rgba(0, 0, 0, 0.16)"
+    "6": "0 2px 6px rgba(0, 0, 0, 0.16)",
+    "color-row": "0 8px 16px rgba(0, 0, 0, 0.24)"
   },
   "layout": {
     "breakpoint-narrow": 480,
     "family-width": 328,
-    "family-min-width": 240,
+    "family-min-width": 160,
     "swatch-size": 48,
     "select-width": 160,
     "select-height": 32,
@@ -85,6 +88,7 @@
     "border/core/focus-outline",
     "decorative/red/100",
     "text/core/tertiary",
+    "text/core/disabled",
     "text/core/secondary",
     "surface/core/top",
     "text/core/inverse",

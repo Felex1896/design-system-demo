@@ -4,7 +4,7 @@
     "because": "Open select list is not in the mock; nearest row height is the select plate at 32"
   },
   {
-    "where": "styles.colorRoles[19]",
+    "where": "styles.colorRoles[20]",
     "because": "Open select list is not in the mock; nearest hover surface above the closed plate is surface/neutral/transparent/hover"
   },
   {
