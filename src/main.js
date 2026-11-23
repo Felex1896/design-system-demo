@@ -277,16 +277,6 @@ function renderFamilies(families) {
     const sections = family.sections;
     sections.forEach((section, index) => {
       const light = lightPrefix(family.name, section.middle);
-      let host = card;
-      if (light) {
-        host = card.querySelector(":scope > .tone-light");
-        if (!host) {
-          host = document.createElement("div");
-          host.className = "tone-light";
-          applyColors(styles, collections, "brand-blue", "light", host);
-          card.append(host);
-        }
-      }
       const rows = section.rows.map((row) => {
         const item = document.createElement("cc-color-row");
         item.id = rowId(row.token.name);
@@ -303,16 +293,22 @@ function renderFamilies(families) {
         const group = document.createElement("cc-subgroup");
         group.id = subgroupId(family.name, section.middle);
         group.setAttribute("label", section.middle);
-        host.append(group);
+        card.append(group);
         for (const item of rows) group.append(item);
+        if (light) group.dataset.tone = "light";
       } else {
-        for (const item of rows) host.append(item);
+        for (const item of rows) card.append(item);
       }
     });
     const cell = document.createElement("div");
     cell.className = "family-title-cell";
     titles.append(cell);
     familyRow.append(card);
+    for (const group of card.querySelectorAll('cc-subgroup[data-tone="light"]')) {
+      const panel = group.querySelector(".cc-subgroup__panel");
+      panel.classList.add("tone-light");
+      applyColors(styles, collections, "brand-blue", "light", panel);
+    }
     const title = card.querySelector(":scope > .cc-family-title");
     if (title) cell.append(title);
     const carousel = card.querySelector(":scope > cc-color-carousel");
