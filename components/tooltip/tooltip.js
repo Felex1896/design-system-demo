@@ -13,8 +13,14 @@ class CcTooltip extends HTMLElement {
     const plate = this.getBoundingClientRect();
     const viewWidth = document.documentElement.clientWidth;
     const viewHeight = document.documentElement.clientHeight;
-    let top = host.bottom + gap;
-    if (top + plate.height > viewHeight) top = host.top - gap - plate.height;
+    const narrow = document.documentElement.classList.contains("is-narrow");
+    const below = host.bottom + gap;
+    const above = host.top - gap - plate.height;
+    const belowFits = below + plate.height <= viewHeight;
+    const aboveFits = above >= 0;
+    let top = below;
+    if (narrow) top = aboveFits || !belowFits ? above : below;
+    else if (!belowFits) top = above;
     const plateWidth = plate.width;
     let left = host.left;
     if (left + plateWidth > viewWidth) left = viewWidth - plateWidth;
