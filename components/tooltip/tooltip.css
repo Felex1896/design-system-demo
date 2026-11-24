@@ -1,6 +1,6 @@
 cc-tooltip {
   position: fixed;
-  z-index: 6;
+  z-index: 7;
   box-sizing: border-box;
   display: block;
   max-width: calc(100vw - var(--spacing-32));

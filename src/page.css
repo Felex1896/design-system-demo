@@ -262,8 +262,14 @@ cc-sidebar[open] {
   pointer-events: none;
 }
 
+.family-row > cc-family:has(:is(cc-color-row, cc-size-row, cc-type-row, cc-shadow-row):is(:hover, :focus-visible, .is-held)),
+cc-subgroup:has(:is(cc-color-row):is(:hover, :focus-visible, .is-held)) {
+  z-index: 1;
+}
+
 .page[data-collection="size"] .family-row,
-.page[data-collection="typography"] .family-row {
+.page[data-collection="typography"] .family-row,
+.page[data-collection="shadow"] .family-row {
   flex-direction: column;
   width: 100%;
   min-width: var(--layout-measure-min-width);
@@ -273,17 +279,54 @@ cc-sidebar[open] {
 .page[data-collection="size"] .family-titles,
 .page[data-collection="size"] .family-row-end,
 .page[data-collection="typography"] .family-titles,
-.page[data-collection="typography"] .family-row-end {
+.page[data-collection="typography"] .family-row-end,
+.page[data-collection="shadow"] .family-titles,
+.page[data-collection="shadow"] .family-row-end {
   display: none;
 }
 
 .page[data-collection="size"] .family-row cc-family,
-.page[data-collection="typography"] .family-row cc-family {
-  position: static;
+.page[data-collection="typography"] .family-row cc-family,
+.page[data-collection="shadow"] .family-row cc-family {
+  position: relative;
   flex: none;
   width: 100%;
   min-width: 0;
   max-width: none;
+}
+
+.page[data-collection="size"] cc-family,
+.page[data-collection="typography"] cc-family {
+  gap: 0;
+}
+
+.page[data-collection="size"] cc-family > .cc-family-title,
+.page[data-collection="typography"] cc-family > .cc-family-title {
+  margin-bottom: 0;
+}
+
+.page[data-collection="size"] cc-family > .cc-family-title::before,
+.page[data-collection="typography"] cc-family > .cc-family-title::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--spacing-2) - var(--layout-header-padding-wide));
+  width: 100vw;
+  background: var(--color-surface-core-base);
+}
+
+.page[data-collection="shadow"] .family-row {
+  gap: var(--spacing-24);
+}
+
+.page[data-collection="shadow"] cc-family {
+  gap: var(--spacing-24);
+}
+
+.page[data-collection="shadow"] cc-family > .cc-family-title {
+  display: none;
 }
 
 .page[data-collection="size"] cc-family + cc-family,
@@ -292,10 +335,17 @@ cc-sidebar[open] {
 }
 
 .is-narrow .page[data-collection="size"] .family-row,
-.is-narrow .page[data-collection="typography"] .family-row {
+.is-narrow .page[data-collection="typography"] .family-row,
+.is-narrow .page[data-collection="shadow"] .family-row {
   width: auto;
   min-width: 0;
   max-width: none;
+}
+
+.is-narrow .page[data-collection="size"] cc-family > .cc-family-title::before,
+.is-narrow .page[data-collection="typography"] cc-family > .cc-family-title::before {
+  left: 0;
+  width: 100%;
 }
 
 .is-narrow .page[data-collection="typography"] .family-row cc-family,

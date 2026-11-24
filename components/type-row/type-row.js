@@ -1,5 +1,5 @@
 (() => {
-const REFLECTED = ["sample", "caption", "weight", "size", "line", "tracking"];
+const REFLECTED = ["sample", "caption", "weight", "size", "line", "tracking", "description"];
 
 function lengthOf(value) {
   const trimmed = String(value).trim();
@@ -61,6 +61,9 @@ class CcTypeRow extends HTMLElement {
     this._sample.style.lineHeight = lengthOf(this.line);
     this._sample.style.letterSpacing = lengthOf(this.tracking);
     this._sample.style.height = lengthOf(this.line);
+    const text = (this.description || "").trim();
+    if (!text) this.removeAttribute("tabindex");
+    else this.tabIndex = 0;
   }
 }
 

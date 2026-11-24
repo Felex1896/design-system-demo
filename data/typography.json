@@ -11,7 +11,8 @@
           "weight": 300,
           "size": 96,
           "lineHeight": 120,
-          "letterSpacing": -1.5
+          "letterSpacing": -1.5,
+          "description": "Largest display title. Heroes and full-page titles, above h2."
         },
         {
           "name": "headline/h2",
@@ -20,7 +21,8 @@
           "weight": 500,
           "size": 56,
           "lineHeight": 80,
-          "letterSpacing": -0.5
+          "letterSpacing": -0.5,
+          "description": "Large section title. Major blocks under a hero, between h1 and h3."
         },
         {
           "name": "headline/h3",
@@ -29,7 +31,8 @@
           "weight": 500,
           "size": 48,
           "lineHeight": 56,
-          "letterSpacing": 0
+          "letterSpacing": 0,
+          "description": "Major heading. A large section title, between h2 and h4."
         },
         {
           "name": "headline/h4",
@@ -38,7 +41,8 @@
           "weight": 500,
           "size": 32,
           "lineHeight": 40,
-          "letterSpacing": 0.25
+          "letterSpacing": 0.25,
+          "description": "Section heading. Mid display title, between h3 and h5."
         },
         {
           "name": "headline/h5",
@@ -47,7 +51,8 @@
           "weight": 500,
           "size": 24,
           "lineHeight": 32,
-          "letterSpacing": 0
+          "letterSpacing": 0,
+          "description": "Subsection heading. Small display title, between h4 and h6."
         },
         {
           "name": "headline/h6",
@@ -56,7 +61,8 @@
           "weight": 500,
           "size": 20,
           "lineHeight": 24,
-          "letterSpacing": 0.15
+          "letterSpacing": 0.15,
+          "description": "Smallest headline. Static section titles inside a panel or workflow."
         }
       ]
     },
@@ -71,7 +77,8 @@
           "weight": 500,
           "size": 18,
           "lineHeight": 24,
-          "letterSpacing": 0
+          "letterSpacing": 0,
+          "description": "Screen and modal title. Object name in a header."
         }
       ]
     },
@@ -86,7 +93,8 @@
           "weight": 700,
           "size": 16,
           "lineHeight": 24,
-          "letterSpacing": 0.25
+          "letterSpacing": 0.25,
+          "description": "Strongest subheader. Page or group label under a screen title, above subtitle/2."
         },
         {
           "name": "subtitle/2",
@@ -95,7 +103,8 @@
           "weight": 500,
           "size": 16,
           "lineHeight": 20,
-          "letterSpacing": 0.25
+          "letterSpacing": 0.25,
+          "description": "Group label. Menus, accordion headers, and list titles, above subtitle/3."
         },
         {
           "name": "subtitle/3",
@@ -104,7 +113,8 @@
           "weight": 500,
           "size": 14,
           "lineHeight": 20,
-          "letterSpacing": 0.1
+          "letterSpacing": 0.1,
+          "description": "Compact accent line. Status, metrics, and short IDs, below subtitle/2."
         }
       ]
     },
@@ -119,7 +129,8 @@
           "weight": 400,
           "size": 16,
           "lineHeight": 24,
-          "letterSpacing": 0.25
+          "letterSpacing": 0.25,
+          "description": "Primary reading and UI text. Search, values, and lists, roomier than body/2."
         },
         {
           "name": "body/2",
@@ -128,7 +139,8 @@
           "weight": 400,
           "size": 14,
           "lineHeight": 18,
-          "letterSpacing": 0.25
+          "letterSpacing": 0.25,
+          "description": "Dense UI text. Filters, metadata, and the line under a title, tighter than body/1."
         }
       ]
     },
@@ -143,7 +155,8 @@
           "weight": 500,
           "size": 12,
           "lineHeight": 16,
-          "letterSpacing": 0
+          "letterSpacing": 0,
+          "description": "Emphasized microtext. Time, percentages, and status chips, heavier than caption/regular."
         },
         {
           "name": "caption/regular",
@@ -152,7 +165,8 @@
           "weight": 400,
           "size": 12,
           "lineHeight": 16,
-          "letterSpacing": 0.14
+          "letterSpacing": 0.14,
+          "description": "Hint on a control. Inset labels, helpers, and footnotes, lighter than caption/medium."
         }
       ]
     },
@@ -167,7 +181,8 @@
           "weight": 500,
           "size": 16,
           "lineHeight": 24,
-          "letterSpacing": 0
+          "letterSpacing": 0,
+          "description": "Default action label. Primary buttons and calls to action, above button/small."
         },
         {
           "name": "button/small",
@@ -176,7 +191,8 @@
           "weight": 500,
           "size": 14,
           "lineHeight": 16,
-          "letterSpacing": 0
+          "letterSpacing": 0,
+          "description": "Compact action label. Secondary buttons in dense panels, below button/base."
         }
       ]
     },
@@ -191,7 +207,8 @@
           "weight": 500,
           "size": 10,
           "lineHeight": 16,
-          "letterSpacing": 1.5
+          "letterSpacing": 1.5,
+          "description": "Uppercase badge and eyebrow. Short section labels set in capitals."
         }
       ]
     },
@@ -206,7 +223,8 @@
           "weight": 500,
           "size": 10,
           "lineHeight": 12,
-          "letterSpacing": 0
+          "letterSpacing": 0,
+          "description": "Smallest utility text. Empty-state hints and scale ticks."
         }
       ]
     }

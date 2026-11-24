@@ -39,8 +39,12 @@
     "8": 8
   },
   "shadow": {
+    "2": "0 0 2px rgba(0,0,0,0.15)",
     "mode-selected": "0 0 2px rgba(0,0,0,0.15)",
     "6": "0 2px 6px rgba(0, 0, 0, 0.16)",
+    "8": "0 4px 8px rgba(0, 0, 0, 0.24)",
+    "16": "0 8px 16px rgba(0, 0, 0, 0.24)",
+    "24": "0 16px 24px rgba(0, 0, 0, 0.24)",
     "color-row": "0 8px 16px rgba(0, 0, 0, 0.24)"
   },
   "layout": {
@@ -101,6 +105,13 @@
       "guess": true,
       "because": "Open select list is not in the mock; nearest hover surface above the closed plate is surface/neutral/transparent/hover"
     },
-    "surface/neutral/transparent/active"
+    "surface/neutral/transparent/active",
+    "surface/neutral/faded/default",
+    "surface/neutral/faded/hover",
+    "surface/neutral/faded/active",
+    "surface/accent/solid/default",
+    "surface/accent/solid/hover",
+    "surface/accent/solid/active",
+    "icon-shape/core/on-solid"
   ]
 }

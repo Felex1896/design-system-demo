@@ -3,7 +3,8 @@
     "primitives",
     "semantic",
     "size",
-    "typography"
+    "typography",
+    "shadow"
   ],
   "brandOrder": [
     "brand-blue",
@@ -1589,7 +1590,7 @@
     {
       "name": "surface/core/inverse-strong",
       "alias": "neutral/light/80",
-      "description": "Strong inverted surface — opposite of ambient, high attention. Default invert surface strength. Snackbars, tooltips, and selected inverse plates.",
+      "description": "Strong inverted surface \u2014 opposite of ambient, high attention. Default invert surface strength. Snackbars, tooltips, and selected inverse plates.",
       "values": {
         "brand-blue": {
           "dark": "rgba(253, 253, 253, 0.8)",
@@ -6314,7 +6315,7 @@
     {
       "name": "surface/core/inverse-subtle",
       "alias": "neutral/light/40",
-      "description": "Subtle inverted surface — opposite of ambient, low attention. Soft invert plates when the surface should stay quiet; invert foreground (text/icon/border) stays unchanged.",
+      "description": "Subtle inverted surface \u2014 opposite of ambient, low attention. Soft invert plates when the surface should stay quiet; invert foreground (text/icon/border) stays unchanged.",
       "values": {
         "brand-blue": {
           "dark": "rgba(253, 253, 253, 0.4)",
@@ -6331,2509 +6332,2509 @@
     {
       "name": "white/white",
       "alias": "",
-      "description": "",
+      "description": "Theme-invariant white. Text and icons on solid chromatic fills; dark-theme focus ring.",
       "value": "#ffffff"
     },
     {
       "name": "black/100",
       "alias": "",
-      "description": "",
+      "description": "Solid black, unchanged across themes. Light-theme focus ring.",
       "value": "#000000"
     },
     {
       "name": "black/70",
       "alias": "",
-      "description": "",
+      "description": "Black at 70% opacity. Dark-theme scrim behind modals and dialogs.",
       "value": "rgba(0, 0, 0, 0.7)"
     },
     {
       "name": "black/50",
       "alias": "",
-      "description": "",
+      "description": "Black at 50% opacity. Light-theme scrim behind modals and dialogs.",
       "value": "rgba(0, 0, 0, 0.5)"
     },
     {
       "name": "neutral/light/104-dark",
       "alias": "",
-      "description": "",
+      "description": "Near-white solid, nudged under the light ramp. Light-theme app base.",
       "value": "#f4f4f4"
     },
     {
       "name": "neutral/dark/104-light",
       "alias": "",
-      "description": "",
+      "description": "Near-black solid, nudged above the dark ramp. Dark-theme top surfaces: popovers, dropdowns, and menus.",
       "value": "#232323"
     },
     {
       "name": "neutral/dark/102-light",
       "alias": "",
-      "description": "",
+      "description": "Near-black solid between base and top. Dark-theme raised cards and panels.",
       "value": "#1f1f1f"
     },
     {
       "name": "neutral/dark/100",
       "alias": "",
-      "description": "",
+      "description": "Solid dark neutral. Dark-theme app base and flat undertone.",
       "value": "#1a1a1a"
     },
     {
       "name": "neutral/dark/95",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 95% opacity. Surface-ramp stop between the solid base and the overlay.",
       "value": "rgba(26, 26, 26, 0.95)"
     },
     {
       "name": "neutral/dark/90",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 90% opacity. Overlay and inverse foreground in dark theme; primary text in light theme.",
       "value": "rgba(26, 26, 26, 0.9)"
     },
     {
       "name": "neutral/dark/80",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 80% opacity. Strong inverse surface in light theme.",
       "value": "rgba(26, 26, 26, 0.8)"
     },
     {
       "name": "neutral/dark/75",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 75% opacity. Surface-ramp stop between the inverse plate and secondary text.",
       "value": "rgba(26, 26, 26, 0.75)"
     },
     {
       "name": "neutral/dark/70",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 70% opacity. Secondary text on light surfaces.",
       "value": "rgba(26, 26, 26, 0.7)"
     },
     {
       "name": "neutral/dark/65",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 65% opacity. Default icons and shapes on light surfaces.",
       "value": "rgba(26, 26, 26, 0.65)"
     },
     {
       "name": "neutral/dark/60",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 60% opacity. Surface-ramp stop between default icons and tertiary text.",
       "value": "rgba(26, 26, 26, 0.6)"
     },
     {
       "name": "neutral/dark/55",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 55% opacity. Tertiary text, captions, and placeholders on light surfaces.",
       "value": "rgba(26, 26, 26, 0.55)"
     },
     {
       "name": "neutral/dark/50",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 50% opacity. Surface-ramp stop between tertiary text and faded active.",
       "value": "rgba(26, 26, 26, 0.5)"
     },
     {
       "name": "neutral/dark/40",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 40% opacity. Faded neutral active fill and the subtle inverse plate in light theme.",
       "value": "rgba(26, 26, 26, 0.4)"
     },
     {
       "name": "neutral/dark/30",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 30% opacity. Disabled text, faded hover, and the default neutral border in light theme.",
       "value": "rgba(26, 26, 26, 0.3)"
     },
     {
       "name": "neutral/dark/24",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 24% opacity. Disabled icons on light surfaces.",
       "value": "rgba(26, 26, 26, 0.24)"
     },
     {
       "name": "neutral/dark/20",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 20% opacity. Faded neutral fill at rest, and the disabled neutral border in light theme.",
       "value": "rgba(26, 26, 26, 0.2)"
     },
     {
       "name": "neutral/dark/16",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 16% opacity. Inverse border in dark theme; strong border in light theme.",
       "value": "rgba(26, 26, 26, 0.16)"
     },
     {
       "name": "neutral/dark/12",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 12% opacity. Neutral transparent overlay, active, in light theme.",
       "value": "rgba(26, 26, 26, 0.12)"
     },
     {
       "name": "neutral/dark/10",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 10% opacity. Faded neutral fill, disabled, in light theme.",
       "value": "rgba(26, 26, 26, 0.1)"
     },
     {
       "name": "neutral/dark/08",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 8% opacity. Subtle borders and the transparent hover overlay in light theme.",
       "value": "rgba(26, 26, 26, 0.08)"
     },
     {
       "name": "neutral/dark/06",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 6% opacity. Surface-ramp stop between subtle borders and the resting overlay.",
       "value": "rgba(26, 26, 26, 0.06)"
     },
     {
       "name": "neutral/dark/04",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 4% opacity. Neutral transparent overlay at rest in light theme.",
       "value": "rgba(26, 26, 26, 0.04)"
     },
     {
       "name": "neutral/dark/02",
       "alias": "",
-      "description": "",
+      "description": "Dark neutral at 2% opacity. Neutral transparent overlay, disabled, in light theme.",
       "value": "rgba(26, 26, 26, 0.02)"
     },
     {
       "name": "neutral/light/102-dark",
       "alias": "",
-      "description": "",
+      "description": "Near-white solid between base and top. Light-theme raised cards and panels.",
       "value": "#f8f8f8"
     },
     {
       "name": "neutral/light/100",
       "alias": "",
-      "description": "",
+      "description": "Solid light neutral. Light-theme top surfaces and flat undertone.",
       "value": "#fdfdfd"
     },
     {
       "name": "neutral/light/95",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 95% opacity. Content-ramp stop between the solid and primary text.",
       "value": "rgba(253, 253, 253, 0.95)"
     },
     {
       "name": "neutral/light/90",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 90% opacity. Primary text and bright icons on dark surfaces.",
       "value": "rgba(253, 253, 253, 0.9)"
     },
     {
       "name": "neutral/light/80",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 80% opacity. Strong inverse surface in dark theme.",
       "value": "rgba(253, 253, 253, 0.8)"
     },
     {
       "name": "neutral/light/75",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 75% opacity. Content-ramp stop between the inverse plate and secondary text.",
       "value": "rgba(253, 253, 253, 0.75)"
     },
     {
       "name": "neutral/light/70",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 70% opacity. Secondary text on dark surfaces.",
       "value": "rgba(253, 253, 253, 0.7)"
     },
     {
       "name": "neutral/light/65",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 65% opacity. Default icons and shapes on dark surfaces.",
       "value": "rgba(253, 253, 253, 0.65)"
     },
     {
       "name": "neutral/light/60",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 60% opacity. Content-ramp stop between default icons and tertiary text.",
       "value": "rgba(253, 253, 253, 0.6)"
     },
     {
       "name": "neutral/light/55",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 55% opacity. Tertiary text, captions, and placeholders on dark surfaces.",
       "value": "rgba(253, 253, 253, 0.55)"
     },
     {
       "name": "neutral/light/50",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 50% opacity. Content-ramp stop between tertiary text and faded active.",
       "value": "rgba(253, 253, 253, 0.5)"
     },
     {
       "name": "neutral/light/40",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 40% opacity. Faded neutral active fill and the subtle inverse plate.",
       "value": "rgba(253, 253, 253, 0.4)"
     },
     {
       "name": "neutral/light/30",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 30% opacity. Disabled text, faded hover, and the default neutral border.",
       "value": "rgba(253, 253, 253, 0.3)"
     },
     {
       "name": "neutral/light/24",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 24% opacity. Disabled icons on dark surfaces.",
       "value": "rgba(253, 253, 253, 0.24)"
     },
     {
       "name": "neutral/light/20",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 20% opacity. Faded neutral fill at rest, and the disabled neutral border.",
       "value": "rgba(253, 253, 253, 0.2)"
     },
     {
       "name": "neutral/light/16",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 16% opacity. Strong borders and dividers on dark surfaces.",
       "value": "rgba(253, 253, 253, 0.16)"
     },
     {
       "name": "neutral/light/12",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 12% opacity. Neutral transparent overlay, active.",
       "value": "rgba(253, 253, 253, 0.12)"
     },
     {
       "name": "neutral/light/10",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 10% opacity. Faded neutral fill, disabled.",
       "value": "rgba(253, 253, 253, 0.1)"
     },
     {
       "name": "neutral/light/08",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 8% opacity. Subtle borders and the neutral transparent hover overlay.",
       "value": "rgba(253, 253, 253, 0.08)"
     },
     {
       "name": "neutral/light/06",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 6% opacity. Content-ramp stop between subtle borders and the resting overlay.",
       "value": "rgba(253, 253, 253, 0.06)"
     },
     {
       "name": "neutral/light/04",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 4% opacity. Neutral transparent overlay at rest.",
       "value": "rgba(253, 253, 253, 0.04)"
     },
     {
       "name": "neutral/light/02",
       "alias": "",
-      "description": "",
+      "description": "Light neutral at 2% opacity. Neutral transparent overlay, disabled.",
       "value": "rgba(253, 253, 253, 0.02)"
     },
     {
       "name": "status/red/130-black",
       "alias": "",
-      "description": "",
+      "description": "Danger red, darkened further. Solid danger fill, active.",
       "value": "#9f3131"
     },
     {
       "name": "status/red/120-black",
       "alias": "",
-      "description": "",
+      "description": "Danger red, darkened. Solid danger fill, hover.",
       "value": "#b63838"
     },
     {
       "name": "status/red/100",
       "alias": "",
-      "description": "",
+      "description": "Danger red. Solid default for danger fills, text, and icons.",
       "value": "#e34646"
     },
     {
       "name": "status/red/60",
       "alias": "",
-      "description": "",
+      "description": "Danger red at 60% opacity. Faded active fill and the default danger border.",
       "value": "rgba(227, 70, 70, 0.6)"
     },
     {
       "name": "status/red/50",
       "alias": "",
-      "description": "",
+      "description": "Danger red at 50% opacity. Faded danger fill, hover.",
       "value": "rgba(227, 70, 70, 0.5)"
     },
     {
       "name": "status/red/40",
       "alias": "",
-      "description": "",
+      "description": "Danger red at 40% opacity. Disabled solid, faded rest, and disabled danger text and icons.",
       "value": "rgba(227, 70, 70, 0.4)"
     },
     {
       "name": "status/red/30",
       "alias": "",
-      "description": "",
+      "description": "Danger red at 30% opacity. Transparent active overlay and the disabled danger border.",
       "value": "rgba(227, 70, 70, 0.3)"
     },
     {
       "name": "status/green/130-black",
       "alias": "",
-      "description": "",
+      "description": "Success green, darkened further. Solid success fill, active.",
       "value": "#267838"
     },
     {
       "name": "status/red/20",
       "alias": "",
-      "description": "",
+      "description": "Danger red at 20% opacity. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(227, 70, 70, 0.2)"
     },
     {
       "name": "status/green/120-black",
       "alias": "",
-      "description": "",
+      "description": "Success green, darkened. Solid success fill, hover.",
       "value": "#2b8a40"
     },
     {
       "name": "status/red/10",
       "alias": "",
-      "description": "",
+      "description": "Danger red at 10% opacity. Transparent danger overlay at rest and when disabled.",
       "value": "rgba(227, 70, 70, 0.1)"
     },
     {
       "name": "status/green/100",
       "alias": "",
-      "description": "",
+      "description": "Success green. Solid default for success fills, text, and icons.",
       "value": "#36ac50"
     },
     {
       "name": "status/green/60",
       "alias": "",
-      "description": "",
+      "description": "Success green at 60% opacity. Faded active fill and the default success border.",
       "value": "rgba(54, 172, 80, 0.6)"
     },
     {
       "name": "status/green/50",
       "alias": "",
-      "description": "",
+      "description": "Success green at 50% opacity. Faded success fill, hover.",
       "value": "rgba(54, 172, 80, 0.5)"
     },
     {
       "name": "status/green/40",
       "alias": "",
-      "description": "",
+      "description": "Success green at 40% opacity. Disabled solid, faded rest, and disabled success text and icons.",
       "value": "rgba(54, 172, 80, 0.4)"
     },
     {
       "name": "status/green/30",
       "alias": "",
-      "description": "",
+      "description": "Success green at 30% opacity. Transparent active overlay and the disabled success border.",
       "value": "rgba(54, 172, 80, 0.3)"
     },
     {
       "name": "status/green/20",
       "alias": "",
-      "description": "",
+      "description": "Success green at 20% opacity. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(54, 172, 80, 0.2)"
     },
     {
       "name": "status/amber/130-black",
       "alias": "",
-      "description": "",
+      "description": "Warning amber, darkened further. Solid warning fill, active.",
       "value": "#9a6d14"
     },
     {
       "name": "status/green/10",
       "alias": "",
-      "description": "",
+      "description": "Success green at 10% opacity. Transparent success overlay at rest and when disabled.",
       "value": "rgba(54, 172, 80, 0.1)"
     },
     {
       "name": "status/green/02",
       "alias": "",
-      "description": "",
+      "description": "Success green at 2% opacity. Low stop under the transparent resting overlay.",
       "value": "rgba(54, 172, 80, 0.02)"
     },
     {
       "name": "status/amber/120-black",
       "alias": "",
-      "description": "",
+      "description": "Warning amber, darkened. Solid warning fill, hover.",
       "value": "#b07c16"
     },
     {
       "name": "status/amber/100",
       "alias": "",
-      "description": "",
+      "description": "Warning amber. Solid default for warning fills, text, and icons.",
       "value": "#dc9b1c"
     },
     {
       "name": "status/amber/60",
       "alias": "",
-      "description": "",
+      "description": "Warning amber at 60% opacity. Faded active fill and the default warning border.",
       "value": "rgba(220, 155, 28, 0.6)"
     },
     {
       "name": "status/amber/50",
       "alias": "",
-      "description": "",
+      "description": "Warning amber at 50% opacity. Faded warning fill, hover.",
       "value": "rgba(220, 155, 28, 0.5)"
     },
     {
       "name": "status/amber/40",
       "alias": "",
-      "description": "",
+      "description": "Warning amber at 40% opacity. Disabled solid, faded rest, and disabled warning text and icons.",
       "value": "rgba(220, 155, 28, 0.4)"
     },
     {
       "name": "status/amber/30",
       "alias": "",
-      "description": "",
+      "description": "Warning amber at 30% opacity. Transparent active overlay and the disabled warning border.",
       "value": "rgba(220, 155, 28, 0.3)"
     },
     {
       "name": "status/amber/20",
       "alias": "",
-      "description": "",
+      "description": "Warning amber at 20% opacity. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(220, 155, 28, 0.2)"
     },
     {
       "name": "status/amber/10",
       "alias": "",
-      "description": "",
+      "description": "Warning amber at 10% opacity. Transparent warning overlay at rest and when disabled.",
       "value": "rgba(220, 155, 28, 0.1)"
     },
     {
       "name": "status/cyan/130-black",
       "alias": "",
-      "description": "",
+      "description": "Info cyan, darkened further. Solid info fill, active.",
       "value": "#24789d"
     },
     {
       "name": "status/amber/02",
       "alias": "",
-      "description": "",
+      "description": "Warning amber at 2% opacity. Low stop under the transparent resting overlay.",
       "value": "rgba(220, 155, 28, 0.02)"
     },
     {
       "name": "status/cyan/120-black",
       "alias": "",
-      "description": "",
+      "description": "Info cyan, darkened. Solid info fill, hover.",
       "value": "#2a8ab3"
     },
     {
       "name": "status/cyan/100",
       "alias": "",
-      "description": "",
+      "description": "Info cyan. Solid default for info fills, text, and icons.",
       "value": "#34ace0"
     },
     {
       "name": "status/cyan/60",
       "alias": "",
-      "description": "",
+      "description": "Info cyan at 60% opacity. Faded active fill and the default info border.",
       "value": "rgba(52, 172, 224, 0.6)"
     },
     {
       "name": "status/cyan/50",
       "alias": "",
-      "description": "",
+      "description": "Info cyan at 50% opacity. Faded info fill, hover.",
       "value": "rgba(52, 172, 224, 0.5)"
     },
     {
       "name": "status/cyan/40",
       "alias": "",
-      "description": "",
+      "description": "Info cyan at 40% opacity. Disabled solid, faded rest, and disabled info text and icons.",
       "value": "rgba(52, 172, 224, 0.4)"
     },
     {
       "name": "status/cyan/30",
       "alias": "",
-      "description": "",
+      "description": "Info cyan at 30% opacity. Transparent active overlay and the disabled info border.",
       "value": "rgba(52, 172, 224, 0.3)"
     },
     {
       "name": "status/cyan/20",
       "alias": "",
-      "description": "",
+      "description": "Info cyan at 20% opacity. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(52, 172, 224, 0.2)"
     },
     {
       "name": "status/cyan/10",
       "alias": "",
-      "description": "",
+      "description": "Info cyan at 10% opacity. Transparent info overlay at rest and when disabled.",
       "value": "rgba(52, 172, 224, 0.1)"
     },
     {
       "name": "brand-blue/base/130-black",
       "alias": "",
-      "description": "",
+      "description": "brand-blue, darkened further. Solid accent active in both themes; link active in light theme.",
       "value": "#204ba0"
     },
     {
       "name": "brand-blue/light/130-black",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-blue, darkened further. Accent link active in dark theme.",
       "value": "#4f6da7"
     },
     {
       "name": "brand-blue/light/120-black",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-blue, darkened. Accent link hover in dark theme.",
       "value": "#5a7cbe"
     },
     {
       "name": "brand-blue/light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-blue for dark backgrounds. Accent text and icons in dark theme.",
       "value": "#719bee"
     },
     {
       "name": "brand-blue/light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-blue at 60% opacity. Faded active fill and the accent border in dark theme.",
       "value": "rgba(113, 155, 238, 0.6)"
     },
     {
       "name": "brand-blue/light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-blue at 50% opacity. Faded accent fill, hover, in dark theme.",
       "value": "rgba(113, 155, 238, 0.5)"
     },
     {
       "name": "brand-blue/light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-blue at 40% opacity. Faded accent rest and disabled accent text and icons in dark theme.",
       "value": "rgba(113, 155, 238, 0.4)"
     },
     {
       "name": "brand-blue/light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-blue at 30% opacity. Transparent active overlay and the disabled accent border in dark theme.",
       "value": "rgba(113, 155, 238, 0.3)"
     },
     {
       "name": "brand-blue/light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-blue at 20% opacity. Faded disabled fill and the transparent hover overlay in dark theme.",
       "value": "rgba(113, 155, 238, 0.2)"
     },
     {
       "name": "brand-blue/light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-blue at 10% opacity. Transparent accent overlay at rest and when disabled, in dark theme.",
       "value": "rgba(113, 155, 238, 0.1)"
     },
     {
       "name": "brand-blue/base/120-black",
       "alias": "",
-      "description": "",
+      "description": "brand-blue, darkened. Solid accent hover in both themes; link hover in light theme.",
       "value": "#2556b7"
     },
     {
       "name": "brand-blue/base/100",
       "alias": "",
-      "description": "",
+      "description": "brand-blue, solid. Accent fills in both themes; accent text and icons in light theme.",
       "value": "#2e6be5"
     },
     {
       "name": "brand-blue/base/60",
       "alias": "",
-      "description": "",
+      "description": "brand-blue at 60% opacity. Faded active fill and the accent border in light theme.",
       "value": "rgba(46, 107, 229, 0.6)"
     },
     {
       "name": "brand-blue/base/50",
       "alias": "",
-      "description": "",
+      "description": "brand-blue at 50% opacity. Faded accent fill, hover, in light theme.",
       "value": "rgba(46, 107, 229, 0.5)"
     },
     {
       "name": "brand-blue/base/40",
       "alias": "",
-      "description": "",
+      "description": "brand-blue at 40% opacity. Disabled solid in both themes; faded rest and disabled accent text in light theme.",
       "value": "rgba(46, 107, 229, 0.4)"
     },
     {
       "name": "brand-blue/base/30",
       "alias": "",
-      "description": "",
+      "description": "brand-blue at 30% opacity. Transparent active overlay and the disabled accent border in light theme.",
       "value": "rgba(46, 107, 229, 0.3)"
     },
     {
       "name": "brand-blue/base/20",
       "alias": "",
-      "description": "",
+      "description": "brand-blue at 20% opacity. Faded disabled fill and the transparent hover overlay in light theme.",
       "value": "rgba(46, 107, 229, 0.2)"
     },
     {
       "name": "brand-blue/base/10",
       "alias": "",
-      "description": "",
+      "description": "brand-blue at 10% opacity. Transparent accent overlay at rest and when disabled, in light theme.",
       "value": "rgba(46, 107, 229, 0.1)"
     },
     {
       "name": "brand-cyan/base/130-black",
       "alias": "",
-      "description": "",
+      "description": "brand-cyan, darkened further. Solid accent active and link active in light theme.",
       "value": "#12748a"
     },
     {
       "name": "brand-cyan/base/120-black",
       "alias": "",
-      "description": "",
+      "description": "brand-cyan, darkened. Solid accent hover and link hover in light theme.",
       "value": "#15859e"
     },
     {
       "name": "brand-cyan/base/100",
       "alias": "",
-      "description": "",
+      "description": "brand-cyan, solid. Accent fills, text, and icons in light theme.",
       "value": "#1aa6c5"
     },
     {
       "name": "brand-cyan/base/60",
       "alias": "",
-      "description": "",
+      "description": "brand-cyan at 60% opacity. Faded active fill and the accent border in light theme.",
       "value": "rgba(26, 166, 197, 0.6)"
     },
     {
       "name": "brand-cyan/base/50",
       "alias": "",
-      "description": "",
+      "description": "brand-cyan at 50% opacity. Faded accent fill, hover, in light theme.",
       "value": "rgba(26, 166, 197, 0.5)"
     },
     {
       "name": "brand-cyan/base/40",
       "alias": "",
-      "description": "",
+      "description": "brand-cyan at 40% opacity. Disabled solid, faded rest, and disabled accent text in light theme.",
       "value": "rgba(26, 166, 197, 0.4)"
     },
     {
       "name": "brand-cyan/base/30",
       "alias": "",
-      "description": "",
+      "description": "brand-cyan at 30% opacity. Transparent active overlay and the disabled accent border in light theme.",
       "value": "rgba(26, 166, 197, 0.3)"
     },
     {
       "name": "brand-cyan/base/20",
       "alias": "",
-      "description": "",
+      "description": "brand-cyan at 20% opacity. Faded disabled fill and the transparent hover overlay in light theme.",
       "value": "rgba(26, 166, 197, 0.2)"
     },
     {
       "name": "brand-cyan/base/10",
       "alias": "",
-      "description": "",
+      "description": "brand-cyan at 10% opacity. Transparent accent overlay at rest and when disabled, in light theme.",
       "value": "rgba(26, 166, 197, 0.1)"
     },
     {
       "name": "brand-cyan/light/130-black",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-cyan, darkened further. Solid accent active and link active in dark theme.",
       "value": "#2e7685"
     },
     {
       "name": "brand-cyan/light/120-black",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-cyan, darkened. Solid accent hover and link hover in dark theme.",
       "value": "#358698"
     },
     {
       "name": "brand-cyan/light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-cyan for dark backgrounds. Solid accent fills, text, and icons in dark theme.",
       "value": "#42a8be"
     },
     {
       "name": "brand-cyan/light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-cyan at 60% opacity. Faded active fill and the accent border in dark theme.",
       "value": "rgba(66, 168, 190, 0.6)"
     },
     {
       "name": "brand-cyan/light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-cyan at 50% opacity. Faded accent fill, hover, in dark theme.",
       "value": "rgba(66, 168, 190, 0.5)"
     },
     {
       "name": "brand-cyan/light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-cyan at 40% opacity. Disabled solid, faded rest, and disabled accent text in dark theme.",
       "value": "rgba(66, 168, 190, 0.4)"
     },
     {
       "name": "brand-cyan/light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-cyan at 30% opacity. Transparent active overlay and the disabled accent border in dark theme.",
       "value": "rgba(66, 168, 190, 0.3)"
     },
     {
       "name": "brand-cyan/light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-cyan at 20% opacity. Faded disabled fill and the transparent hover overlay in dark theme.",
       "value": "rgba(66, 168, 190, 0.2)"
     },
     {
       "name": "brand-cyan/light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter brand-cyan at 10% opacity. Transparent accent overlay at rest and when disabled, in dark theme.",
       "value": "rgba(66, 168, 190, 0.1)"
     },
     {
       "name": "additional/red/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative red. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#a92d26"
     },
     {
       "name": "additional/pink/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative pink. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#7d1f4e"
     },
     {
       "name": "additional/purple/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative purple. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#432085"
     },
     {
       "name": "additional/deep-purple/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep purple. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#2c248c"
     },
     {
       "name": "additional/indigo/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative indigo. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#192879"
     },
     {
       "name": "additional/violet/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative violet. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#8052e0"
     },
     {
       "name": "additional/violet/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative violet. Faded active fill and the default color-code border.",
       "value": "rgba(128, 82, 224, 0.6)"
     },
     {
       "name": "additional/violet/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative violet. Faded color-code fill, hover.",
       "value": "rgba(128, 82, 224, 0.5)"
     },
     {
       "name": "additional/violet/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative violet. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(128, 82, 224, 0.4)"
     },
     {
       "name": "additional/violet/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative violet. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(128, 82, 224, 0.3)"
     },
     {
       "name": "additional/blue/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#1c4a9b"
     },
     {
       "name": "additional/blue-wave/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue wave. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#396fa7"
     },
     {
       "name": "additional/blue-wave/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue wave. Faded active fill and the default color-code border.",
       "value": "rgba(57, 111, 167, 0.6)"
     },
     {
       "name": "additional/cyan/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative cyan. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#265f63"
     },
     {
       "name": "additional/teal/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative teal. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#1e4a40"
     },
     {
       "name": "additional/deep-green/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep green. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#2f5c28"
     },
     {
       "name": "additional/deep-salad/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep salad. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#589b4c"
     },
     {
       "name": "additional/deep-salad/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep salad. Faded active fill and the default color-code border.",
       "value": "rgba(88, 155, 76, 0.6)"
     },
     {
       "name": "additional/green/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative green. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#416729"
     },
     {
       "name": "additional/green/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative green. Faded active fill and the default color-code border.",
       "value": "rgba(65, 103, 41, 0.6)"
     },
     {
       "name": "additional/olive/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative olive. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#817840"
     },
     {
       "name": "additional/lime/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative lime. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#81762c"
     },
     {
       "name": "additional/yellow/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative yellow. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#ffc540"
     },
     {
       "name": "additional/orange/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative orange. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#ee762f"
     },
     {
       "name": "additional/orange/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative orange. Faded active fill and the default color-code border.",
       "value": "rgba(238, 118, 47, 0.6)"
     },
     {
       "name": "additional/orange/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative orange. Faded color-code fill, hover.",
       "value": "rgba(238, 118, 47, 0.5)"
     },
     {
       "name": "additional/carrot-orange/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative carrot orange. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#c96226"
     },
     {
       "name": "additional/carrot-orange/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative carrot orange. Faded active fill and the default color-code border.",
       "value": "rgba(201, 98, 38, 0.6)"
     },
     {
       "name": "additional/orange/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative orange. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(238, 118, 47, 0.4)"
     },
     {
       "name": "additional/orange/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative orange. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(238, 118, 47, 0.3)"
     },
     {
       "name": "additional/deep-orange/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep orange. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#b14020"
     },
     {
       "name": "additional/brown/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative brown. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#3b2824"
     },
     {
       "name": "additional/bronze/100",
       "alias": "",
-      "description": "",
+      "description": "Decorative bronze. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#9c614f"
     },
     {
       "name": "additional/red-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative red. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#e25141"
     },
     {
       "name": "additional/pink-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative pink. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#d73963"
     },
     {
       "name": "additional/purple-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative purple. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#8f38aa"
     },
     {
       "name": "additional/deep-purple-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep purple. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#6041af"
     },
     {
       "name": "additional/indigo-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative indigo. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#4055af"
     },
     {
       "name": "additional/violet-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative violet. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#b294f1"
     },
     {
       "name": "additional/violet-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative violet. Faded active fill and the default color-code border.",
       "value": "rgba(178, 148, 241, 0.6)"
     },
     {
       "name": "additional/violet-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative violet. Faded color-code fill, hover.",
       "value": "rgba(178, 148, 241, 0.5)"
     },
     {
       "name": "additional/blue-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#4597ec"
     },
     {
       "name": "additional/blue-wave-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue wave. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#58a4f2"
     },
     {
       "name": "additional/blue-wave-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue wave. Faded active fill and the default color-code border.",
       "value": "rgba(88, 164, 242, 0.6)"
     },
     {
       "name": "additional/cyan-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative cyan. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#52bad1"
     },
     {
       "name": "additional/teal-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative teal. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#419288"
     },
     {
       "name": "additional/deep-green-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep green. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#67ab5b"
     },
     {
       "name": "additional/deep-salad-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep salad. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#8bc780"
     },
     {
       "name": "additional/deep-salad-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep salad. Faded active fill and the default color-code border.",
       "value": "rgba(139, 199, 128, 0.6)"
     },
     {
       "name": "additional/deep-salad-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep salad. Faded color-code fill, hover.",
       "value": "rgba(139, 199, 128, 0.5)"
     },
     {
       "name": "additional/green-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative green. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#97c05c"
     },
     {
       "name": "additional/lime-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative lime. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#d0d959"
     },
     {
       "name": "additional/olive-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative olive. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#b1a765"
     },
     {
       "name": "additional/yellow-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative yellow. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#feeb6c"
     },
     {
       "name": "additional/orange-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative orange. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#f29b38"
     },
     {
       "name": "additional/orange-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative orange. Faded active fill and the default color-code border.",
       "value": "rgba(242, 155, 56, 0.6)"
     },
     {
       "name": "additional/orange-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative orange. Faded color-code fill, hover.",
       "value": "rgba(242, 155, 56, 0.5)"
     },
     {
       "name": "additional/carrot-orange-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative carrot orange. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#f18b4e"
     },
     {
       "name": "additional/orange-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative orange. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(242, 155, 56, 0.4)"
     },
     {
       "name": "additional/carrot-orange-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative carrot orange. Faded active fill and the default color-code border.",
       "value": "rgba(241, 139, 78, 0.6)"
     },
     {
       "name": "additional/deep-orange-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep orange. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#ed6237"
     },
     {
       "name": "additional/brown-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative brown. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#74564a"
     },
     {
       "name": "additional/bronze-light/100",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative bronze. Solid color-code for markers and zones; hover and active stay on this step.",
       "value": "#d0a091"
     },
     {
       "name": "additional/violet/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative violet. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(128, 82, 224, 0.2)"
     },
     {
       "name": "additional/deep-salad/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep salad. Faded color-code fill, hover.",
       "value": "rgba(88, 155, 76, 0.5)"
     },
     {
       "name": "additional/deep-salad/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep salad. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(88, 155, 76, 0.4)"
     },
     {
       "name": "additional/deep-salad-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep salad. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(139, 199, 128, 0.4)"
     },
     {
       "name": "additional/deep-salad/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep salad. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(88, 155, 76, 0.2)"
     },
     {
       "name": "additional/carrot-orange/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative carrot orange. Faded color-code fill, hover.",
       "value": "rgba(201, 98, 38, 0.5)"
     },
     {
       "name": "additional/carrot-orange-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative carrot orange. Faded color-code fill, hover.",
       "value": "rgba(241, 139, 78, 0.5)"
     },
     {
       "name": "additional/carrot-orange/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative carrot orange. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(201, 98, 38, 0.4)"
     },
     {
       "name": "additional/carrot-orange-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative carrot orange. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(241, 139, 78, 0.4)"
     },
     {
       "name": "additional/blue-wave/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue wave. Faded color-code fill, hover.",
       "value": "rgba(57, 111, 167, 0.5)"
     },
     {
       "name": "additional/blue-wave-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue wave. Faded color-code fill, hover.",
       "value": "rgba(88, 164, 242, 0.5)"
     },
     {
       "name": "additional/blue-wave/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue wave. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(57, 111, 167, 0.4)"
     },
     {
       "name": "additional/blue-wave/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue wave. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(57, 111, 167, 0.3)"
     },
     {
       "name": "additional/blue-wave-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue wave. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(88, 164, 242, 0.4)"
     },
     {
       "name": "additional/blue-wave/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue wave. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(57, 111, 167, 0.2)"
     },
     {
       "name": "additional/orange/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative orange. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(238, 118, 47, 0.2)"
     },
     {
       "name": "additional/red/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative red. Faded active fill and the default color-code border.",
       "value": "rgba(169, 45, 38, 0.6)"
     },
     {
       "name": "additional/red/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative red. Faded color-code fill, hover.",
       "value": "rgba(169, 45, 38, 0.5)"
     },
     {
       "name": "additional/red/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative red. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(169, 45, 38, 0.4)"
     },
     {
       "name": "additional/red/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative red. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(169, 45, 38, 0.3)"
     },
     {
       "name": "additional/red/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative red. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(169, 45, 38, 0.2)"
     },
     {
       "name": "additional/pink/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative pink. Faded active fill and the default color-code border.",
       "value": "rgba(125, 31, 78, 0.6)"
     },
     {
       "name": "additional/red/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative red. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(169, 45, 38, 0.1)"
     },
     {
       "name": "additional/pink/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative pink. Faded color-code fill, hover.",
       "value": "rgba(125, 31, 78, 0.5)"
     },
     {
       "name": "additional/pink/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative pink. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(125, 31, 78, 0.4)"
     },
     {
       "name": "additional/pink/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative pink. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(125, 31, 78, 0.3)"
     },
     {
       "name": "additional/pink/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative pink. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(125, 31, 78, 0.2)"
     },
     {
       "name": "additional/purple/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative purple. Faded active fill and the default color-code border.",
       "value": "rgba(67, 32, 133, 0.6)"
     },
     {
       "name": "additional/pink/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative pink. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(125, 31, 78, 0.1)"
     },
     {
       "name": "additional/purple/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative purple. Faded color-code fill, hover.",
       "value": "rgba(67, 32, 133, 0.5)"
     },
     {
       "name": "additional/purple/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative purple. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(67, 32, 133, 0.4)"
     },
     {
       "name": "additional/purple/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative purple. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(67, 32, 133, 0.3)"
     },
     {
       "name": "additional/purple/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative purple. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(67, 32, 133, 0.2)"
     },
     {
       "name": "additional/deep-purple/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep purple. Faded active fill and the default color-code border.",
       "value": "rgba(44, 36, 140, 0.6)"
     },
     {
       "name": "additional/purple/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative purple. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(67, 32, 133, 0.1)"
     },
     {
       "name": "additional/deep-purple/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep purple. Faded color-code fill, hover.",
       "value": "rgba(44, 36, 140, 0.5)"
     },
     {
       "name": "additional/deep-purple/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep purple. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(44, 36, 140, 0.4)"
     },
     {
       "name": "additional/deep-purple/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep purple. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(44, 36, 140, 0.3)"
     },
     {
       "name": "additional/deep-purple/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep purple. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(44, 36, 140, 0.2)"
     },
     {
       "name": "additional/indigo/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative indigo. Faded active fill and the default color-code border.",
       "value": "rgba(25, 40, 121, 0.6)"
     },
     {
       "name": "additional/deep-purple/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep purple. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(44, 36, 140, 0.1)"
     },
     {
       "name": "additional/indigo/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative indigo. Faded color-code fill, hover.",
       "value": "rgba(25, 40, 121, 0.5)"
     },
     {
       "name": "additional/indigo/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative indigo. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(25, 40, 121, 0.4)"
     },
     {
       "name": "additional/indigo/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative indigo. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(25, 40, 121, 0.3)"
     },
     {
       "name": "additional/indigo/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative indigo. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(25, 40, 121, 0.2)"
     },
     {
       "name": "additional/indigo/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative indigo. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(25, 40, 121, 0.1)"
     },
     {
       "name": "additional/violet/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative violet. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(128, 82, 224, 0.1)"
     },
     {
       "name": "additional/blue/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue. Faded active fill and the default color-code border.",
       "value": "rgba(28, 74, 155, 0.6)"
     },
     {
       "name": "additional/blue/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue. Faded color-code fill, hover.",
       "value": "rgba(28, 74, 155, 0.5)"
     },
     {
       "name": "additional/blue/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(28, 74, 155, 0.4)"
     },
     {
       "name": "additional/blue/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(28, 74, 155, 0.3)"
     },
     {
       "name": "additional/blue/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(28, 74, 155, 0.2)"
     },
     {
       "name": "additional/blue/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(28, 74, 155, 0.1)"
     },
     {
       "name": "additional/blue-wave/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative blue wave. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(57, 111, 167, 0.1)"
     },
     {
       "name": "additional/cyan/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative cyan. Faded active fill and the default color-code border.",
       "value": "rgba(38, 95, 99, 0.6)"
     },
     {
       "name": "additional/cyan/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative cyan. Faded color-code fill, hover.",
       "value": "rgba(38, 95, 99, 0.5)"
     },
     {
       "name": "additional/cyan/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative cyan. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(38, 95, 99, 0.4)"
     },
     {
       "name": "additional/cyan/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative cyan. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(38, 95, 99, 0.3)"
     },
     {
       "name": "additional/cyan/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative cyan. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(38, 95, 99, 0.2)"
     },
     {
       "name": "additional/cyan/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative cyan. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(38, 95, 99, 0.1)"
     },
     {
       "name": "additional/teal/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative teal. Faded active fill and the default color-code border.",
       "value": "rgba(30, 74, 64, 0.6)"
     },
     {
       "name": "additional/teal/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative teal. Faded color-code fill, hover.",
       "value": "rgba(30, 74, 64, 0.5)"
     },
     {
       "name": "additional/teal/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative teal. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(30, 74, 64, 0.4)"
     },
     {
       "name": "additional/teal/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative teal. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(30, 74, 64, 0.3)"
     },
     {
       "name": "additional/teal/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative teal. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(30, 74, 64, 0.2)"
     },
     {
       "name": "additional/deep-green/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep green. Faded active fill and the default color-code border.",
       "value": "rgba(47, 92, 40, 0.6)"
     },
     {
       "name": "additional/teal/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative teal. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(30, 74, 64, 0.1)"
     },
     {
       "name": "additional/deep-green/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep green. Faded color-code fill, hover.",
       "value": "rgba(47, 92, 40, 0.5)"
     },
     {
       "name": "additional/deep-green/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep green. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(47, 92, 40, 0.4)"
     },
     {
       "name": "additional/deep-green/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep green. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(47, 92, 40, 0.3)"
     },
     {
       "name": "additional/deep-green/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep green. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(47, 92, 40, 0.2)"
     },
     {
       "name": "additional/deep-green/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep green. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(47, 92, 40, 0.1)"
     },
     {
       "name": "additional/deep-salad/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep salad. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(88, 155, 76, 0.3)"
     },
     {
       "name": "additional/deep-salad/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep salad. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(88, 155, 76, 0.1)"
     },
     {
       "name": "additional/green/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative green. Faded color-code fill, hover.",
       "value": "rgba(65, 103, 41, 0.5)"
     },
     {
       "name": "additional/green/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative green. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(65, 103, 41, 0.4)"
     },
     {
       "name": "additional/green/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative green. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(65, 103, 41, 0.3)"
     },
     {
       "name": "additional/green/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative green. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(65, 103, 41, 0.2)"
     },
     {
       "name": "additional/green/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative green. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(65, 103, 41, 0.1)"
     },
     {
       "name": "additional/olive/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative olive. Faded active fill and the default color-code border.",
       "value": "rgba(129, 120, 64, 0.6)"
     },
     {
       "name": "additional/olive/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative olive. Faded color-code fill, hover.",
       "value": "rgba(129, 120, 64, 0.5)"
     },
     {
       "name": "additional/olive/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative olive. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(129, 120, 64, 0.4)"
     },
     {
       "name": "additional/olive/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative olive. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(129, 120, 64, 0.3)"
     },
     {
       "name": "additional/olive/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative olive. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(129, 120, 64, 0.2)"
     },
     {
       "name": "additional/olive/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative olive. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(129, 120, 64, 0.1)"
     },
     {
       "name": "additional/lime/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative lime. Faded active fill and the default color-code border.",
       "value": "rgba(129, 118, 44, 0.6)"
     },
     {
       "name": "additional/lime/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative lime. Faded color-code fill, hover.",
       "value": "rgba(129, 118, 44, 0.5)"
     },
     {
       "name": "additional/lime/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative lime. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(129, 118, 44, 0.4)"
     },
     {
       "name": "additional/lime/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative lime. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(129, 118, 44, 0.3)"
     },
     {
       "name": "additional/lime/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative lime. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(129, 118, 44, 0.2)"
     },
     {
       "name": "additional/lime/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative lime. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(129, 118, 44, 0.1)"
     },
     {
       "name": "additional/yellow/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative yellow. Faded active fill and the default color-code border.",
       "value": "rgba(255, 197, 64, 0.6)"
     },
     {
       "name": "additional/yellow/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative yellow. Faded color-code fill, hover.",
       "value": "rgba(255, 197, 64, 0.5)"
     },
     {
       "name": "additional/yellow/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative yellow. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(255, 197, 64, 0.4)"
     },
     {
       "name": "additional/yellow/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative yellow. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(255, 197, 64, 0.3)"
     },
     {
       "name": "additional/yellow/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative yellow. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(255, 197, 64, 0.2)"
     },
     {
       "name": "additional/yellow/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative yellow. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(255, 197, 64, 0.1)"
     },
     {
       "name": "additional/orange/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative orange. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(238, 118, 47, 0.1)"
     },
     {
       "name": "additional/carrot-orange/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative carrot orange. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(201, 98, 38, 0.3)"
     },
     {
       "name": "additional/carrot-orange/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative carrot orange. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(201, 98, 38, 0.2)"
     },
     {
       "name": "additional/carrot-orange/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative carrot orange. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(201, 98, 38, 0.1)"
     },
     {
       "name": "additional/deep-orange/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep orange. Faded active fill and the default color-code border.",
       "value": "rgba(177, 64, 32, 0.6)"
     },
     {
       "name": "additional/deep-orange/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep orange. Faded color-code fill, hover.",
       "value": "rgba(177, 64, 32, 0.5)"
     },
     {
       "name": "additional/deep-orange/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep orange. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(177, 64, 32, 0.4)"
     },
     {
       "name": "additional/deep-orange/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep orange. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(177, 64, 32, 0.3)"
     },
     {
       "name": "additional/deep-orange/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep orange. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(177, 64, 32, 0.2)"
     },
     {
       "name": "additional/deep-orange/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative deep orange. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(177, 64, 32, 0.1)"
     },
     {
       "name": "additional/brown/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative brown. Faded active fill and the default color-code border.",
       "value": "rgba(59, 40, 36, 0.6)"
     },
     {
       "name": "additional/brown/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative brown. Faded color-code fill, hover.",
       "value": "rgba(59, 40, 36, 0.5)"
     },
     {
       "name": "additional/brown/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative brown. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(59, 40, 36, 0.4)"
     },
     {
       "name": "additional/brown/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative brown. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(59, 40, 36, 0.3)"
     },
     {
       "name": "additional/brown/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative brown. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(59, 40, 36, 0.2)"
     },
     {
       "name": "additional/bronze/60",
       "alias": "",
-      "description": "",
+      "description": "Decorative bronze. Faded active fill and the default color-code border.",
       "value": "rgba(156, 97, 79, 0.6)"
     },
     {
       "name": "additional/brown/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative brown. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(59, 40, 36, 0.1)"
     },
     {
       "name": "additional/bronze/50",
       "alias": "",
-      "description": "",
+      "description": "Decorative bronze. Faded color-code fill, hover.",
       "value": "rgba(156, 97, 79, 0.5)"
     },
     {
       "name": "additional/bronze/40",
       "alias": "",
-      "description": "",
+      "description": "Decorative bronze. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(156, 97, 79, 0.4)"
     },
     {
       "name": "additional/bronze/30",
       "alias": "",
-      "description": "",
+      "description": "Decorative bronze. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(156, 97, 79, 0.3)"
     },
     {
       "name": "additional/bronze/20",
       "alias": "",
-      "description": "",
+      "description": "Decorative bronze. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(156, 97, 79, 0.2)"
     },
     {
       "name": "additional/bronze/10",
       "alias": "",
-      "description": "",
+      "description": "Decorative bronze. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(156, 97, 79, 0.1)"
     },
     {
       "name": "additional/red-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative red. Faded active fill and the default color-code border.",
       "value": "rgba(226, 81, 65, 0.6)"
     },
     {
       "name": "additional/red-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative red. Faded color-code fill, hover.",
       "value": "rgba(226, 81, 65, 0.5)"
     },
     {
       "name": "additional/red-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative red. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(226, 81, 65, 0.4)"
     },
     {
       "name": "additional/red-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative red. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(226, 81, 65, 0.3)"
     },
     {
       "name": "additional/red-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative red. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(226, 81, 65, 0.2)"
     },
     {
       "name": "additional/red-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative red. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(226, 81, 65, 0.1)"
     },
     {
       "name": "additional/pink-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative pink. Faded active fill and the default color-code border.",
       "value": "rgba(215, 57, 99, 0.6)"
     },
     {
       "name": "additional/pink-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative pink. Faded color-code fill, hover.",
       "value": "rgba(215, 57, 99, 0.5)"
     },
     {
       "name": "additional/pink-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative pink. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(215, 57, 99, 0.4)"
     },
     {
       "name": "additional/pink-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative pink. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(215, 57, 99, 0.3)"
     },
     {
       "name": "additional/pink-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative pink. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(215, 57, 99, 0.2)"
     },
     {
       "name": "additional/purple-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative purple. Faded active fill and the default color-code border.",
       "value": "rgba(143, 56, 170, 0.6)"
     },
     {
       "name": "additional/pink-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative pink. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(215, 57, 99, 0.1)"
     },
     {
       "name": "additional/purple-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative purple. Faded color-code fill, hover.",
       "value": "rgba(143, 56, 170, 0.5)"
     },
     {
       "name": "additional/purple-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative purple. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(143, 56, 170, 0.4)"
     },
     {
       "name": "additional/purple-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative purple. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(143, 56, 170, 0.3)"
     },
     {
       "name": "additional/purple-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative purple. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(143, 56, 170, 0.2)"
     },
     {
       "name": "additional/deep-purple-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep purple. Faded active fill and the default color-code border.",
       "value": "rgba(96, 65, 175, 0.6)"
     },
     {
       "name": "additional/purple-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative purple. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(143, 56, 170, 0.1)"
     },
     {
       "name": "additional/deep-purple-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep purple. Faded color-code fill, hover.",
       "value": "rgba(96, 65, 175, 0.5)"
     },
     {
       "name": "additional/deep-purple-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep purple. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(96, 65, 175, 0.4)"
     },
     {
       "name": "additional/deep-purple-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep purple. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(96, 65, 175, 0.3)"
     },
     {
       "name": "additional/deep-purple-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep purple. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(96, 65, 175, 0.2)"
     },
     {
       "name": "additional/indigo-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative indigo. Faded active fill and the default color-code border.",
       "value": "rgba(64, 85, 175, 0.6)"
     },
     {
       "name": "additional/deep-purple-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep purple. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(96, 65, 175, 0.1)"
     },
     {
       "name": "additional/indigo-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative indigo. Faded color-code fill, hover.",
       "value": "rgba(64, 85, 175, 0.5)"
     },
     {
       "name": "additional/indigo-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative indigo. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(64, 85, 175, 0.4)"
     },
     {
       "name": "additional/indigo-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative indigo. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(64, 85, 175, 0.3)"
     },
     {
       "name": "additional/indigo-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative indigo. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(64, 85, 175, 0.2)"
     },
     {
       "name": "additional/indigo-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative indigo. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(64, 85, 175, 0.1)"
     },
     {
       "name": "additional/violet-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative violet. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(178, 148, 241, 0.4)"
     },
     {
       "name": "additional/violet-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative violet. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(178, 148, 241, 0.3)"
     },
     {
       "name": "additional/violet-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative violet. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(178, 148, 241, 0.2)"
     },
     {
       "name": "additional/blue-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue. Faded active fill and the default color-code border.",
       "value": "rgba(69, 151, 236, 0.6)"
     },
     {
       "name": "additional/violet-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative violet. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(178, 148, 241, 0.1)"
     },
     {
       "name": "additional/blue-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue. Faded color-code fill, hover.",
       "value": "rgba(69, 151, 236, 0.5)"
     },
     {
       "name": "additional/blue-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(69, 151, 236, 0.4)"
     },
     {
       "name": "additional/blue-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(69, 151, 236, 0.3)"
     },
     {
       "name": "additional/blue-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(69, 151, 236, 0.2)"
     },
     {
       "name": "additional/blue-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(69, 151, 236, 0.1)"
     },
     {
       "name": "additional/blue-wave-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue wave. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(88, 164, 242, 0.3)"
     },
     {
       "name": "additional/blue-wave-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue wave. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(88, 164, 242, 0.2)"
     },
     {
       "name": "additional/blue-wave-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative blue wave. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(88, 164, 242, 0.1)"
     },
     {
       "name": "additional/cyan-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative cyan. Faded active fill and the default color-code border.",
       "value": "rgba(82, 186, 209, 0.6)"
     },
     {
       "name": "additional/cyan-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative cyan. Faded color-code fill, hover.",
       "value": "rgba(82, 186, 209, 0.5)"
     },
     {
       "name": "additional/cyan-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative cyan. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(82, 186, 209, 0.4)"
     },
     {
       "name": "additional/cyan-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative cyan. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(82, 186, 209, 0.3)"
     },
     {
       "name": "additional/cyan-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative cyan. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(82, 186, 209, 0.2)"
     },
     {
       "name": "additional/cyan-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative cyan. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(82, 186, 209, 0.1)"
     },
     {
       "name": "additional/teal-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative teal. Faded active fill and the default color-code border.",
       "value": "rgba(65, 146, 136, 0.6)"
     },
     {
       "name": "additional/teal-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative teal. Faded color-code fill, hover.",
       "value": "rgba(65, 146, 136, 0.5)"
     },
     {
       "name": "additional/teal-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative teal. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(65, 146, 136, 0.4)"
     },
     {
       "name": "additional/teal-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative teal. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(65, 146, 136, 0.3)"
     },
     {
       "name": "additional/teal-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative teal. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(65, 146, 136, 0.2)"
     },
     {
       "name": "additional/deep-green-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep green. Faded active fill and the default color-code border.",
       "value": "rgba(103, 171, 91, 0.6)"
     },
     {
       "name": "additional/teal-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative teal. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(65, 146, 136, 0.1)"
     },
     {
       "name": "additional/deep-green-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep green. Faded color-code fill, hover.",
       "value": "rgba(103, 171, 91, 0.5)"
     },
     {
       "name": "additional/deep-green-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep green. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(103, 171, 91, 0.4)"
     },
     {
       "name": "additional/deep-green-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep green. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(103, 171, 91, 0.3)"
     },
     {
       "name": "additional/deep-green-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep green. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(103, 171, 91, 0.2)"
     },
     {
       "name": "additional/deep-green-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep green. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(103, 171, 91, 0.1)"
     },
     {
       "name": "additional/deep-salad-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep salad. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(139, 199, 128, 0.3)"
     },
     {
       "name": "additional/deep-salad-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep salad. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(139, 199, 128, 0.2)"
     },
     {
       "name": "additional/deep-salad-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep salad. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(139, 199, 128, 0.1)"
     },
     {
       "name": "additional/green-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative green. Faded active fill and the default color-code border.",
       "value": "rgba(151, 192, 92, 0.6)"
     },
     {
       "name": "additional/green-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative green. Faded color-code fill, hover.",
       "value": "rgba(151, 192, 92, 0.5)"
     },
     {
       "name": "additional/green-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative green. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(151, 192, 92, 0.4)"
     },
     {
       "name": "additional/green-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative green. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(151, 192, 92, 0.3)"
     },
     {
       "name": "additional/green-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative green. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(151, 192, 92, 0.2)"
     },
     {
       "name": "additional/lime-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative lime. Faded active fill and the default color-code border.",
       "value": "rgba(208, 217, 89, 0.6)"
     },
     {
       "name": "additional/green-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative green. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(151, 192, 92, 0.1)"
     },
     {
       "name": "additional/lime-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative lime. Faded color-code fill, hover.",
       "value": "rgba(208, 217, 89, 0.5)"
     },
     {
       "name": "additional/lime-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative lime. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(208, 217, 89, 0.4)"
     },
     {
       "name": "additional/lime-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative lime. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(208, 217, 89, 0.3)"
     },
     {
       "name": "additional/lime-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative lime. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(208, 217, 89, 0.2)"
     },
     {
       "name": "additional/lime-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative lime. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(208, 217, 89, 0.1)"
     },
     {
       "name": "additional/olive-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative olive. Faded active fill and the default color-code border.",
       "value": "rgba(177, 167, 101, 0.6)"
     },
     {
       "name": "additional/olive-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative olive. Faded color-code fill, hover.",
       "value": "rgba(177, 167, 101, 0.5)"
     },
     {
       "name": "additional/olive-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative olive. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(177, 167, 101, 0.4)"
     },
     {
       "name": "additional/olive-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative olive. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(177, 167, 101, 0.3)"
     },
     {
       "name": "additional/olive-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative olive. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(177, 167, 101, 0.2)"
     },
     {
       "name": "additional/olive-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative olive. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(177, 167, 101, 0.1)"
     },
     {
       "name": "additional/yellow-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative yellow. Faded active fill and the default color-code border.",
       "value": "rgba(254, 235, 108, 0.6)"
     },
     {
       "name": "additional/yellow-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative yellow. Faded color-code fill, hover.",
       "value": "rgba(254, 235, 108, 0.5)"
     },
     {
       "name": "additional/yellow-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative yellow. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(254, 235, 108, 0.4)"
     },
     {
       "name": "additional/yellow-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative yellow. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(254, 235, 108, 0.3)"
     },
     {
       "name": "additional/yellow-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative yellow. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(254, 235, 108, 0.2)"
     },
     {
       "name": "additional/yellow-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative yellow. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(254, 235, 108, 0.1)"
     },
     {
       "name": "additional/orange-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative orange. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(242, 155, 56, 0.3)"
     },
     {
       "name": "additional/orange-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative orange. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(242, 155, 56, 0.2)"
     },
     {
       "name": "additional/orange-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative orange. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(242, 155, 56, 0.1)"
     },
     {
       "name": "additional/carrot-orange-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative carrot orange. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(241, 139, 78, 0.3)"
     },
     {
       "name": "additional/carrot-orange-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative carrot orange. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(241, 139, 78, 0.2)"
     },
     {
       "name": "additional/carrot-orange-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative carrot orange. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(241, 139, 78, 0.1)"
     },
     {
       "name": "additional/deep-orange-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep orange. Faded active fill and the default color-code border.",
       "value": "rgba(237, 98, 55, 0.6)"
     },
     {
       "name": "additional/deep-orange-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep orange. Faded color-code fill, hover.",
       "value": "rgba(237, 98, 55, 0.5)"
     },
     {
       "name": "additional/deep-orange-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep orange. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(237, 98, 55, 0.4)"
     },
     {
       "name": "additional/deep-orange-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep orange. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(237, 98, 55, 0.3)"
     },
     {
       "name": "additional/deep-orange-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep orange. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(237, 98, 55, 0.2)"
     },
     {
       "name": "additional/deep-orange-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative deep orange. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(237, 98, 55, 0.1)"
     },
     {
       "name": "additional/brown-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative brown. Faded active fill and the default color-code border.",
       "value": "rgba(116, 86, 74, 0.6)"
     },
     {
       "name": "additional/brown-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative brown. Faded color-code fill, hover.",
       "value": "rgba(116, 86, 74, 0.5)"
     },
     {
       "name": "additional/brown-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative brown. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(116, 86, 74, 0.4)"
     },
     {
       "name": "additional/brown-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative brown. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(116, 86, 74, 0.3)"
     },
     {
       "name": "additional/brown-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative brown. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(116, 86, 74, 0.2)"
     },
     {
       "name": "additional/bronze-light/60",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative bronze. Faded active fill and the default color-code border.",
       "value": "rgba(208, 160, 145, 0.6)"
     },
     {
       "name": "additional/brown-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative brown. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(116, 86, 74, 0.1)"
     },
     {
       "name": "additional/bronze-light/50",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative bronze. Faded color-code fill, hover.",
       "value": "rgba(208, 160, 145, 0.5)"
     },
     {
       "name": "additional/bronze-light/40",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative bronze. Disabled solid, faded rest, and disabled color-code text and icons.",
       "value": "rgba(208, 160, 145, 0.4)"
     },
     {
       "name": "additional/bronze-light/30",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative bronze. Transparent active overlay and the disabled color-code border.",
       "value": "rgba(208, 160, 145, 0.3)"
     },
     {
       "name": "additional/bronze-light/20",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative bronze. Faded disabled fill and the transparent hover overlay.",
       "value": "rgba(208, 160, 145, 0.2)"
     },
     {
       "name": "additional/bronze-light/10",
       "alias": "",
-      "description": "",
+      "description": "Lighter decorative bronze. Transparent color-code overlay at rest and when disabled.",
       "value": "rgba(208, 160, 145, 0.1)"
     }
   ]

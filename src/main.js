@@ -16,16 +16,18 @@ const scrollX = document.querySelector("#scroll-x");
 const sidebarScroll = document.querySelector("#sidebar-scroll");
 
 const styles = await fetch(new URL("../data/styles.json?v=4", import.meta.url)).then((response) => response.json());
-const collections = await fetch(new URL("../data/collections.json?v=5", import.meta.url)).then((response) => response.json());
-const sizeDoc = await fetch(new URL("../data/size.json?v=1", import.meta.url)).then((response) => response.json());
-const typeDoc = await fetch(new URL("../data/typography.json?v=1", import.meta.url)).then((response) => response.json());
-const copy = await fetch(new URL("../data/copy.json", import.meta.url)).then((response) => response.json());
+const collections = await fetch(new URL("../data/collections.json?v=8", import.meta.url)).then((response) => response.json());
+const sizeDoc = await fetch(new URL("../data/size.json?v=2", import.meta.url)).then((response) => response.json());
+const typeDoc = await fetch(new URL("../data/typography.json?v=2", import.meta.url)).then((response) => response.json());
+const shadowDoc = await fetch(new URL("../data/shadow.json?v=1", import.meta.url)).then((response) => response.json());
+const copy = await fetch(new URL("../data/copy.json?v=2", import.meta.url)).then((response) => response.json());
 
 applyStyles(styles);
 
 let collection = collections.defaults.collection;
 let brand = collections.defaults.brand;
 let theme = collections.defaults.theme;
+let shadowHover = false;
 const remembered = { brand, theme };
 
 function copyText(key) {
@@ -79,11 +81,12 @@ function activeTokens() {
 function measureDoc() {
   if (collection === "size") return sizeDoc;
   if (collection === "typography") return typeDoc;
+  if (collection === "shadow") return shadowDoc;
   return null;
 }
 
 function stackedLayout() {
-  return root.classList.contains("is-narrow") || collection === "size" || collection === "typography";
+  return root.classList.contains("is-narrow") || collection === "size" || collection === "typography" || collection === "shadow";
 }
 
 function familyHead(parts) {
@@ -329,6 +332,18 @@ function sizeRow(family, token) {
   item.label = token.label;
   item.kind = family.kind;
   item.amount = String(token.value);
+  item.description = token.description || "";
+  return item;
+}
+
+function shadowRow(token) {
+  const item = document.createElement("cc-shadow-row");
+  item.id = rowId(token.name);
+  item.label = token.label;
+  item.description = token.description || "";
+  item.setAttribute("tip", "above");
+  item.style.setProperty("--shadow-sample", `var(--shadow-${token.token})`);
+  if (shadowHover) item.dataset.rest = "hover";
   return item;
 }
 
@@ -341,21 +356,41 @@ function typeRow(token) {
   item.size = String(token.size);
   item.line = String(token.lineHeight);
   item.tracking = String(token.letterSpacing);
+  item.description = token.description || "";
   return item;
 }
 
 function renderMeasure(doc) {
   familyRow.parentElement.querySelectorAll(".family-titles").forEach((node) => node.remove());
   familyRow.replaceChildren();
+  if (collection === "shadow") familyRow.append(shadowSwitch());
   for (const family of doc.families) {
     const card = document.createElement("cc-family");
     card.setAttribute("title", family.title);
     card.setAttribute("heading-id", familyId(family.id));
     for (const token of family.tokens) {
-      card.append(collection === "size" ? sizeRow(family, token) : typeRow(token));
+      if (collection === "size") card.append(sizeRow(family, token));
+      else if (collection === "shadow") card.append(shadowRow(token));
+      else card.append(typeRow(token));
     }
     familyRow.append(card);
   }
+}
+
+function shadowSwitch() {
+  const item = document.createElement("cc-switcher-end");
+  item.setAttribute("label", copyText("shadow.hover"));
+  if (shadowHover) item.setAttribute("selected", "");
+  item.addEventListener("cc-change", (event) => {
+    shadowHover = Boolean(event.detail && event.detail.selected);
+    if (shadowHover) item.setAttribute("selected", "");
+    else item.removeAttribute("selected");
+    for (const row of familyRow.querySelectorAll("cc-shadow-row")) {
+      if (shadowHover) row.dataset.rest = "hover";
+      else delete row.dataset.rest;
+    }
+  });
+  return item;
 }
 
 function buildMeasureMenu(doc) {
@@ -409,7 +444,8 @@ function showHue(card, id) {
 function placeChrome() {
   const narrow = root.classList.contains("is-narrow");
   const semantic = collection === "semantic";
-  themeSwitch.hidden = !semantic;
+  const themed = semantic || collection === "shadow";
+  themeSwitch.hidden = !themed;
   brandSelect.hidden = !semantic;
   if (!semantic) {
     closeSidebar();
@@ -466,7 +502,7 @@ function stickCarousels() {
 function paint(fade) {
   const draw = () => {
     const chromeBrand = collection === "semantic" ? brand : "brand-blue";
-    const chromeTheme = collection === "semantic" ? theme : "dark";
+    const chromeTheme = collection === "semantic" || collection === "shadow" ? theme : "dark";
     applyColors(styles, collections, chromeBrand, chromeTheme);
     page.dataset.collection = collection;
     const doc = measureDoc();
@@ -629,6 +665,7 @@ const collectionLabels = {
   primitives: "colors-primitive",
   semantic: "colors-semantic",
   size: "size",
+  shadow: "shadow",
   typography: "typography",
 };
 collectionSelect.options = collections.collectionOrder.map((id) => ({
@@ -641,11 +678,13 @@ brandSelect.value = brand;
 
 collectionSelect.addEventListener("cc-change", (event) => {
   collection = event.detail.value;
+  if (collection === "semantic" || collection === "shadow") {
+    theme = remembered.theme;
+    themeSwitch.setAttribute("mode", theme);
+  }
   if (collection === "semantic") {
     brand = remembered.brand;
-    theme = remembered.theme;
     brandSelect.value = brand;
-    themeSwitch.setAttribute("mode", theme);
   }
   paint("content");
 });

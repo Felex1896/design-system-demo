@@ -1,5 +1,5 @@
 (() => {
-const REFLECTED = ["label", "kind", "amount"];
+const REFLECTED = ["label", "kind", "amount", "description"];
 
 function px(amount) {
   const text = String(amount).trim();
@@ -56,6 +56,9 @@ class CcSizeRow extends HTMLElement {
 
   _sync() {
     this._label.textContent = this.label;
+    const text = (this.description || "").trim();
+    if (!text) this.removeAttribute("tabindex");
+    else this.tabIndex = 0;
     const length = px(this.amount);
     this._specimen.style.width = "";
     this._specimen.style.height = "";

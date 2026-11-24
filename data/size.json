@@ -5,32 +5,32 @@
       "title": "spacing",
       "kind": "spacing",
       "tokens": [
-        { "name": "spacing/0", "label": "0", "value": 0 },
-        { "name": "spacing/1", "label": "1", "value": 1 },
-        { "name": "spacing/2", "label": "2", "value": 2 },
-        { "name": "spacing/4", "label": "4", "value": 4 },
-        { "name": "spacing/6", "label": "6", "value": 6 },
-        { "name": "spacing/8", "label": "8", "value": 8 },
-        { "name": "spacing/10", "label": "10", "value": 10 },
-        { "name": "spacing/12", "label": "12", "value": 12 },
-        { "name": "spacing/16", "label": "16", "value": 16 },
-        { "name": "spacing/20", "label": "20", "value": 20 },
-        { "name": "spacing/24", "label": "24", "value": 24 },
-        { "name": "spacing/32", "label": "32", "value": 32 },
-        { "name": "spacing/36", "label": "36", "value": 36 },
-        { "name": "spacing/40", "label": "40", "value": 40 },
-        { "name": "spacing/48", "label": "48", "value": 48 },
-        { "name": "spacing/56", "label": "56", "value": 56 },
-        { "name": "spacing/64", "label": "64", "value": 64 },
-        { "name": "spacing/72", "label": "72", "value": 72 },
-        { "name": "spacing/80", "label": "80", "value": 80 },
-        { "name": "spacing/88", "label": "88", "value": 88 },
-        { "name": "spacing/96", "label": "96", "value": 96 },
-        { "name": "spacing/120", "label": "120", "value": 120 },
-        { "name": "spacing/160", "label": "160", "value": 160 },
-        { "name": "spacing/224", "label": "224", "value": 224 },
-        { "name": "spacing/240", "label": "240", "value": 240 },
-        { "name": "spacing/320", "label": "320", "value": 320 }
+        { "name": "spacing/0", "label": "0", "value": 0, "description": "Flush stack. Title and caption, or any pair that should sit with no gap." },
+        { "name": "spacing/1", "label": "1", "value": 1, "description": "Smallest positive fine-grid step. Hairline separation inside a very dense control." },
+        { "name": "spacing/2", "label": "2", "value": 2, "description": "Tight fine-grid gap. Labels, subtitles, and badge dots." },
+        { "name": "spacing/4", "label": "4", "value": 4, "description": "Dense fine-grid step. Hint offsets, small-label padding, and gaps inside fields." },
+        { "name": "spacing/6", "label": "6", "value": 6, "description": "Upper fine-grid step. Compact vertical padding on fields and icon buttons." },
+        { "name": "spacing/8", "label": "8", "value": 8, "description": "Base grid step. Default gap and padding inside controls; larger layout steps multiply it." },
+        { "name": "spacing/10", "label": "10", "value": 10, "description": "Short step just above the base. Compact leading inset on a trailing control." },
+        { "name": "spacing/12", "label": "12", "value": 12, "description": "Control inset above the base. Side padding on fields, selects, and compact rows." },
+        { "name": "spacing/16", "label": "16", "value": 16, "description": "Standard content inset. Row padding inside cards, lists, and menus." },
+        { "name": "spacing/20", "label": "20", "value": 20, "description": "In-between layout step. A group gap between row padding and a section gap." },
+        { "name": "spacing/24", "label": "24", "value": 24, "description": "Comfortable group gap. Header side padding, icon frames, and space under a page header." },
+        { "name": "spacing/32", "label": "32", "value": 32, "description": "Group separation inside a region. Larger icon frames and wide gaps in a header." },
+        { "name": "spacing/36", "label": "36", "value": 36, "description": "Off-grid control size. Fixed hit area a control dictates, such as an icon-button frame." },
+        { "name": "spacing/40", "label": "40", "value": 40, "description": "Section rhythm. Gap between form sections, and the usual compact control height." },
+        { "name": "spacing/48", "label": "48", "value": 48, "description": "Large control or media frame. Big icon step and a roomy empty-region measure." },
+        { "name": "spacing/56", "label": "56", "value": 56, "description": "Tall control slot. Reserved width for a check, or a tall option row." },
+        { "name": "spacing/64", "label": "64", "value": 64, "description": "Page-chrome band. Header height, table row height, and the inset at the bottom of a screen." },
+        { "name": "spacing/72", "label": "72", "value": 72, "description": "Coarse step above page chrome. A large fixed frame or a deep region gap." },
+        { "name": "spacing/80", "label": "80", "value": 80, "description": "Deep inset under scrolled content. Breathing room after the last row of a listing." },
+        { "name": "spacing/88", "label": "88", "value": 88, "description": "Large on-grid measure. A deep page gap or a fixed frame above the listing inset." },
+        { "name": "spacing/96", "label": "96", "value": 96, "description": "Large square frame. Media and icon containers above everyday control size." },
+        { "name": "spacing/120", "label": "120", "value": 120, "description": "Wide layout inset. A side reserve that clears a neighboring control." },
+        { "name": "spacing/160", "label": "160", "value": 160, "description": "Large pictogram frame. Empty-state and person artwork above the icon scale." },
+        { "name": "spacing/224", "label": "224", "value": 224, "description": "Oversized layout block. A fixed region above component and icon scale." },
+        { "name": "spacing/240", "label": "240", "value": 240, "description": "Tall empty region. Placeholder height for a card or media frame with nothing inside." },
+        { "name": "spacing/320", "label": "320", "value": 320, "description": "Largest layout step. A page-scale block or a very large fixed frame." }
       ]
     },
     {
@@ -38,11 +38,11 @@
       "title": "rounding",
       "kind": "rounding",
       "tokens": [
-        { "name": "roundings/2", "label": "2", "value": 2 },
-        { "name": "roundings/4", "label": "4", "value": 4 },
-        { "name": "roundings/6", "label": "6", "value": 6 },
-        { "name": "roundings/8", "label": "8", "value": 8 },
-        { "name": "roundings/pill", "label": "pill", "value": 1000 }
+        { "name": "roundings/2", "label": "2", "value": 2, "description": "Tightest corner. Small labels and thin markers that should barely soften." },
+        { "name": "roundings/4", "label": "4", "value": 4, "description": "Default control corner. Fields, selects, and other compact inputs." },
+        { "name": "roundings/6", "label": "6", "value": 6, "description": "Softer control corner. Medium labels." },
+        { "name": "roundings/8", "label": "8", "value": 8, "description": "Soft plate corner. Cards, menus, dropdowns, and grouped controls." },
+        { "name": "roundings/pill", "label": "pill", "value": 1000, "description": "Fully rounded ends. Badges, progress tracks, icon buttons, and chips." }
       ]
     },
     {
@@ -50,11 +50,11 @@
       "title": "stroke",
       "kind": "stroke",
       "tokens": [
-        { "name": "stroke/1", "label": "1", "value": 1 },
-        { "name": "stroke/2", "label": "2", "value": 2 },
-        { "name": "stroke/3", "label": "3", "value": 3 },
-        { "name": "stroke/4", "label": "4", "value": 4 },
-        { "name": "stroke/8", "label": "8", "value": 8 }
+        { "name": "stroke/1", "label": "1", "value": 1, "description": "Hairline border. Dividers, cell rules, and the resting edge of a card." },
+        { "name": "stroke/2", "label": "2", "value": 2, "description": "Emphasis border. Focus rings, selected underlines, and a stronger card edge." },
+        { "name": "stroke/3", "label": "3", "value": 3, "description": "Mid-weight stroke. A border between the emphasis ring and a heavy active edge." },
+        { "name": "stroke/4", "label": "4", "value": 4, "description": "Heavy stroke. Active card edge and the large spinner ring." },
+        { "name": "stroke/8", "label": "8", "value": 8, "description": "Heaviest stroke. A bold outline or a thick ring when the heavy step is still too light." }
       ]
     }
   ]

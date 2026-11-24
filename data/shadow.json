@@ -1,0 +1,41 @@
+{
+  "families": [
+    {
+      "id": "shadow",
+      "title": "shadow",
+      "kind": "shadow",
+      "tokens": [
+        {
+          "name": "shadow/2",
+          "label": "shadow 2",
+          "token": "2",
+          "description": "Use for resting elevation on a filled control, such as a selected checkbox or toggle. Not: floating panels; it flattens on hover."
+        },
+        {
+          "name": "shadow/6",
+          "label": "shadow 6",
+          "token": "6",
+          "description": "Use for a floating panel. Popovers, dropdowns, and menus. Not: a resting control."
+        },
+        {
+          "name": "shadow/8",
+          "label": "shadow 8",
+          "token": "8",
+          "description": "Use for the next depth above a floating panel. Not: a menu plate, and not the deepest overlay."
+        },
+        {
+          "name": "shadow/16",
+          "label": "shadow 16",
+          "token": "16",
+          "description": "Use for a deep overlay lifted well off the page. Not: dropdowns or resting controls."
+        },
+        {
+          "name": "shadow/24",
+          "label": "shadow 24",
+          "token": "24",
+          "description": "Use for the deepest elevation on the scale. Not: menus, popovers, or inline controls."
+        }
+      ]
+    }
+  ]
+}

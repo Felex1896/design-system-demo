@@ -1,0 +1,100 @@
+cc-switcher-end {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+cc-switcher-end button {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--spacing-40);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-core-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-body-2-size);
+  font-weight: var(--font-body-2-weight);
+  line-height: var(--font-body-2-line);
+  letter-spacing: var(--font-body-2-tracking);
+  text-align: start;
+  cursor: pointer;
+}
+
+cc-switcher-end button:focus {
+  outline: 0;
+}
+
+cc-switcher-end button:focus-visible .cc-switcher-end__toggle {
+  outline: var(--stroke-2) solid var(--color-border-core-focus-outline);
+  outline-offset: 0;
+}
+
+.cc-switcher-end__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--spacing-8) 0;
+  text-align: start;
+}
+
+.cc-switcher-end__control {
+  display: flex;
+  flex: none;
+  align-items: center;
+  padding-left: var(--spacing-16);
+}
+
+.cc-switcher-end__toggle {
+  display: flex;
+  flex: none;
+  padding: var(--spacing-2);
+  border-radius: var(--radius-pill);
+}
+
+.cc-switcher-end__track {
+  display: flex;
+  flex: none;
+  align-items: center;
+  box-sizing: border-box;
+  padding: var(--spacing-2) var(--spacing-16) var(--spacing-2) var(--spacing-2);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-neutral-faded-default);
+}
+
+cc-switcher-end button[aria-pressed="true"] .cc-switcher-end__track {
+  padding: var(--spacing-2) var(--spacing-2) var(--spacing-2) var(--spacing-16);
+  background-color: var(--color-surface-accent-solid-default);
+  box-shadow: var(--shadow-mode-selected);
+}
+
+.cc-switcher-end__knob {
+  display: block;
+  flex: none;
+  width: var(--spacing-16);
+  height: var(--spacing-16);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-icon-shape-core-on-solid);
+}
+
+@media (hover: hover) {
+  cc-switcher-end button:hover .cc-switcher-end__track {
+    background-color: var(--color-surface-neutral-faded-hover);
+  }
+
+  cc-switcher-end button[aria-pressed="true"]:hover .cc-switcher-end__track {
+    background-color: var(--color-surface-accent-solid-hover);
+    box-shadow: none;
+  }
+}
+
+cc-switcher-end button:active .cc-switcher-end__track {
+  background-color: var(--color-surface-neutral-faded-active);
+}
+
+cc-switcher-end button[aria-pressed="true"]:active .cc-switcher-end__track {
+  background-color: var(--color-surface-accent-solid-active);
+  box-shadow: none;
+}

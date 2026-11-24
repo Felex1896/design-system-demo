@@ -2,5 +2,6 @@
   "theme.dark": "Dark theme",
   "theme.light": "Light theme",
   "menu.open": "Open menu",
-  "menu.close": "Close menu"
+  "menu.close": "Close menu",
+  "shadow.hover": "show shadow on hover"
 }
