@@ -1,0 +1,256 @@
+demo-button {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  vertical-align: middle;
+  box-sizing: border-box;
+  max-width: 100%;
+  color: var(--demo-ink);
+  font-family: var(--font-family);
+  font-size: var(--font-subtitle-3-size);
+  font-weight: var(--font-subtitle-3-weight);
+  line-height: var(--font-subtitle-3-line);
+  letter-spacing: var(--font-subtitle-3-tracking);
+}
+
+demo-button button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--demo-fill);
+  box-shadow: inset 0 0 0 var(--stroke-1) var(--demo-border);
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+}
+
+demo-button:not([kind="icon-button"]) button {
+  height: 56px; /* lint-allow */
+  min-width: 80px; /* lint-allow */
+  padding-inline: var(--spacing-16);
+}
+
+demo-button:not([kind="icon-button"])[size="medium"] button {
+  height: var(--spacing-40);
+  min-width: 80px; /* lint-allow */
+  padding-inline: 12px; /* lint-allow */
+}
+
+demo-button:not([kind="icon-button"])[size="small"] {
+  font-size: var(--font-caption-medium-size);
+  font-weight: var(--font-caption-medium-weight);
+  line-height: var(--font-caption-medium-line);
+  letter-spacing: var(--font-caption-medium-tracking);
+}
+
+demo-button:not([kind="icon-button"])[size="small"] button {
+  height: var(--spacing-32);
+  min-width: var(--spacing-64);
+  padding-inline: 12px; /* lint-allow */
+}
+
+demo-button[kind="icon-button"] button {
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+  min-width: 0;
+  padding: 12px; /* lint-allow */
+}
+
+demo-button[kind="icon-button"][size="medium"] button {
+  width: var(--layout-icon-button-size);
+  height: var(--layout-icon-button-size);
+  padding: var(--spacing-6);
+}
+
+demo-button[kind="icon-button"][size="small"] button {
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  padding: var(--spacing-4);
+}
+
+demo-button:not([disabled]):hover button {
+  background: var(--demo-fill-hover);
+  box-shadow: inset 0 0 0 var(--stroke-1) var(--demo-border-hover);
+  color: var(--demo-ink-hover);
+}
+
+demo-button:not([disabled]):active button {
+  background: var(--demo-fill-pressed);
+  box-shadow: inset 0 0 0 var(--stroke-1) var(--demo-border-pressed);
+  color: var(--demo-ink-pressed);
+}
+
+demo-button[disabled] button,
+demo-button[disabled]:hover button,
+demo-button[disabled]:active button {
+  background: var(--demo-fill-disabled);
+  box-shadow: inset 0 0 0 var(--stroke-1) var(--demo-border-disabled);
+  color: var(--demo-ink-disabled);
+  cursor: default;
+}
+
+demo-button button:focus,
+demo-button button:focus-visible {
+  outline: none;
+}
+
+.demo-button-icon {
+  display: none;
+  flex: none;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  color: var(--demo-icon);
+}
+
+demo-button:not([disabled]):hover .demo-button-icon {
+  color: var(--demo-icon-hover);
+}
+
+demo-button:not([disabled]):active .demo-button-icon {
+  color: var(--demo-icon-pressed);
+}
+
+demo-button[disabled] .demo-button-icon {
+  color: var(--demo-icon-disabled);
+}
+
+.demo-button-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+demo-button[show-icon]:not([kind="icon-button"]):not([size="small"]) .demo-button-icon {
+  display: block;
+  margin-inline-end: var(--spacing-4);
+}
+
+demo-button[show-icon]:not([kind="icon-button"])[size="small"] .demo-button-icon {
+  display: block;
+  margin-inline-start: calc(var(--spacing-4) * -1);
+}
+
+demo-button[kind="icon-button"] .demo-button-icon {
+  display: block;
+  margin: 0;
+}
+
+demo-button[kind="icon-button"][size="small"] .demo-button-icon {
+  width: var(--spacing-16);
+  height: var(--spacing-16);
+}
+
+.demo-button-label {
+  display: block;
+}
+
+demo-button:not([kind="icon-button"]):not([size="medium"]):not([size="small"]) .demo-button-label {
+  padding-inline: var(--spacing-8);
+}
+
+demo-button:not([kind="icon-button"])[size="medium"] .demo-button-label,
+demo-button:not([kind="icon-button"])[size="small"] .demo-button-label {
+  padding-inline: var(--spacing-4);
+}
+
+demo-button[kind="icon-button"] .demo-button-label {
+  display: none;
+}
+
+.demo-button-badge {
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--spacing-4) * -1.5);
+  inset-inline-end: calc(var(--spacing-4) * -1.5);
+  display: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: calc(var(--spacing-4) / 2);
+  border-radius: var(--radius-pill);
+  background: var(--demo-badge-plate);
+  pointer-events: none;
+}
+
+demo-button[show-badge] .demo-button-badge {
+  display: block;
+}
+
+.demo-button-badge-mark {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--spacing-16);
+  height: var(--spacing-16);
+  padding-inline: var(--spacing-4);
+  border-radius: inherit;
+  background: var(--demo-badge-fill);
+  color: var(--demo-badge-ink);
+  font-family: var(--font-family);
+  font-size: var(--font-caption-medium-size);
+  font-weight: var(--font-caption-medium-weight);
+  line-height: var(--font-caption-medium-line);
+  letter-spacing: var(--font-caption-medium-tracking);
+}
+
+demo-button:not([kind="icon-button"]):not([size="medium"]):not([size="small"]) .demo-button-badge-mark {
+  min-width: var(--spacing-24);
+  height: var(--spacing-24);
+  padding-inline: var(--spacing-8);
+}
+
+demo-button[size="medium"] .demo-button-badge,
+demo-button[size="small"] .demo-button-badge {
+  top: calc(var(--spacing-4) * -1);
+  inset-inline-end: calc(var(--spacing-4) * -1);
+}
+
+demo-button[size="small"] .demo-button-badge {
+  top: calc(var(--spacing-4) * -1 - var(--spacing-2));
+  inset-inline-end: calc(var(--spacing-4) * -1 - var(--spacing-2));
+}
+
+demo-button[size="medium"] .demo-button-badge-mark,
+demo-button[size="small"] .demo-button-badge-mark {
+  width: 10px; /* lint-allow */
+  min-width: 10px; /* lint-allow */
+  height: 10px; /* lint-allow */
+  padding-inline: 0;
+  font-size: 0;
+  line-height: 0;
+  background-color: var(--demo-badge-plate);
+  background-image: linear-gradient(var(--demo-badge-dot), var(--demo-badge-dot));
+}
+
+.demo-button-tip {
+  position: fixed;
+  z-index: 7;
+  box-sizing: border-box;
+  display: block;
+  max-width: calc(100vw - var(--spacing-32));
+  margin: 0;
+  padding: var(--spacing-8);
+  border-radius: var(--radius-4);
+  background: var(--color-surface-core-inverse-strong);
+  color: var(--color-text-core-inverse);
+  font-family: var(--font-family);
+  font-size: var(--font-body-2-size);
+  font-weight: var(--font-body-2-weight);
+  line-height: var(--font-body-2-line);
+  letter-spacing: var(--font-body-2-tracking);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.demo-button-tip[hidden] {
+  display: none;
+}

@@ -14,8 +14,22 @@ const menuSlot = document.querySelector("#sidebar-menu");
 const scrollY = document.querySelector("#scroll-y");
 const scrollX = document.querySelector("#scroll-x");
 const sidebarScroll = document.querySelector("#sidebar-scroll");
+const buttonsScreen = document.querySelector(".buttons-screen");
+const buttonClassSelect = document.querySelector("#button-class");
+const buttonSizeSelect = document.querySelector("#button-size");
+const buttonColorSelect = document.querySelector("#button-color");
+const buttonStyleSelect = document.querySelector("#button-style");
+const buttonBadgeSelect = document.querySelector("#button-badge-color");
+const buttonIconRow = document.querySelector("#button-row-icon");
+const buttonShowDisabled = document.querySelector("#button-show-disabled");
+const buttonShowIcon = document.querySelector("#button-show-icon");
+const buttonShowBadge = document.querySelector("#button-show-badge");
+const buttonsCaption = document.querySelector("#buttons-caption");
+const buttonsScroll = document.querySelector("#buttons-scroll");
+const demoButton = document.getElementById("demo-button");
+const buttonsFigma = document.querySelector("#buttons-figma");
 
-const styles = await fetch(new URL("../data/styles.json?v=4", import.meta.url)).then((response) => response.json());
+const styles = await fetch(new URL("../data/styles.json?v=6", import.meta.url)).then((response) => response.json());
 const collections = await fetch(new URL("../data/collections.json?v=8", import.meta.url)).then((response) => response.json());
 const sizeDoc = await fetch(new URL("../data/size.json?v=2", import.meta.url)).then((response) => response.json());
 const typeDoc = await fetch(new URL("../data/typography.json?v=2", import.meta.url)).then((response) => response.json());
@@ -444,9 +458,11 @@ function showHue(card, id) {
 function placeChrome() {
   const narrow = root.classList.contains("is-narrow");
   const semantic = collection === "semantic";
-  const themed = semantic || collection === "shadow";
+  const buttons = collection === "buttons";
+  const themed = semantic || collection === "shadow" || buttons;
   themeSwitch.hidden = !themed;
   brandSelect.hidden = !semantic;
+  menuButton.hidden = buttons;
   if (!semantic) {
     closeSidebar();
     return;
@@ -466,6 +482,12 @@ function syncNarrow() {
   root.classList.toggle("is-narrow", window.innerWidth < limit);
   placeFamilyTitles();
   placeChrome();
+  syncStacked();
+}
+
+function syncStacked() {
+  const limit = Number.parseFloat(getComputedStyle(root).getPropertyValue("--layout-buttons-stack"));
+  root.classList.toggle("is-stacked", collection === "buttons" && window.innerWidth < limit);
 }
 
 function stickFamilies() {
@@ -502,25 +524,36 @@ function stickCarousels() {
 function paint(fade) {
   const draw = () => {
     const chromeBrand = collection === "semantic" ? brand : "brand-blue";
-    const chromeTheme = collection === "semantic" || collection === "shadow" ? theme : "dark";
+    const chromeTheme = collection === "semantic" || collection === "shadow" || collection === "buttons" ? theme : "dark";
     applyColors(styles, collections, chromeBrand, chromeTheme);
     page.dataset.collection = collection;
-    const doc = measureDoc();
-    if (doc) {
-      renderMeasure(doc);
-      buildMeasureMenu(doc);
+    const buttons = collection === "buttons";
+    buttonsScreen.hidden = !buttons;
+    if (buttons) {
+      syncDemo();
     } else {
-      const tokens = activeTokens();
-      const families = groupTokens(tokens);
-      renderFamilies(families);
-      buildMenu(tokens, families);
+      const doc = measureDoc();
+      if (doc) {
+        renderMeasure(doc);
+        buildMeasureMenu(doc);
+      } else {
+        const tokens = activeTokens();
+        const families = groupTokens(tokens);
+        renderFamilies(families);
+        buildMenu(tokens, families);
+      }
     }
     placeChrome();
-    scrollY.target = scrollRoot;
-    scrollX.target = scrollRoot;
-    const menu = sidebar.querySelector(".menu");
-    if (menu) sidebarScroll.target = menu;
-    stickFamilies();
+    syncStacked();
+    if (buttons) {
+      syncButtonsScroll();
+    } else {
+      scrollY.target = scrollRoot;
+      scrollX.target = scrollRoot;
+      const menu = sidebar.querySelector(".menu");
+      if (menu) sidebarScroll.target = menu;
+      stickFamilies();
+    }
   };
   if (fade === "page") crossfade(page, draw);
   else if (fade === "content") crossfade(scrollRoot, draw);
@@ -668,17 +701,22 @@ const collectionLabels = {
   shadow: "shadow",
   typography: "typography",
 };
-collectionSelect.options = collections.collectionOrder.map((id) => ({
-  value: id,
-  label: collectionLabels[id] || id,
-}));
+collectionSelect.options = [
+  { kind: "group", label: "token-collections" },
+  ...collections.collectionOrder.map((id) => ({
+    value: id,
+    label: collectionLabels[id] || id,
+  })),
+  { kind: "group", label: "components-demo" },
+  { value: "buttons", label: "buttons" },
+];
 collectionSelect.value = collection;
 brandSelect.options = collections.brandOrder.slice();
 brandSelect.value = brand;
 
 collectionSelect.addEventListener("cc-change", (event) => {
   collection = event.detail.value;
-  if (collection === "semantic" || collection === "shadow") {
+  if (collection === "semantic" || collection === "shadow" || collection === "buttons") {
     theme = remembered.theme;
     themeSwitch.setAttribute("mode", theme);
   }
@@ -686,6 +724,7 @@ collectionSelect.addEventListener("cc-change", (event) => {
     brand = remembered.brand;
     brandSelect.value = brand;
   }
+  hideNoAccess();
   paint("content");
 });
 
@@ -739,6 +778,434 @@ document.addEventListener("cc-open", (event) => {
   for (const select of document.querySelectorAll("cc-select-small")) {
     if (select !== event.target) select.removeAttribute("open");
   }
+});
+
+const buttonState = {
+  kind: "labeled-button",
+  size: "large",
+  color: "brand-blue",
+  style: "solid",
+  disabled: false,
+  showIcon: true,
+  showBadge: false,
+  badgeColor: "danger",
+  tab: "settings",
+};
+
+const buttonColors = ["brand-blue", "brand-cyan", "neutral", "danger", "success", "warning", "info"];
+const semanticByName = new Map(collections.semantic.map((token) => [token.name, token]));
+const demoProps = [
+  "--demo-fill",
+  "--demo-fill-hover",
+  "--demo-fill-pressed",
+  "--demo-fill-disabled",
+  "--demo-ink",
+  "--demo-ink-hover",
+  "--demo-ink-pressed",
+  "--demo-ink-disabled",
+  "--demo-icon",
+  "--demo-icon-hover",
+  "--demo-icon-pressed",
+  "--demo-icon-disabled",
+  "--demo-border",
+  "--demo-border-hover",
+  "--demo-border-pressed",
+  "--demo-border-disabled",
+  "--demo-badge-fill",
+  "--demo-badge-ink",
+  "--demo-badge-dot",
+  "--demo-badge-plate",
+];
+
+let docToken = 0;
+let accessAnchor = null;
+
+function toneFamily(color) {
+  if (color === "brand-blue" || color === "brand-cyan") return "accent";
+  return color;
+}
+
+function toneBrand(color) {
+  return color === "brand-cyan" ? "brand-cyan" : "brand-blue";
+}
+
+function colorOf(name, brandKey) {
+  const token = semanticByName.get(name);
+  const band = token && token.values && token.values[brandKey];
+  const raw = band && band[theme];
+  if (raw == null || raw === "") return "";
+  if (typeof raw === "object" && "value" in raw) return raw.value == null ? "" : String(raw.value);
+  return String(raw);
+}
+
+function writeDemo(node, prop, value) {
+  if (!value) return;
+  node.style.setProperty(prop, value);
+}
+
+function paintDemo(node) {
+  for (const prop of demoProps) node.style.removeProperty(prop);
+  const family = toneFamily(buttonState.color);
+  const brandKey = toneBrand(buttonState.color);
+  const style = buttonState.style;
+  const surface = (layer, state) => colorOf(`surface/${family}/${layer}/${state}`, brandKey);
+  if (style === "no-surface" || style === "outline") {
+    writeDemo(node, "--demo-fill", "transparent");
+    writeDemo(node, "--demo-fill-disabled", "transparent");
+    writeDemo(node, "--demo-fill-hover", surface("transparent", "hover"));
+    writeDemo(node, "--demo-fill-pressed", surface("transparent", "active"));
+  } else {
+    writeDemo(node, "--demo-fill", surface(style, "default"));
+    writeDemo(node, "--demo-fill-hover", surface(style, "hover"));
+    writeDemo(node, "--demo-fill-pressed", surface(style, "active"));
+    writeDemo(node, "--demo-fill-disabled", surface(style, "disabled"));
+  }
+  const ghost = style === "transparent" || style === "no-surface" || style === "outline";
+  const foreground = (scope, state) => {
+    if (state === "disabled") {
+      if (!ghost || family === "neutral") return `${scope}/core/disabled`;
+      return `${scope}/${family}/disabled`;
+    }
+    if (style === "solid") return `${scope}/core/on-solid`;
+    if (style === "faded" || family === "neutral") {
+      return scope === "text" ? "text/core/primary" : "icon-shape/core/default";
+    }
+    return `${scope}/${family}/default`;
+  };
+  const ink = colorOf(foreground("text", "default"), brandKey);
+  const icon = colorOf(foreground("icon-shape", "default"), brandKey);
+  const inkDisabled = colorOf(foreground("text", "disabled"), brandKey);
+  const iconDisabled = colorOf(foreground("icon-shape", "disabled"), brandKey);
+  for (const prop of ["--demo-ink", "--demo-ink-hover", "--demo-ink-pressed"]) writeDemo(node, prop, ink);
+  writeDemo(node, "--demo-ink-disabled", inkDisabled);
+  for (const prop of ["--demo-icon", "--demo-icon-hover", "--demo-icon-pressed"]) writeDemo(node, prop, icon);
+  writeDemo(node, "--demo-icon-disabled", iconDisabled);
+  if (style === "outline") {
+    const border = colorOf(`border/${family}/default`, brandKey);
+    const borderDisabled = colorOf(`border/${family}/disabled`, brandKey);
+    writeDemo(node, "--demo-border", border);
+    writeDemo(node, "--demo-border-hover", border);
+    writeDemo(node, "--demo-border-pressed", border);
+    writeDemo(node, "--demo-border-disabled", borderDisabled);
+  } else {
+    writeDemo(node, "--demo-border", "transparent");
+    writeDemo(node, "--demo-border-hover", "transparent");
+    writeDemo(node, "--demo-border-pressed", "transparent");
+    writeDemo(node, "--demo-border-disabled", "transparent");
+  }
+  const badgeKey = toneBrand(buttonState.badgeColor);
+  const badgeFamily = toneFamily(buttonState.badgeColor);
+  writeDemo(node, "--demo-badge-plate", colorOf("surface/core/undertone", badgeKey));
+  if (buttonState.badgeColor === "neutral") {
+    writeDemo(node, "--demo-badge-fill", colorOf("surface/neutral/faded/default", "brand-blue"));
+    writeDemo(node, "--demo-badge-ink", colorOf("text/core/primary", "brand-blue"));
+    writeDemo(node, "--demo-badge-dot", colorOf("icon-shape/core/disabled", "brand-blue"));
+  } else {
+    writeDemo(node, "--demo-badge-fill", colorOf(`surface/${badgeFamily}/solid/default`, badgeKey));
+    writeDemo(node, "--demo-badge-ink", colorOf("text/core/on-solid", badgeKey));
+    writeDemo(node, "--demo-badge-dot", colorOf(`icon-shape/${badgeFamily}/default`, badgeKey));
+  }
+}
+
+function setFlag(node, name, on) {
+  if (on) node.setAttribute(name, "");
+  else node.removeAttribute(name);
+}
+
+function coerceButtonStyle() {
+  if (buttonState.color === "neutral" && buttonState.style === "solid") buttonState.style = "faded";
+}
+
+function syncDemo() {
+  coerceButtonStyle();
+  buttonStyleSelect.value = buttonState.style;
+  buttonIconRow.hidden = buttonState.kind === "icon-button";
+  buttonsCaption.textContent = `${buttonState.kind} / ${buttonState.size} / ${buttonState.color} / ${buttonState.style}`;
+  demoButton.setAttribute("kind", buttonState.kind);
+  demoButton.setAttribute("size", buttonState.size);
+  demoButton.setAttribute("label", "Label");
+  setFlag(demoButton, "show-icon", buttonState.kind === "icon-button" || buttonState.showIcon);
+  setFlag(demoButton, "show-badge", buttonState.showBadge);
+  setFlag(demoButton, "disabled", buttonState.disabled);
+  paintDemo(demoButton);
+}
+
+function bindButtonSelect(node, options, key) {
+  node.options = options;
+  node.value = buttonState[key];
+  node.addEventListener("cc-change", (event) => {
+    buttonState[key] = event.detail.value;
+    if (key === "color" || key === "style") coerceButtonStyle();
+    syncDemo();
+    if (key === "kind" && (buttonState.tab === "spec" || buttonState.tab === "usage")) loadDoc(buttonState.tab);
+  });
+}
+
+function bindButtonToggle(node, key) {
+  node.setAttribute("aria-pressed", buttonState[key] ? "true" : "false");
+  node.addEventListener("click", () => {
+    buttonState[key] = !buttonState[key];
+    node.setAttribute("aria-pressed", buttonState[key] ? "true" : "false");
+    syncDemo();
+  });
+}
+
+function showButtonTab(tab) {
+  buttonState.tab = tab;
+  for (const name of ["settings", "spec", "usage"]) {
+    const on = name === tab;
+    document.querySelector(`#buttons-tab-${name}`).setAttribute("aria-selected", on ? "true" : "false");
+    document.querySelector(`#buttons-panel-${name}`).hidden = !on;
+  }
+  if (tab === "spec" || tab === "usage") loadDoc(tab);
+  syncButtonsScroll();
+}
+
+function syncButtonsScroll() {
+  const panel = document.querySelector(`#buttons-panel-${buttonState.tab}`);
+  if (panel) buttonsScroll.target = panel;
+}
+
+function showEmpty(panel) {
+  panel.classList.remove("buttons-doc");
+  panel.replaceChildren();
+  const empty = document.createElement("p");
+  empty.className = "buttons-empty";
+  empty.textContent = "Nothing here yet.";
+  panel.append(empty);
+}
+
+function stripFrontmatter(text) {
+  const normalized = String(text).replace(/^\uFEFF/, "");
+  if (!normalized.startsWith("---")) return normalized;
+  const end = normalized.indexOf("\n---", 3);
+  if (end === -1) return normalized;
+  return normalized.slice(end + 4).replace(/^\r?\n/, "");
+}
+
+function appendInline(parent, text) {
+  const pattern = /\[([^\]]+)\]\(([^)\s]+)\)|`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*/g;
+  let last = 0;
+  for (const match of text.matchAll(pattern)) {
+    if (match.index > last) parent.append(text.slice(last, match.index));
+    if (match[1] != null) {
+      const link = document.createElement("a");
+      link.href = match[2];
+      link.textContent = match[1];
+      parent.append(link);
+    } else if (match[3] != null) {
+      const code = document.createElement("code");
+      code.textContent = match[3];
+      parent.append(code);
+    } else if (match[4] != null) {
+      const strong = document.createElement("strong");
+      strong.textContent = match[4];
+      parent.append(strong);
+    } else if (match[5] != null) {
+      const em = document.createElement("em");
+      em.textContent = match[5];
+      parent.append(em);
+    }
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) parent.append(text.slice(last));
+}
+
+function splitCells(line) {
+  let body = line.trim();
+  if (body.startsWith("|")) body = body.slice(1);
+  if (body.endsWith("|")) body = body.slice(0, -1);
+  return body.split("|").map((cell) => cell.trim());
+}
+
+function isTableStart(lines, index) {
+  if (index + 1 >= lines.length || !lines[index].includes("|")) return false;
+  return /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(lines[index + 1]);
+}
+
+function blockStart(lines, index) {
+  const line = lines[index];
+  if (!line || !line.trim()) return true;
+  if (/^#{1,6}\s+/.test(line)) return true;
+  if (/^\s*[-*+]\s+/.test(line)) return true;
+  if (/^\s*\d+\.\s+/.test(line)) return true;
+  return isTableStart(lines, index);
+}
+
+function appendList(host, lines, start, tag) {
+  const list = document.createElement(tag);
+  const marker = tag === "ul" ? /^\s*[-*+]\s+(.*)$/ : /^\s*\d+\.\s+(.*)$/;
+  let index = start;
+  while (index < lines.length) {
+    const match = marker.exec(lines[index]);
+    if (!match) break;
+    const item = document.createElement("li");
+    appendInline(item, match[1]);
+    list.append(item);
+    index += 1;
+  }
+  host.append(list);
+  return index;
+}
+
+function appendTable(host, lines, start) {
+  const table = document.createElement("table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  for (const cell of splitCells(lines[start])) {
+    const th = document.createElement("th");
+    appendInline(th, cell);
+    headRow.append(th);
+  }
+  head.append(headRow);
+  table.append(head);
+  const body = document.createElement("tbody");
+  let index = start + 2;
+  while (index < lines.length && lines[index].trim() && lines[index].includes("|")) {
+    const row = document.createElement("tr");
+    for (const cell of splitCells(lines[index])) {
+      const td = document.createElement("td");
+      appendInline(td, cell);
+      row.append(td);
+    }
+    body.append(row);
+    index += 1;
+  }
+  table.append(body);
+  host.append(table);
+  return index;
+}
+
+function renderMarkdown(panel, source) {
+  panel.classList.add("buttons-doc");
+  panel.replaceChildren();
+  const lines = source.replace(/\r\n/g, "\n").split("\n");
+  let index = 0;
+  while (index < lines.length) {
+    if (!lines[index].trim()) {
+      index += 1;
+      continue;
+    }
+    const heading = /^(#{1,6})\s+(.*)$/.exec(lines[index]);
+    if (heading) {
+      const level = heading[1].length;
+      const node = document.createElement(`h${level}`);
+      appendInline(node, heading[2]);
+      panel.append(node);
+      index += 1;
+      continue;
+    }
+    if (isTableStart(lines, index)) {
+      index = appendTable(panel, lines, index);
+      continue;
+    }
+    if (/^\s*[-*+]\s+/.test(lines[index])) {
+      index = appendList(panel, lines, index, "ul");
+      continue;
+    }
+    if (/^\s*\d+\.\s+/.test(lines[index])) {
+      index = appendList(panel, lines, index, "ol");
+      continue;
+    }
+    const para = [lines[index]];
+    index += 1;
+    while (index < lines.length && !blockStart(lines, index)) {
+      para.push(lines[index]);
+      index += 1;
+    }
+    const node = document.createElement("p");
+    appendInline(node, para.join(" "));
+    panel.append(node);
+  }
+}
+
+async function loadDoc(tab) {
+  const kind = buttonState.kind;
+  const token = ++docToken;
+  const panel = document.querySelector(tab === "spec" ? "#buttons-panel-spec" : "#buttons-panel-usage");
+  const file = tab === "spec" ? "spec.md" : "usage.md";
+  try {
+    const response = await fetch(`components/${kind}/${file}`);
+    if (token !== docToken || buttonState.tab !== tab || buttonState.kind !== kind) return;
+    if (!response.ok) {
+      showEmpty(panel);
+      return;
+    }
+    const body = stripFrontmatter(await response.text()).trim();
+    if (token !== docToken || buttonState.tab !== tab || buttonState.kind !== kind) return;
+    if (!body) showEmpty(panel);
+    else renderMarkdown(panel, body);
+    syncButtonsScroll();
+  } catch {
+    if (token !== docToken || buttonState.tab !== tab || buttonState.kind !== kind) return;
+    showEmpty(panel);
+  }
+}
+
+function tipNode() {
+  return document.querySelector("cc-tooltip");
+}
+
+function showNoAccess(anchor) {
+  const tip = tipNode();
+  if (!tip) return;
+  if (accessAnchor === anchor && !tip.hidden) {
+    accessAnchor = null;
+    tip.hide();
+    return;
+  }
+  accessAnchor = anchor;
+  tip.show(anchor, "no access");
+}
+
+function hideNoAccess() {
+  if (!accessAnchor) return;
+  accessAnchor = null;
+  const tip = tipNode();
+  if (tip) tip.hide();
+}
+
+function anchorFrom(event) {
+  if (event.target instanceof Element) return event.target;
+  return event.target && event.target.parentElement ? event.target.parentElement : null;
+}
+
+bindButtonSelect(buttonClassSelect, ["labeled-button", "icon-button"], "kind");
+bindButtonSelect(buttonSizeSelect, ["large", "medium", "small"], "size");
+bindButtonSelect(buttonColorSelect, buttonColors, "color");
+bindButtonSelect(buttonStyleSelect, ["solid", "faded", "transparent", "no-surface", "outline"], "style");
+bindButtonSelect(buttonBadgeSelect, buttonColors, "badgeColor");
+bindButtonToggle(buttonShowDisabled, "disabled");
+bindButtonToggle(buttonShowIcon, "showIcon");
+bindButtonToggle(buttonShowBadge, "showBadge");
+
+for (const name of ["settings", "spec", "usage"]) {
+  document.querySelector(`#buttons-tab-${name}`).addEventListener("click", () => showButtonTab(name));
+}
+
+buttonsFigma.addEventListener("click", () => showNoAccess(buttonsFigma));
+
+for (const id of ["#buttons-panel-spec", "#buttons-panel-usage"]) {
+  document.querySelector(id).addEventListener("click", (event) => {
+    const origin = anchorFrom(event);
+    const link = origin && origin.closest("a");
+    if (!link || !event.currentTarget.contains(link)) return;
+    event.preventDefault();
+    showNoAccess(link);
+  });
+}
+
+document.addEventListener("pointerdown", (event) => {
+  if (!accessAnchor) return;
+  const origin = anchorFrom(event);
+  if (origin && (accessAnchor === origin || accessAnchor.contains(origin))) return;
+  const tip = tipNode();
+  if (tip && origin && tip.contains(origin)) return;
+  hideNoAccess();
+}, true);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") hideNoAccess();
 });
 
 window.addEventListener("resize", () => {

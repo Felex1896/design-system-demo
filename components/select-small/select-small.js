@@ -44,6 +44,9 @@ class CcSelectSmall extends HTMLElement {
   set options(list) {
     const source = Array.isArray(list) ? list : [];
     this._options = source.map((item) => {
+      if (item && typeof item === "object" && item.kind === "group") {
+        return { kind: "group", label: String(item.label ?? "") };
+      }
       if (item && typeof item === "object") {
         const value = String(item.value ?? "");
         return { value, label: String(item.label ?? value) };
@@ -145,6 +148,14 @@ class CcSelectSmall extends HTMLElement {
     if (!this._list) return;
     this._list.replaceChildren();
     for (const option of this._options) {
+      if (option.kind === "group") {
+        const group = document.createElement("div");
+        group.className = "cc-select-small__group";
+        group.setAttribute("role", "presentation");
+        group.textContent = option.label;
+        this._list.append(group);
+        continue;
+      }
       const button = document.createElement("button");
       button.type = "button";
       button.className = "cc-select-small__option";
@@ -163,7 +174,7 @@ class CcSelectSmall extends HTMLElement {
   _syncValue() {
     if (!this._valueNode) return;
     const value = this.getAttribute("value") || "";
-    const match = this._options.find((option) => option.value === value);
+    const match = this._options.find((option) => option.kind !== "group" && option.value === value);
     this._valueNode.textContent = match ? match.label : value;
     if (!this._list) return;
     for (const option of this._list.querySelectorAll(".cc-select-small__option")) {

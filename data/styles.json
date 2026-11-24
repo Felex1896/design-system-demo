@@ -11,7 +11,8 @@
     "caption-regular": { "size": 12, "lineHeight": 16, "letterSpacing": 0.14, "weight": 400 },
     "caption-medium": { "size": 12, "lineHeight": 16, "letterSpacing": 0, "weight": 500 },
     "subtitle-2": { "size": 16, "lineHeight": 20, "letterSpacing": 0.25, "weight": 500 },
-    "subtitle-3": { "size": 14, "lineHeight": 20, "letterSpacing": 0.1, "weight": 500 }
+    "subtitle-3": { "size": 14, "lineHeight": 20, "letterSpacing": 0.1, "weight": 500 },
+    "overline": { "size": 10, "lineHeight": 16, "letterSpacing": 1.5, "weight": 500 }
   },
   "spacing": {
     "0": 0,
@@ -77,7 +78,15 @@
     "sidebar-header-height": 64,
     "chevron-slot": 32,
     "measure-min-width": 320,
-    "measure-max-width": 400
+    "measure-max-width": 400,
+    "buttons-side-width": 400,
+    "buttons-pane-min": 360,
+    "buttons-stack": 720,
+    "buttons-play-stack": 320,
+    "buttons-label": 120,
+    "buttons-tab-height": 40,
+    "buttons-toggle-width": 38,
+    "buttons-toggle-height": 24
   },
   "colorRoles": [
     "surface/neutral/transparent/default",
@@ -112,6 +121,9 @@
     "surface/accent/solid/default",
     "surface/accent/solid/hover",
     "surface/accent/solid/active",
-    "icon-shape/core/on-solid"
+    "icon-shape/core/on-solid",
+    "icon-shape/accent/default",
+    "border/accent/solid",
+    "text/accent/default"
   ]
 }

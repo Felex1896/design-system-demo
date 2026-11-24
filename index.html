@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Token collections</title>
-    <link rel="stylesheet" href="src/page.css?v=24">
-    <link rel="stylesheet" href="components/select-small/select-small.css?v=2">
+    <link rel="stylesheet" href="src/page.css?v=28">
+    <link rel="stylesheet" href="components/select-small/select-small.css?v=4">
+    <link rel="stylesheet" href="components/demo-button/demo-button.css?v=4">
     <link rel="stylesheet" href="components/mode-switcher/mode-switcher.css?v=3">
     <link rel="stylesheet" href="components/icon-button/icon-button.css">
     <link rel="stylesheet" href="components/color-row/color-row.css?v=6">
@@ -34,6 +35,62 @@
       </div>
       <cc-scrollbar id="scroll-y" axis="vertical"></cc-scrollbar>
       <cc-scrollbar id="scroll-x" axis="horizontal"></cc-scrollbar>
+      <div class="buttons-screen" hidden>
+        <div class="buttons-side">
+          <div class="buttons-tabs" role="tablist">
+            <button class="buttons-tab" id="buttons-tab-settings" type="button" role="tab" aria-selected="true" aria-controls="buttons-panel-settings">Settings</button>
+            <button class="buttons-tab" id="buttons-tab-spec" type="button" role="tab" aria-selected="false" aria-controls="buttons-panel-spec">Spec.md</button>
+            <button class="buttons-tab" id="buttons-tab-usage" type="button" role="tab" aria-selected="false" aria-controls="buttons-panel-usage">Usage.md</button>
+          </div>
+          <div class="buttons-panel cc-scroll-hidden" id="buttons-panel-settings" role="tabpanel">
+            <div class="buttons-row">
+              <span class="buttons-label" id="button-label-class">class</span>
+              <cc-select-small id="button-class" aria-labelledby="button-label-class"></cc-select-small>
+            </div>
+            <div class="buttons-row">
+              <span class="buttons-label" id="button-label-size">size</span>
+              <cc-select-small id="button-size" aria-labelledby="button-label-size"></cc-select-small>
+            </div>
+            <div class="buttons-row">
+              <span class="buttons-label" id="button-label-color">color</span>
+              <cc-select-small id="button-color" aria-labelledby="button-label-color"></cc-select-small>
+            </div>
+            <div class="buttons-row">
+              <span class="buttons-label" id="button-label-style">style</span>
+              <cc-select-small id="button-style" aria-labelledby="button-label-style"></cc-select-small>
+            </div>
+            <div class="buttons-row" id="button-row-disabled">
+              <span class="buttons-label" id="button-label-disabled">show-disabled</span>
+              <button class="buttons-toggle" id="button-show-disabled" type="button" aria-pressed="false" aria-labelledby="button-label-disabled"><span class="buttons-toggle__thumb"></span></button>
+            </div>
+            <div class="buttons-row" id="button-row-icon">
+              <span class="buttons-label" id="button-label-icon">show-icon</span>
+              <button class="buttons-toggle" id="button-show-icon" type="button" aria-pressed="true" aria-labelledby="button-label-icon"><span class="buttons-toggle__thumb"></span></button>
+            </div>
+            <div class="buttons-row">
+              <span class="buttons-label" id="button-label-badge">show-badge</span>
+              <button class="buttons-toggle" id="button-show-badge" type="button" aria-pressed="false" aria-labelledby="button-label-badge"><span class="buttons-toggle__thumb"></span></button>
+            </div>
+            <div class="buttons-row">
+              <span class="buttons-label" id="button-label-badge-color">badge-color</span>
+              <cc-select-small id="button-badge-color" aria-labelledby="button-label-badge-color"></cc-select-small>
+            </div>
+          </div>
+          <div class="buttons-panel cc-scroll-hidden" id="buttons-panel-spec" role="tabpanel" hidden></div>
+          <div class="buttons-panel cc-scroll-hidden" id="buttons-panel-usage" role="tabpanel" hidden></div>
+          <cc-scrollbar id="buttons-scroll" axis="vertical"></cc-scrollbar>
+        </div>
+        <div class="buttons-play">
+          <div class="buttons-play__caption" id="buttons-caption"></div>
+          <div class="buttons-play__stage">
+            <demo-button id="demo-button" label="Label"></demo-button>
+          </div>
+          <div class="buttons-play__footer">
+            <button class="buttons-figma" id="buttons-figma" type="button">Open in Figma</button>
+            <span class="buttons-play__mark">Playground</span>
+          </div>
+        </div>
+      </div>
       <cc-sidebar id="sidebar">
         <div id="sidebar-menu" slot="menu"></div>
         <cc-scrollbar id="sidebar-scroll" slot="scrollbar" axis="vertical"></cc-scrollbar>
@@ -42,7 +99,8 @@
     <span hidden data-copy="theme.dark"></span>
     <span hidden data-copy="theme.light"></span>
     <span hidden data-copy="menu.close"></span>
-    <script src="components/select-small/select-small.js?v=7"></script>
+    <script src="components/demo-button/demo-button.js?v=4"></script>
+    <script src="components/select-small/select-small.js?v=8"></script>
     <script src="components/mode-switcher/mode-switcher.js?v=2"></script>
     <script src="components/icon-button/icon-button.js?v=2"></script>
     <script src="components/color-row/color-row.js?v=4"></script>
@@ -57,6 +115,6 @@
     <script src="components/type-row/type-row.js?v=3"></script>
     <script src="components/shadow-row/shadow-row.js?v=1"></script>
     <script src="components/switcher-end/switcher-end.js?v=1"></script>
-    <script type="module" src="src/main.js?v=47"></script>
+    <script type="module" src="src/main.js?v=51"></script>
   </body>
 </html>
