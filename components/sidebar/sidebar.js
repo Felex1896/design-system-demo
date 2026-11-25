@@ -28,6 +28,10 @@ class CcSidebar extends HTMLElement {
 
     this.#brand = document.createElement("div");
     this.#brand.className = "brand";
+    const mark = document.createElement("span");
+    mark.className = "brand-mark";
+    mark.textContent = "fast-scroll";
+    this.#brand.append(mark);
 
     this.#close = document.createElement("cc-icon-button");
     this.#close.setAttribute("glyph", "close");

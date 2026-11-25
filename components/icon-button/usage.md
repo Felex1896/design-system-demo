@@ -24,7 +24,7 @@ Use an icon button when the glyph is enough. Use a labeled button when the actio
 
 | Color | When |
 | --- | --- |
-| `brand-blue`, `brand-cyan` | An important, priority action. |
+| `accent` | An important, priority action. |
 | `success` | A confirmation. |
 | `danger` | A destructive or dangerous action that cannot be undone. |
 | `warning` | A dangerous action that can be undone. It needs extra attention. |

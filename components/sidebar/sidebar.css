@@ -85,6 +85,15 @@ cc-sidebar .brand > * {
   min-width: 0;
 }
 
+cc-sidebar .brand-mark {
+  color: var(--color-text-core-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-subtitle-3-size);
+  font-weight: var(--font-subtitle-3-weight);
+  line-height: var(--font-subtitle-3-line);
+  letter-spacing: var(--font-subtitle-3-tracking);
+}
+
 cc-sidebar .header > cc-icon-button {
   flex: 0 0 auto;
 }

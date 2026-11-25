@@ -3,7 +3,8 @@ cc-tooltip {
   z-index: 7;
   box-sizing: border-box;
   display: block;
-  max-width: calc(100vw - var(--spacing-32));
+  width: max-content;
+  max-width: min(var(--layout-tooltip-max), calc(100vw - var(--spacing-32)));
   margin: 0;
   padding: var(--spacing-8);
   border-radius: var(--radius-4);
@@ -16,6 +17,10 @@ cc-tooltip {
   letter-spacing: var(--font-body-2-tracking);
   pointer-events: none;
   overflow-wrap: anywhere;
+}
+
+cc-tooltip[data-fit="anchor"] {
+  max-width: none;
 }
 
 cc-tooltip[hidden] {

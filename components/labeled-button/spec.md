@@ -17,7 +17,7 @@ A button with a text label.
 | Axis | Values |
 | --- | --- |
 | size | `large` · `medium` · `small` |
-| color | `brand-blue` · `brand-cyan` · `neutral` · `danger` · `success` · `warning` · `info` |
+| color | `accent` · `neutral` · `danger` · `success` · `warning` · `info` |
 | style | `solid` · `faded` · `transparent` · `no-surface` · `outline` |
 
 `neutral` has no `solid`. Switching to `neutral` from `solid` sets the style to `faded`.

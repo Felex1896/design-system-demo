@@ -52,7 +52,7 @@ cc-color-carousel .cc-color-carousel__slide {
   background-color: transparent;
 }
 
-cc-color-carousel .cc-color-carousel__slide:not(.swiper-slide-active):hover {
+cc-color-carousel .cc-color-carousel__slide:not(.is-centered):hover {
   background-color: var(--color-surface-neutral-transparent-hover);
 }
 
@@ -67,7 +67,7 @@ cc-color-carousel .cc-color-carousel__disk {
   transition-timing-function: ease;
 }
 
-cc-color-carousel .swiper-slide-active .cc-color-carousel__disk {
+cc-color-carousel .is-centered .cc-color-carousel__disk {
   width: var(--spacing-24);
   height: var(--spacing-24);
 }

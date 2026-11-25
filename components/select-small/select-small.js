@@ -9,11 +9,6 @@
   document.head.append(link);
 })();
 
-const CHEVRON_PATH =
-  "M12 13.2L16.2 8.99998C16.5314 8.6686 17.0686 8.6686 17.4 8.99998C17.7314 9.33135 17.7314 9.8686 17.4 10.2L12 15.6L6.6 10.2C6.26863 9.8686 6.26863 9.33135 6.6 8.99998C6.93137 8.6686 7.46863 8.6686 7.8 8.99998L12 13.2Z";
-
-let sequence = 0;
-
 class CcSelectSmall extends HTMLElement {
   static get observedAttributes() {
     return ["value", "disabled", "open"];
@@ -22,39 +17,17 @@ class CcSelectSmall extends HTMLElement {
   constructor() {
     super();
     this._options = [];
-    this._open = false;
-    this._ready = false;
-    this._onPointerDown = (event) => {
-      if (!this._open) return;
-      if (event.composedPath().includes(this)) return;
-      this._setOpen(false);
-    };
-    this._onKeyDown = (event) => {
-      if (!this._open || event.key !== "Escape") return;
-      event.preventDefault();
-      this._setOpen(false);
-      if (this._plate) this._plate.focus();
-    };
+    this._inner = null;
+    this._lock = false;
   }
 
   get options() {
-    return this._options.slice();
+    return this._inner ? this._inner.options : this._options.slice();
   }
 
   set options(list) {
-    const source = Array.isArray(list) ? list : [];
-    this._options = source.map((item) => {
-      if (item && typeof item === "object" && item.kind === "group") {
-        return { kind: "group", label: String(item.label ?? "") };
-      }
-      if (item && typeof item === "object") {
-        const value = String(item.value ?? "");
-        return { value, label: String(item.label ?? value) };
-      }
-      const value = String(item);
-      return { value, label: value };
-    });
-    this._renderOptions();
+    this._options = Array.isArray(list) ? list : [];
+    if (this._inner) this._inner.options = this._options;
   }
 
   get value() {
@@ -64,200 +37,65 @@ class CcSelectSmall extends HTMLElement {
   set value(next) {
     const text = next == null ? "" : String(next);
     if (this.getAttribute("value") === text) {
-      this._syncValue();
+      if (this._inner && this._inner.getAttribute("value") !== text) {
+        this._inner.setAttribute("value", text);
+      }
       return;
     }
     this.setAttribute("value", text);
   }
 
-  get open() {
-    return this._open;
-  }
-
-  set open(next) {
-    this._setOpen(Boolean(next));
-  }
-
   connectedCallback() {
     if (this.closest("[data-ghost]")) return;
-    if (!this._ready) {
-      this._ready = true;
-      this._build();
-    }
-    if (this.hasAttribute("open")) this._setOpen(true);
-    if (this._open) this._bindDismiss(true);
-  }
-
-  disconnectedCallback() {
-    this._bindDismiss(false);
+    if (this._inner) return;
+    const inner = document.createElement("cc-select");
+    inner.setAttribute("type", "small");
+    this._inner = inner;
+    this.append(inner);
+    if (this._options.length) inner.options = this._options;
+    this._push();
+    inner.addEventListener("cc-change", (event) => {
+      const value = event.detail && event.detail.value != null ? String(event.detail.value) : "";
+      if (this.getAttribute("value") === value) return;
+      this._lock = true;
+      this.setAttribute("value", value);
+      this._lock = false;
+    });
+    new MutationObserver(() => this._mirrorOpen()).observe(inner, {
+      attributes: true,
+      attributeFilter: ["open"],
+    });
   }
 
   attributeChangedCallback(name) {
-    if (!this._ready) return;
-    if (name === "value") this._syncValue();
-    if (name === "disabled") this._syncDisabled();
-    if (name === "open") this._setOpen(this.hasAttribute("open"));
-  }
-
-  _build() {
-    const listId = `cc-select-small-list-${++sequence}`;
-
-    this._plate = document.createElement("button");
-    this._plate.type = "button";
-    this._plate.className = "cc-select-small__plate";
-    this._plate.setAttribute("aria-haspopup", "listbox");
-    this._plate.setAttribute("aria-expanded", "false");
-    this._plate.setAttribute("aria-controls", listId);
-
-    this._valueNode = document.createElement("span");
-    this._valueNode.className = "cc-select-small__label";
-    this._plate.append(this._valueNode, this._chevron());
-
-    this._list = document.createElement("div");
-    this._list.id = listId;
-    this._list.className = "cc-select-small__list";
-    this._list.setAttribute("role", "listbox");
-    this._list.hidden = true;
-
-    this._plate.addEventListener("click", () => {
-      if (this.hasAttribute("disabled")) return;
-      this._setOpen(!this._open);
-    });
-
-    this.append(this._plate, this._list);
-    this._renderOptions();
-    this._syncDisabled();
-  }
-
-  _chevron() {
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("class", "cc-select-small__icon");
-    svg.setAttribute("viewBox", "0 0 24 24");
-    svg.setAttribute("fill", "none");
-    svg.setAttribute("aria-hidden", "true");
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("fill", "currentColor");
-    path.setAttribute("fill-rule", "evenodd");
-    path.setAttribute("clip-rule", "evenodd");
-    path.setAttribute("d", CHEVRON_PATH);
-    svg.append(path);
-    return svg;
-  }
-
-  _renderOptions() {
-    if (!this._list) return;
-    this._list.replaceChildren();
-    for (const option of this._options) {
-      if (option.kind === "group") {
-        const group = document.createElement("div");
-        group.className = "cc-select-small__group";
-        group.setAttribute("role", "presentation");
-        group.textContent = option.label;
-        this._list.append(group);
-        continue;
-      }
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "cc-select-small__option";
-      button.setAttribute("role", "option");
-      button.setAttribute("data-value", option.value);
-      const label = document.createElement("span");
-      label.className = "cc-select-small__label";
-      label.textContent = option.label;
-      button.append(label);
-      button.addEventListener("click", () => this._choose(option.value));
-      this._list.append(button);
+    if (!this._inner || this._lock) return;
+    if (name === "value") this._inner.setAttribute("value", this.getAttribute("value") || "");
+    if (name === "disabled") {
+      this._inner.setAttribute("state", this.hasAttribute("disabled") ? "disabled" : "default");
     }
-    this._syncValue();
-  }
-
-  _syncValue() {
-    if (!this._valueNode) return;
-    const value = this.getAttribute("value") || "";
-    const match = this._options.find((option) => option.kind !== "group" && option.value === value);
-    this._valueNode.textContent = match ? match.label : value;
-    if (!this._list) return;
-    for (const option of this._list.querySelectorAll(".cc-select-small__option")) {
-      const selected = option.getAttribute("data-value") === value;
-      option.setAttribute("aria-selected", selected ? "true" : "false");
+    if (name === "open") {
+      if (this.hasAttribute("open")) this._inner.setAttribute("open", "");
+      else this._inner.removeAttribute("open");
     }
   }
 
-  _syncDisabled() {
-    if (!this._plate) return;
-    const disabled = this.hasAttribute("disabled");
-    this._plate.disabled = disabled;
-    if (disabled) this._setOpen(false);
+  _push() {
+    this._inner.setAttribute("value", this.getAttribute("value") || "");
+    if (this.hasAttribute("disabled")) this._inner.setAttribute("state", "disabled");
+    if (this.hasAttribute("open")) this._inner.setAttribute("open", "");
   }
 
-  _choose(value) {
-    this.value = value;
-    this.dispatchEvent(new CustomEvent("cc-change", {
-      bubbles: true,
-      detail: { value },
-    }));
-    this._setOpen(false);
-    if (this._plate) this._plate.focus();
-  }
-
-  _setOpen(next) {
-    const open = Boolean(next) && !this.hasAttribute("disabled");
-    if (this._open === open) {
-      if (open && !this.hasAttribute("open")) this.setAttribute("open", "");
-      if (!open && this.hasAttribute("open")) this.removeAttribute("open");
+  _mirrorOpen() {
+    const open = this._inner.hasAttribute("open");
+    if (open === this.hasAttribute("open")) {
+      if (open) this.dispatchEvent(new CustomEvent("cc-open", { bubbles: true }));
       return;
     }
-    this._open = open;
+    this._lock = true;
     if (open) this.setAttribute("open", "");
     else this.removeAttribute("open");
-    if (this._plate) this._plate.setAttribute("aria-expanded", open ? "true" : "false");
-    this._playList(open);
-    this._bindDismiss(open);
-    if (open) {
-      this.dispatchEvent(new CustomEvent("cc-open", { bubbles: true }));
-    }
-  }
-
-  _playList(open) {
-    const list = this._list;
-    if (!list) return;
-    const motion = window.ccMotion;
-    const run = {};
-    this._listRun = run;
-    const finish = () => {
-      if (this._listRun !== run) return;
-      if (!this._open) list.hidden = true;
-      list.style.opacity = "";
-    };
-    const fade = { duration: 0.12, ease: "easeOut" };
-    if (!motion || motion.reduce()) {
-      list.hidden = !open;
-      list.style.opacity = "";
-      return;
-    }
-    if (open) {
-      list.hidden = false;
-      list.style.opacity = "0";
-      motion.animate(list, { opacity: [0, 1] }, fade);
-    } else {
-      motion.animate(list, { opacity: 0 }, fade);
-    }
-    requestAnimationFrame(() => {
-      const running = [...list.getAnimations()];
-      if (!running.length) {
-        finish();
-        return;
-      }
-      Promise.all(running.map((item) => item.finished.then(() => {}, () => {}))).then(finish);
-    });
-  }
-
-  _bindDismiss(active) {
-    document.removeEventListener("pointerdown", this._onPointerDown, true);
-    document.removeEventListener("keydown", this._onKeyDown);
-    if (!active) return;
-    document.addEventListener("pointerdown", this._onPointerDown, true);
-    document.addEventListener("keydown", this._onKeyDown);
+    this._lock = false;
+    if (open) this.dispatchEvent(new CustomEvent("cc-open", { bubbles: true }));
   }
 }
 

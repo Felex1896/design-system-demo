@@ -50,6 +50,19 @@ cc-scrollbar .cc-scrollbar-thumb.is-active {
   background-color: var(--color-border-core-strong);
 }
 
+cc-scrollbar[fade]:not(.is-shown) {
+  pointer-events: none;
+}
+
+cc-scrollbar[fade] .cc-scrollbar-thumb {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+
+cc-scrollbar[fade].is-shown .cc-scrollbar-thumb {
+  opacity: 1;
+}
+
 cc-scrollbar.is-idle {
   pointer-events: none;
 }

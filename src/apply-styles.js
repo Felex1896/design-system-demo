@@ -21,7 +21,9 @@ export function applyStyles(styles) {
     const weight = unwrap(file.weight);
     const style = unwrap(file.style);
     const href = unwrap(file.file);
-    return `@font-face{font-family:${JSON.stringify(family)};src:url("${href}") format("woff2");font-weight:${weight};font-style:${style};font-display:swap}`;
+    const range = unwrap(file.unicodeRange);
+    const unicode = range ? `unicode-range:${range};` : "";
+    return `@font-face{font-family:${JSON.stringify(family)};src:url("${href}") format("woff2");font-weight:${weight};font-style:${style};font-display:swap;${unicode}}`;
   }).join("");
   document.head.append(faces);
 

@@ -236,7 +236,8 @@ demo-button[size="small"] .demo-button-badge-mark {
   z-index: 7;
   box-sizing: border-box;
   display: block;
-  max-width: calc(100vw - var(--spacing-32));
+  width: max-content;
+  max-width: min(var(--layout-tooltip-max), calc(100vw - var(--spacing-32)));
   margin: 0;
   padding: var(--spacing-8);
   border-radius: var(--radius-4);
@@ -247,7 +248,6 @@ demo-button[size="small"] .demo-button-badge-mark {
   font-weight: var(--font-body-2-weight);
   line-height: var(--font-body-2-line);
   letter-spacing: var(--font-body-2-tracking);
-  white-space: nowrap;
   pointer-events: none;
 }
 

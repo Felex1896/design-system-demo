@@ -1,3 +1,4 @@
+(() => {
 class CcTooltip extends HTMLElement {
   connectedCallback() {
     this.setAttribute("role", "tooltip");
@@ -5,14 +6,17 @@ class CcTooltip extends HTMLElement {
     this._run = 0;
   }
 
-  show(anchor, text) {
+  show(anchor, text, fit) {
     const appear = this.hidden;
     this._run += 1;
     this.textContent = text;
     this.hidden = false;
     const gap = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--spacing-2")) || 0;
     const host = restBox(anchor);
-    this.style.width = `${host.width}px`;
+    const anchorFit = fit === "anchor";
+    if (anchorFit) this.dataset.fit = "anchor";
+    else delete this.dataset.fit;
+    this.style.width = anchorFit ? `${host.width}px` : "";
     const plate = this.getBoundingClientRect();
     const viewWidth = document.documentElement.clientWidth;
     const viewHeight = document.documentElement.clientHeight;
@@ -25,12 +29,13 @@ class CcTooltip extends HTMLElement {
     if (anchor.getAttribute("tip") === "above") top = above;
     else if (narrow) top = aboveFits || !belowFits ? above : below;
     else if (!belowFits) top = above;
+    const span = anchorFit ? host.width : plate.width;
     let left = host.left;
-    if (left + host.width > viewWidth) left = viewWidth - host.width;
-    if (left < 0) left = host.left;
+    if (left + span > viewWidth) left = viewWidth - span;
+    if (left < 0) left = anchorFit ? host.left : 0;
     this.style.top = `${top}px`;
     this.style.left = `${left}px`;
-    if (appear) this._fade(true);
+    if (appear && !document.documentElement.classList.contains("is-touch")) this._fade(true);
     else this._holdOpen();
   }
 
@@ -50,6 +55,7 @@ class CcTooltip extends HTMLElement {
       this.style.top = "";
       this.style.left = "";
       this.style.width = "";
+      delete this.dataset.fit;
     };
     const motion = window.ccMotion;
     if (immediate || !motion || motion.reduce()) {
@@ -116,7 +122,7 @@ function showRow(row) {
     return;
   }
   hoveredRow = row;
-  tip.show(row, text);
+  tip.show(row, text, "anchor");
 }
 
 function staysInside(row, event) {
@@ -127,6 +133,7 @@ function staysInside(row, event) {
 const HOLD_SLOP = 8;
 let holdPointer = null;
 let heldRow = null;
+let latchUntil = 0;
 let hoveredRow = null;
 let mousePoint = null;
 let keyboardNav = false;
@@ -152,6 +159,7 @@ function dropHold() {
   }
   heldRow = null;
   holdPointer = null;
+  latchUntil = 0;
   hoveredRow = null;
   tip.hide();
 }
@@ -215,10 +223,12 @@ document.addEventListener("pointerdown", (event) => {
     dropHold();
     return;
   }
+  if (event.cancelable) event.preventDefault();
   holdPointer = {
     id: event.pointerId,
     x: event.clientX,
     y: event.clientY,
+    moved: false,
   };
   placeHold(row);
 });
@@ -227,18 +237,24 @@ document.addEventListener("pointermove", (event) => {
   if (!holdPointer || event.pointerId !== holdPointer.id) return;
   const dx = event.clientX - holdPointer.x;
   const dy = event.clientY - holdPointer.y;
-  if (dx * dx + dy * dy > HOLD_SLOP * HOLD_SLOP || rowUnder(event) !== heldRow) dropHold();
-});
-
-document.addEventListener("pointerup", (event) => {
-  if (!holdPointer || event.pointerId !== holdPointer.id) return;
+  if (dx * dx + dy * dy <= HOLD_SLOP * HOLD_SLOP && rowUnder(event) === heldRow) return;
+  holdPointer.moved = true;
   dropHold();
 });
 
-document.addEventListener("pointercancel", (event) => {
+function endTouch(event) {
   if (!holdPointer || event.pointerId !== holdPointer.id) return;
-  dropHold();
-});
+  const moved = holdPointer.moved;
+  holdPointer = null;
+  if (moved || !heldRow) {
+    dropHold();
+    return;
+  }
+  latchUntil = performance.now() + 400;
+}
+
+document.addEventListener("pointerup", endTouch);
+document.addEventListener("pointercancel", endTouch);
 
 document.addEventListener("contextmenu", (event) => {
   if (rowFrom(event) && document.documentElement.classList.contains("is-touch")) event.preventDefault();
@@ -261,11 +277,15 @@ document.addEventListener("focusout", (event) => {
 });
 
 document.addEventListener("scroll", () => {
-  if (holdPointer || heldRow) {
+  if (holdPointer) return;
+  if (heldRow && performance.now() < latchUntil) return;
+  if (heldRow) {
     dropHold();
     return;
   }
-  if (!mousePoint || !hoveredRow) {
+  if (!hoveredRow) return;
+  if (!mousePoint) {
+    hoveredRow = null;
     tip.hide(true);
     return;
   }
@@ -276,3 +296,4 @@ document.addEventListener("scroll", () => {
   hoveredRow = null;
   tip.hide(true);
 }, true);
+})();

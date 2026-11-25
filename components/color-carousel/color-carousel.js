@@ -69,7 +69,12 @@ class CcColorCarousel extends HTMLElement {
   #reflecting = false;
   #shifting = false;
   #copies = 1;
+  #middle = 0;
   #resize = null;
+  #wheelTimer = 0;
+  #settleTimer = 0;
+  #pumping = false;
+  #settling = false;
 
   static get observedAttributes() {
     return ["value"];
@@ -90,10 +95,21 @@ class CcColorCarousel extends HTMLElement {
 
   set colors(value) {
     const source = Array.isArray(value) ? value : [];
-    this.#colors = source.map((item) => ({
+    const next = source.map((item) => ({
       id: item && item.id != null ? String(item.id) : "",
       color: item && item.color != null ? String(item.color) : "",
     }));
+    const same = next.length === this.#colors.length
+      && next.every((item, index) => item.id === this.#colors[index].id);
+    this.#colors = next;
+    if (same && this.#wrapper && this.#wrapper.childElementCount) {
+      for (const slide of this.#wrapper.querySelectorAll(".cc-color-carousel__slide")) {
+        const item = next.find((entry) => entry.id === slide.getAttribute("data-id"));
+        const disk = slide.querySelector(".cc-color-carousel__disk");
+        if (item && disk) disk.style.backgroundColor = item.color;
+      }
+      return;
+    }
     this.#schedule();
   }
 
@@ -107,6 +123,10 @@ class CcColorCarousel extends HTMLElement {
   }
 
   disconnectedCallback() {
+    clearTimeout(this.#wheelTimer);
+    clearTimeout(this.#settleTimer);
+    this.#wheelTimer = 0;
+    this.#settleTimer = 0;
     this.#resize?.disconnect();
     this.#resize = null;
     const generation = this.#generation;
@@ -171,6 +191,7 @@ class CcColorCarousel extends HTMLElement {
         this.#mount();
         return;
       }
+      if (this.#swiper.animating || this.#swiper.touchEventsData?.isTouched) return;
       this.#swiper.update();
       this.setAttribute("ready", "");
     });
@@ -185,7 +206,15 @@ class CcColorCarousel extends HTMLElement {
     if (!this.#colors.length || !window.Swiper || this.#root.clientWidth === 0) return;
 
     const count = this.#colors.length;
-    this.#copies = count > 1 ? 3 : 1;
+    const span = readToken(this, "--spacing-32") + readToken(this, "--spacing-4");
+    if (count > 1) {
+      const side = span > 0 ? Math.max(1, Math.ceil(4000 / (count * span))) : 1;
+      this.#middle = side;
+      this.#copies = side * 2 + 1;
+    } else {
+      this.#middle = 0;
+      this.#copies = 1;
+    }
     for (let copy = 0; copy < this.#copies; copy += 1) {
       for (const item of this.#colors) {
         const slide = document.createElement("div");
@@ -202,7 +231,7 @@ class CcColorCarousel extends HTMLElement {
 
     const value = this.getAttribute("value");
     const selected = this.#colors.findIndex((item) => item.id === value);
-    const start = (selected < 0 ? 0 : selected) + (this.#copies === 3 ? count : 0);
+    const start = (selected < 0 ? 0 : selected) + this.#middle * count;
 
     this.#silent = true;
     const swiper = new window.Swiper(this.#root, {
@@ -213,11 +242,36 @@ class CcColorCarousel extends HTMLElement {
       grabCursor: true,
       speed: 280,
       spaceBetween: readToken(this, "--spacing-4"),
+      freeMode: {
+        enabled: true,
+        momentum: true,
+        momentumRatio: 0.64,
+        momentumBounce: false,
+        momentumVelocityRatio: 1,
+        sticky: false,
+      },
+      mousewheel: {
+        enabled: true,
+        forceToAxis: true,
+        sensitivity: 1,
+      },
       on: {
-        slideChange: (instance) => this.#publish(instance),
-        transitionEnd: (instance) => {
-          this.#recenter(instance);
-          this.#publish(instance);
+        setTranslate: (instance) => {
+          this.#markCenter(instance);
+          if (instance.animating) this.#pump();
+        },
+        transitionStart: (instance) => this.#pump(),
+        touchEnd: (instance) => {
+          requestAnimationFrame(() => this.#released(instance));
+        },
+        transitionEnd: (instance) => this.#released(instance),
+        scroll: (instance) => {
+          this.#markCenter(instance);
+          clearTimeout(this.#wheelTimer);
+          this.#wheelTimer = setTimeout(() => {
+            this.#wheelTimer = 0;
+            this.#released(instance);
+          }, 140);
         },
       },
     });
@@ -228,7 +282,7 @@ class CcColorCarousel extends HTMLElement {
       swiper.update();
       this.#silent = false;
       this.setAttribute("ready", "");
-      this.#publish(swiper);
+      this.#markCenter(swiper);
     });
   }
 
@@ -238,21 +292,107 @@ class CcColorCarousel extends HTMLElement {
     if (duration === "0s") swiper.animating = false;
   }
 
-  #band(index) {
+  #inMiddle(index) {
     const count = this.#colors.length;
-    if (this.#copies !== 3 || count < 2) return true;
-    return index >= count && index < count * 2;
+    if (this.#copies === 1 || count < 2) return true;
+    const start = this.#middle * count;
+    return index >= start && index < start + count;
+  }
+
+  #closest(swiper) {
+    const view = swiper.el.getBoundingClientRect();
+    if (view.width <= 0) return null;
+    const mid = view.left + view.width / 2;
+    let best = null;
+    let bestDist = Infinity;
+    for (const slide of swiper.slides) {
+      const box = slide.getBoundingClientRect();
+      const dist = Math.abs(mid - (box.left + box.width / 2));
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = slide;
+      }
+    }
+    return best;
+  }
+
+  #markCenter(swiper) {
+    if (!swiper || swiper.destroyed) return;
+    const slide = this.#closest(swiper);
+    for (const item of swiper.slides) item.classList.toggle("is-centered", item === slide);
+    if (!swiper.animating) this.#publishSlide(slide);
+  }
+
+  #armSettle(swiper) {
+    clearTimeout(this.#settleTimer);
+    const seconds = Number.parseFloat(swiper.wrapperEl.style.transitionDuration);
+    const wait = (Number.isFinite(seconds) ? seconds * 1000 : swiper.params.speed) + 90;
+    this.#settleTimer = setTimeout(() => {
+      this.#settleTimer = 0;
+      if (this.#swiper !== swiper || swiper.destroyed || !swiper.animating) return;
+      swiper.setTransition(0);
+      swiper.animating = false;
+      this.#released(swiper);
+    }, wait);
+  }
+
+  #pump() {
+    if (this.#pumping) return;
+    this.#pumping = true;
+    if (this.#swiper) this.#armSettle(this.#swiper);
+    const step = () => {
+      const swiper = this.#swiper;
+      if (!swiper || swiper.destroyed) {
+        this.#pumping = false;
+        return;
+      }
+      this.#markCenter(swiper);
+      if (swiper.animating) {
+        requestAnimationFrame(step);
+        return;
+      }
+      this.#pumping = false;
+    };
+    requestAnimationFrame(step);
   }
 
   #recenter(swiper) {
-    if (!swiper || swiper.destroyed || this.#shifting || this.#copies !== 3) return;
+    if (!swiper || swiper.destroyed || this.#shifting || this.#middle === 0) return;
     const count = this.#colors.length;
-    const index = swiper.activeIndex;
-    if (this.#band(index)) return;
+    const slide = this.#closest(swiper);
+    const index = slide ? [...swiper.slides].indexOf(slide) : -1;
+    if (index < 0 || this.#inMiddle(index)) return;
     const normalized = ((index % count) + count) % count;
     this.#shifting = true;
-    swiper.slideTo(count + normalized, 0, false);
+    swiper.slideTo(this.#middle * count + normalized, 0, false);
     this.#shifting = false;
+    this.#markCenter(swiper);
+  }
+
+  #released(swiper) {
+    if (!swiper || swiper.destroyed || this.#shifting || this.#silent) return;
+    if (swiper.animating) return;
+    const slide = this.#closest(swiper);
+    if (!slide) return;
+    const view = swiper.el.getBoundingClientRect();
+    const box = slide.getBoundingClientRect();
+    const delta = view.left + view.width / 2 - (box.left + box.width / 2);
+    if (Math.abs(delta) >= 1) {
+      if (this.#settling) return;
+      this.#settling = true;
+      this.#unstick(swiper);
+      const moved = swiper.slideToClosest(swiper.params.speed);
+      this.#settling = false;
+      if (moved && swiper.animating) {
+        this.#armSettle(swiper);
+        return;
+      }
+    }
+    clearTimeout(this.#settleTimer);
+    this.#settleTimer = 0;
+    swiper.animating = false;
+    this.#recenter(swiper);
+    this.#markCenter(swiper);
   }
 
   #slideToId(swiper, id, speed) {
@@ -261,19 +401,22 @@ class CcColorCarousel extends HTMLElement {
     let best = -1;
     let bestDistance = Infinity;
     swiper.slides.forEach((slide, index) => {
-      if (slide.getAttribute("data-id") !== id || !this.#band(index)) return;
-      const distance = Math.abs(index - (count > 1 ? count : 0));
+      if (slide.getAttribute("data-id") !== id || !this.#inMiddle(index)) return;
+      const distance = Math.abs(index - this.#middle * count);
       if (distance < bestDistance) {
         bestDistance = distance;
         best = index;
       }
     });
     if (best < 0) return;
-    this.#unstick(swiper);
-    if (best === swiper.activeIndex) {
-      if (!this.#isCentered(swiper)) swiper.slideToClosest(speed);
-      return;
+    const current = this.#closest(swiper);
+    if (current && current.getAttribute("data-id") === id) {
+      const view = swiper.el.getBoundingClientRect();
+      const box = current.getBoundingClientRect();
+      const delta = view.left + view.width / 2 - (box.left + box.width / 2);
+      if (Math.abs(delta) < 1) return;
     }
+    this.#unstick(swiper);
     swiper.slideTo(best, speed);
   }
 
@@ -286,20 +429,8 @@ class CcColorCarousel extends HTMLElement {
     swiper.slideTo(index);
   }
 
-  #isCentered(swiper) {
-    const slide = swiper.slides[swiper.activeIndex];
-    if (!slide) return true;
-    const view = swiper.el.getBoundingClientRect();
-    if (view.width <= 0) return true;
-    const box = slide.getBoundingClientRect();
-    const delta = view.left + view.width / 2 - (box.left + box.width / 2);
-    return Math.abs(delta) < 1;
-  }
-
-  #publish(swiper) {
-    if (this.#silent || !swiper || swiper.destroyed) return;
-    const slide = swiper.slides[swiper.activeIndex];
-    if (!slide) return;
+  #publishSlide(slide) {
+    if (this.#silent || !slide) return;
     const id = slide.getAttribute("data-id") || "";
     if (id === this.#centeredId) return;
     this.#centeredId = id;

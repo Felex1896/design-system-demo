@@ -84,6 +84,7 @@ cc-select-small[open] .cc-select-small__plate:not(:disabled) {
   position: absolute;
   z-index: 3;
   top: 100%;
+  bottom: auto;
   left: 0;
   width: 100%;
   box-sizing: border-box;
@@ -95,6 +96,11 @@ cc-select-small[open] .cc-select-small__plate:not(:disabled) {
   background-color: var(--color-surface-core-top);
   box-shadow: var(--shadow-6);
   color: var(--color-text-core-primary);
+}
+
+cc-select-small[data-flip] .cc-select-small__list {
+  top: auto;
+  bottom: 100%;
 }
 
 .cc-select-small__list[hidden] {

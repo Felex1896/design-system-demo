@@ -1,4 +1,4 @@
-import { applyColors, applyStyles, swatchColor } from "./apply-styles.js";
+import { applyColors, applyStyles, swatchColor } from "./apply-styles.js?v=3";
 import { animate, calm, reduceMotion, crossfade, playNumber, whenSettled } from "./motion.js?v=4";
 
 const root = document.documentElement;
@@ -20,6 +20,7 @@ const buttonSizeSelect = document.querySelector("#button-size");
 const buttonColorSelect = document.querySelector("#button-color");
 const buttonStyleSelect = document.querySelector("#button-style");
 const buttonBadgeSelect = document.querySelector("#button-badge-color");
+const buttonBadgeRow = document.querySelector("#button-row-badge-color");
 const buttonIconRow = document.querySelector("#button-row-icon");
 const buttonShowDisabled = document.querySelector("#button-show-disabled");
 const buttonShowIcon = document.querySelector("#button-show-icon");
@@ -27,18 +28,25 @@ const buttonShowBadge = document.querySelector("#button-show-badge");
 const buttonsCaption = document.querySelector("#buttons-caption");
 const buttonsScroll = document.querySelector("#buttons-scroll");
 const demoButton = document.getElementById("demo-button");
+const demoField = document.getElementById("demo-field");
+const demoSelect = document.getElementById("demo-select");
+const fieldStateSelect = document.querySelector("#field-state");
 const buttonsFigma = document.querySelector("#buttons-figma");
 
-const styles = await fetch(new URL("../data/styles.json?v=6", import.meta.url)).then((response) => response.json());
-const collections = await fetch(new URL("../data/collections.json?v=8", import.meta.url)).then((response) => response.json());
+const styles = await fetch(new URL("../data/styles.json?v=13", import.meta.url)).then((response) => response.json());
+const collections = await fetch(new URL("../data/collections.json?v=9", import.meta.url)).then((response) => response.json());
 const sizeDoc = await fetch(new URL("../data/size.json?v=2", import.meta.url)).then((response) => response.json());
 const typeDoc = await fetch(new URL("../data/typography.json?v=2", import.meta.url)).then((response) => response.json());
-const shadowDoc = await fetch(new URL("../data/shadow.json?v=1", import.meta.url)).then((response) => response.json());
+const shadowDoc = await fetch(new URL("../data/shadow.json?v=2", import.meta.url)).then((response) => response.json());
 const copy = await fetch(new URL("../data/copy.json?v=2", import.meta.url)).then((response) => response.json());
 
 applyStyles(styles);
 
 let collection = collections.defaults.collection;
+
+function isPlayground() {
+  return collection === "buttons" || collection === "fields" || collection === "selects";
+}
 let brand = collections.defaults.brand;
 let theme = collections.defaults.theme;
 let shadowHover = false;
@@ -95,12 +103,12 @@ function activeTokens() {
 function measureDoc() {
   if (collection === "size") return sizeDoc;
   if (collection === "typography") return typeDoc;
-  if (collection === "shadow") return shadowDoc;
+  if (collection === "effects") return shadowDoc;
   return null;
 }
 
 function stackedLayout() {
-  return root.classList.contains("is-narrow") || collection === "size" || collection === "typography" || collection === "shadow";
+  return root.classList.contains("is-narrow") || collection === "size" || collection === "typography" || collection === "effects";
 }
 
 function familyHead(parts) {
@@ -377,14 +385,14 @@ function typeRow(token) {
 function renderMeasure(doc) {
   familyRow.parentElement.querySelectorAll(".family-titles").forEach((node) => node.remove());
   familyRow.replaceChildren();
-  if (collection === "shadow") familyRow.append(shadowSwitch());
   for (const family of doc.families) {
     const card = document.createElement("cc-family");
     card.setAttribute("title", family.title);
     card.setAttribute("heading-id", familyId(family.id));
+    if (collection === "effects") card.append(shadowSwitch());
     for (const token of family.tokens) {
       if (collection === "size") card.append(sizeRow(family, token));
-      else if (collection === "shadow") card.append(shadowRow(token));
+      else if (collection === "effects") card.append(shadowRow(token));
       else card.append(typeRow(token));
     }
     familyRow.append(card);
@@ -458,23 +466,14 @@ function showHue(card, id) {
 function placeChrome() {
   const narrow = root.classList.contains("is-narrow");
   const semantic = collection === "semantic";
-  const buttons = collection === "buttons";
-  const themed = semantic || collection === "shadow" || buttons;
-  themeSwitch.hidden = !themed;
-  brandSelect.hidden = !semantic;
-  menuButton.hidden = buttons;
-  if (!semantic) {
-    closeSidebar();
-    return;
-  }
-  if (narrow) {
-    brandSelect.setAttribute("slot", "brand");
-    sidebar.append(brandSelect);
-  } else {
-    brandSelect.removeAttribute("slot");
-    themeSwitch.before(brandSelect);
-    closeSidebar();
-  }
+  const playground = isPlayground();
+  themeSwitch.hidden = false;
+  themeSwitch.setAttribute("mode", theme);
+  brandSelect.hidden = narrow || !(semantic || playground);
+  menuButton.hidden = playground;
+  brandSelect.removeAttribute("slot");
+  themeSwitch.before(brandSelect);
+  if (!semantic || !narrow) closeSidebar();
 }
 
 function syncNarrow() {
@@ -487,15 +486,88 @@ function syncNarrow() {
 
 function syncStacked() {
   const limit = Number.parseFloat(getComputedStyle(root).getPropertyValue("--layout-buttons-stack"));
-  root.classList.toggle("is-stacked", collection === "buttons" && window.innerWidth < limit);
+  root.classList.toggle("is-stacked", isPlayground() && window.innerWidth < limit);
+}
+
+function colorColumns() {
+  return !root.classList.contains("is-narrow") && (collection === "primitives" || collection === "semantic");
+}
+
+function mountColumnScroll() {
+  const on = colorColumns();
+  if (on) scrollRoot.scrollTop = 0;
+  for (const card of familyRow.querySelectorAll(":scope > cc-family")) {
+    let scroller = card.querySelector(":scope > .family-scroll");
+    let bar = card.querySelector(":scope > cc-scrollbar");
+    if (!on) {
+      if (scroller) {
+        card.prepend(...scroller.childNodes);
+        scroller.remove();
+      }
+      if (bar) {
+        bar.target = null;
+        bar.remove();
+      }
+      continue;
+    }
+    if (!scroller) {
+      scroller = document.createElement("div");
+      scroller.className = "family-scroll";
+      const kept = [...card.childNodes].filter((node) => node !== bar);
+      scroller.append(...kept);
+      card.append(scroller);
+    }
+    if (!bar) {
+      bar = document.createElement("cc-scrollbar");
+      bar.setAttribute("axis", "vertical");
+      bar.setAttribute("fade", "");
+      card.append(bar);
+    }
+    bar.target = scroller;
+  }
+  const playground = isPlayground();
+  if (!playground) scrollY.target = on ? null : scrollRoot;
+  placeFamilyTitles();
+}
+
+function colorScroller(node) {
+  if (!colorColumns() || !(node instanceof Element)) return null;
+  const card = node.closest("cc-family");
+  if (!card || !familyRow.contains(card)) return null;
+  return card.querySelector(":scope > .family-scroll");
+}
+
+function offsetWithin(node, ancestor) {
+  let top = 0;
+  let current = node;
+  while (current && current !== ancestor) {
+    top += current.offsetTop;
+    const parent = current.offsetParent;
+    if (!(parent instanceof HTMLElement)) break;
+    current = parent;
+  }
+  return top;
+}
+
+function revealLeft(node) {
+  const point = flowPoint(node);
+  let left = scrollRoot.scrollLeft;
+  const view = scrollRoot.clientWidth;
+  const start = point.left - left;
+  const end = start + point.width;
+  if (start < 0) left += start;
+  else if (end > view) left += end - view;
+  const maxLeft = Math.max(0, scrollRoot.scrollWidth - scrollRoot.clientWidth);
+  return clamp(left, 0, maxLeft);
 }
 
 function stickFamilies() {
+  mountColumnScroll();
   const narrow = stackedLayout();
   const inset = Number.parseFloat(getComputedStyle(scrollRoot).paddingBottom) || 0;
   const view = scrollRoot.clientHeight;
   for (const card of familyRow.querySelectorAll(":scope > cc-family")) {
-    if (narrow) {
+    if (narrow || colorColumns()) {
       card.style.top = "";
       continue;
     }
@@ -510,7 +582,11 @@ function stickFamilies() {
 function stickCarousels() {
   const narrow = root.classList.contains("is-narrow");
   const bar = familyRow.previousElementSibling;
-  const wideTop = !narrow && bar && bar.classList.contains("family-titles") ? bar.offsetHeight : 0;
+  const wideTop = colorColumns()
+    ? 0
+    : !narrow && bar && bar.classList.contains("family-titles")
+      ? bar.offsetHeight
+      : 0;
   for (const card of familyRow.querySelectorAll(":scope > cc-family")) {
     const title = card.querySelector(":scope > .cc-family-title");
     const top = narrow && title ? title.offsetHeight : wideTop;
@@ -521,16 +597,53 @@ function stickCarousels() {
   }
 }
 
+function recolor() {
+  const playground = isPlayground();
+  const chromeBrand = collection === "semantic" || playground ? brand : "brand-blue";
+  applyColors(styles, collections, chromeBrand, theme);
+  if (playground) {
+    if (!demoButton.hidden) paintDemo(demoButton);
+    return;
+  }
+  if (measureDoc()) return;
+  const families = groupTokens(activeTokens());
+  const byId = new Map();
+  for (const family of families) {
+    for (const section of family.sections) {
+      for (const row of section.rows) byId.set(rowId(row.token.name), row.token);
+    }
+    const card = familyRow.querySelector(`cc-family[heading-id="${CSS.escape(familyId(family.name))}"]`);
+    const carousel = card && card.querySelector("cc-color-carousel");
+    if (!carousel) continue;
+    const hues = family.sections.filter((section) => section.middle && section.rows.some((row) => row.token.name.endsWith("/100")));
+    carousel.colors = hues.map((section) => {
+      const sample = section.rows.find((row) => row.token.name.endsWith("/100"));
+      return {
+        id: section.middle,
+        color: swatchColor(sample.token, collection, brand, theme),
+      };
+    });
+  }
+  for (const row of familyRow.querySelectorAll("cc-color-row")) {
+    const token = byId.get(row.id);
+    if (!token) continue;
+    const swatch = swatchColor(token, collection, brand, theme);
+    row.alias = collection === "primitives" ? hexAlpha(swatch) : shownAlias(token);
+    row.removeAttribute("swatch");
+    row.setAttribute("swatch", swatch);
+  }
+}
+
 function paint(fade) {
   const draw = () => {
-    const chromeBrand = collection === "semantic" ? brand : "brand-blue";
-    const chromeTheme = collection === "semantic" || collection === "shadow" || collection === "buttons" ? theme : "dark";
+    const playground = isPlayground();
+  const chromeBrand = collection === "semantic" || playground ? brand : "brand-blue";
+  const chromeTheme = theme;
     applyColors(styles, collections, chromeBrand, chromeTheme);
     page.dataset.collection = collection;
-    const buttons = collection === "buttons";
-    buttonsScreen.hidden = !buttons;
-    if (buttons) {
-      syncDemo();
+    buttonsScreen.hidden = !playground;
+    if (playground) {
+      syncPlayground();
     } else {
       const doc = measureDoc();
       if (doc) {
@@ -545,7 +658,7 @@ function paint(fade) {
     }
     placeChrome();
     syncStacked();
-    if (buttons) {
+    if (playground) {
       syncButtonsScroll();
     } else {
       scrollY.target = scrollRoot;
@@ -662,18 +775,32 @@ function scrollDuration(fromTop, toTop, fromLeft, toLeft) {
 
 function scrollToTarget(target) {
   const anchor = scrollAnchor(target);
+  const scroller = colorScroller(anchor);
+  if (scroller) {
+    const card = anchor.closest("cc-family");
+    const inside = scroller.contains(anchor);
+    const maxTop = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+    const top = inside ? clamp(offsetWithin(anchor, scroller), 0, maxTop) : 0;
+    const left = revealLeft(card || anchor);
+    if (reduceMotion()) {
+      scroller.scrollTop = top;
+      scrollRoot.scrollLeft = left;
+      return;
+    }
+    const glide = { ease: "easeInOut", duration: scrollDuration(scroller.scrollTop, top, scrollRoot.scrollLeft, left) };
+    playNumber("scroll-top", scroller.scrollTop, top, (value) => {
+      scroller.scrollTop = value;
+    }, glide);
+    playNumber("scroll-left", scrollRoot.scrollLeft, left, (value) => {
+      scrollRoot.scrollLeft = value;
+    }, glide);
+    return;
+  }
   const point = flowPoint(anchor);
   const cover = scrollCover(target, anchor);
   const maxTop = Math.max(0, scrollRoot.scrollHeight - scrollRoot.clientHeight);
   const top = clamp(point.top - cover, 0, maxTop);
-  let left = scrollRoot.scrollLeft;
-  const view = scrollRoot.clientWidth;
-  const start = point.left - left;
-  const end = start + point.width;
-  if (start < 0) left += start;
-  else if (end > view) left += end - view;
-  const maxLeft = Math.max(0, scrollRoot.scrollWidth - scrollRoot.clientWidth);
-  left = clamp(left, 0, maxLeft);
+  const left = revealLeft(anchor);
   if (reduceMotion()) {
     scrollRoot.scrollTop = top;
     scrollRoot.scrollLeft = left;
@@ -695,10 +822,10 @@ themeSwitch.setAttribute("mode", theme);
 sidebar.querySelector("cc-icon-button").setAttribute("label", copyText("menu.close"));
 
 const collectionLabels = {
-  primitives: "colors-primitive",
-  semantic: "colors-semantic",
-  size: "size",
-  shadow: "shadow",
+  primitives: "primitive-colors",
+  semantic: "semantic-colors",
+  size: "sizes",
+  effects: "effects",
   typography: "typography",
 };
 collectionSelect.options = [
@@ -708,7 +835,9 @@ collectionSelect.options = [
     label: collectionLabels[id] || id,
   })),
   { kind: "group", label: "components-demo" },
-  { value: "buttons", label: "buttons" },
+  { value: "buttons", label: "button" },
+  { value: "fields", label: "field" },
+  { value: "selects", label: "select" },
 ];
 collectionSelect.value = collection;
 brandSelect.options = collections.brandOrder.slice();
@@ -716,11 +845,11 @@ brandSelect.value = brand;
 
 collectionSelect.addEventListener("cc-change", (event) => {
   collection = event.detail.value;
-  if (collection === "semantic" || collection === "shadow" || collection === "buttons") {
+  if (collection === "semantic" || collection === "effects" || isPlayground()) {
     theme = remembered.theme;
     themeSwitch.setAttribute("mode", theme);
   }
-  if (collection === "semantic") {
+  if (collection === "semantic" || isPlayground()) {
     brand = remembered.brand;
     brandSelect.value = brand;
   }
@@ -731,14 +860,14 @@ collectionSelect.addEventListener("cc-change", (event) => {
 brandSelect.addEventListener("cc-change", (event) => {
   brand = event.detail.value;
   remembered.brand = brand;
-  paint("page");
+  recolor();
 });
 
 themeSwitch.addEventListener("cc-change", (event) => {
   theme = event.detail.mode;
   remembered.theme = theme;
   themeSwitch.setAttribute("mode", theme);
-  paint("page");
+  recolor();
 });
 
 menuButton.addEventListener("cc-press", () => {
@@ -783,7 +912,7 @@ document.addEventListener("cc-open", (event) => {
 const buttonState = {
   kind: "labeled-button",
   size: "large",
-  color: "brand-blue",
+  color: "accent",
   style: "solid",
   disabled: false,
   showIcon: true,
@@ -792,7 +921,7 @@ const buttonState = {
   tab: "settings",
 };
 
-const buttonColors = ["brand-blue", "brand-cyan", "neutral", "danger", "success", "warning", "info"];
+const buttonColors = ["accent", "neutral", "danger", "success", "warning", "info"];
 const semanticByName = new Map(collections.semantic.map((token) => [token.name, token]));
 const demoProps = [
   "--demo-fill",
@@ -819,15 +948,8 @@ const demoProps = [
 
 let docToken = 0;
 let accessAnchor = null;
-
-function toneFamily(color) {
-  if (color === "brand-blue" || color === "brand-cyan") return "accent";
-  return color;
-}
-
-function toneBrand(color) {
-  return color === "brand-cyan" ? "brand-cyan" : "brand-blue";
-}
+let accessTimer = 0;
+const accessHold = 1000;
 
 function colorOf(name, brandKey) {
   const token = semanticByName.get(name);
@@ -845,8 +967,8 @@ function writeDemo(node, prop, value) {
 
 function paintDemo(node) {
   for (const prop of demoProps) node.style.removeProperty(prop);
-  const family = toneFamily(buttonState.color);
-  const brandKey = toneBrand(buttonState.color);
+  const family = buttonState.color;
+  const brandKey = brand;
   const style = buttonState.style;
   const surface = (layer, state) => colorOf(`surface/${family}/${layer}/${state}`, brandKey);
   if (style === "no-surface" || style === "outline") {
@@ -893,13 +1015,13 @@ function paintDemo(node) {
     writeDemo(node, "--demo-border-pressed", "transparent");
     writeDemo(node, "--demo-border-disabled", "transparent");
   }
-  const badgeKey = toneBrand(buttonState.badgeColor);
-  const badgeFamily = toneFamily(buttonState.badgeColor);
+  const badgeKey = brand;
+  const badgeFamily = buttonState.badgeColor;
   writeDemo(node, "--demo-badge-plate", colorOf("surface/core/undertone", badgeKey));
   if (buttonState.badgeColor === "neutral") {
-    writeDemo(node, "--demo-badge-fill", colorOf("surface/neutral/faded/default", "brand-blue"));
-    writeDemo(node, "--demo-badge-ink", colorOf("text/core/primary", "brand-blue"));
-    writeDemo(node, "--demo-badge-dot", colorOf("icon-shape/core/disabled", "brand-blue"));
+    writeDemo(node, "--demo-badge-fill", colorOf("surface/neutral/faded/default", brand));
+    writeDemo(node, "--demo-badge-ink", colorOf("text/core/primary", brand));
+    writeDemo(node, "--demo-badge-dot", colorOf("icon-shape/core/disabled", brand));
   } else {
     writeDemo(node, "--demo-badge-fill", colorOf(`surface/${badgeFamily}/solid/default`, badgeKey));
     writeDemo(node, "--demo-badge-ink", colorOf("text/core/on-solid", badgeKey));
@@ -920,7 +1042,11 @@ function syncDemo() {
   coerceButtonStyle();
   buttonStyleSelect.value = buttonState.style;
   buttonIconRow.hidden = buttonState.kind === "icon-button";
+  buttonBadgeRow.hidden = !buttonState.showBadge;
   buttonsCaption.textContent = `${buttonState.kind} / ${buttonState.size} / ${buttonState.color} / ${buttonState.style}`;
+  demoButton.hidden = false;
+  demoField.hidden = true;
+  demoSelect.hidden = true;
   demoButton.setAttribute("kind", buttonState.kind);
   demoButton.setAttribute("size", buttonState.size);
   demoButton.setAttribute("label", "Label");
@@ -930,10 +1056,199 @@ function syncDemo() {
   paintDemo(demoButton);
 }
 
+const fieldTypes = [
+  { value: "field-standard", label: "standard" },
+  { value: "field-medium", label: "medium" },
+  { value: "field-text-area", label: "text-area" },
+  { value: "field-with-chips", label: "multiple-values" },
+];
+const fieldDefaults = {
+  "field-standard": { showPlaceholder: false, showHint: false, showIcon: false, showSuffix: false, showTrailing: false, showRequired: false, showLabel: true },
+  "field-medium": { showPlaceholder: true, showHint: false, showIcon: false, showSuffix: false, showTrailing: false, showRequired: false, showLabel: true },
+  "field-text-area": { showPlaceholder: false, showHint: false, showIcon: false, showSuffix: false, showTrailing: false, showRequired: false, showLabel: true },
+  "field-with-chips": { showPlaceholder: false, showHint: false, showIcon: false, showSuffix: false, showTrailing: false, showRequired: false, showLabel: true },
+};
+const fieldToggles = {
+  showPlaceholder: document.querySelector("#field-show-placeholder"),
+  showHint: document.querySelector("#field-show-hint"),
+  showIcon: document.querySelector("#field-show-icon"),
+  showSuffix: document.querySelector("#field-show-suffix"),
+  showTrailing: document.querySelector("#field-show-trailing"),
+  showRequired: document.querySelector("#field-show-required"),
+  showLabel: document.querySelector("#field-show-label"),
+};
+const fieldState = {
+  kind: "field-standard",
+  state: "default",
+  ...fieldDefaults["field-standard"],
+};
+
+function applyFieldDefaults() {
+  Object.assign(fieldState, fieldDefaults[fieldState.kind]);
+  for (const [key, node] of Object.entries(fieldToggles)) {
+    node.setAttribute("aria-pressed", fieldState[key] ? "true" : "false");
+  }
+}
+
+function fieldCaption() {
+  let state = fieldState.state;
+  if (state === "default" && demoField.hasAttribute("data-active")) state = "selected";
+  const type = fieldTypes.find((item) => item.value === fieldState.kind);
+  return `${type ? type.label : fieldState.kind} / ${state}`;
+}
+
+function syncFieldRows() {
+  const kind = fieldState.kind;
+  document.querySelector("#field-row-state").hidden = false;
+  document.querySelector("#field-row-placeholder").hidden = false;
+  document.querySelector("#field-row-hint").hidden = false;
+  document.querySelector("#field-row-icon").hidden = false;
+  document.querySelector("#field-row-trailing").hidden = false;
+  document.querySelector("#field-row-suffix").hidden = kind === "field-text-area" || kind === "field-with-chips";
+  document.querySelector("#field-row-label").hidden = kind !== "field-with-chips";
+  const labeled = kind !== "field-medium" && (kind !== "field-with-chips" || fieldState.showLabel);
+  document.querySelector("#field-row-required").hidden = !labeled;
+}
+
+function syncField() {
+  demoButton.hidden = true;
+  demoField.hidden = false;
+  demoSelect.hidden = true;
+  fieldStateSelect.value = fieldState.state;
+  syncFieldRows();
+  demoField.setAttribute("kind", fieldState.kind);
+  demoField.setAttribute("state", fieldState.state);
+  setFlag(demoField, "show-placeholder", fieldState.showPlaceholder);
+  setFlag(demoField, "show-hint", fieldState.showHint);
+  setFlag(demoField, "show-icon", fieldState.showIcon);
+  setFlag(demoField, "show-suffix", fieldState.showSuffix);
+  setFlag(demoField, "show-trailing", fieldState.showTrailing);
+  setFlag(demoField, "show-required", fieldState.showRequired);
+  setFlag(demoField, "show-label", fieldState.showLabel);
+  buttonsCaption.textContent = fieldCaption();
+}
+
+const selectTypes = [
+  { value: "large", label: "large" },
+  { value: "medium", label: "medium" },
+  { value: "small", label: "small" },
+  { value: "multiple-values", label: "multiple-values" },
+];
+const selectSample = [
+  { value: "Value", label: "Value" },
+  { value: "Item 2", label: "Item 2" },
+  { value: "Item 3", label: "Item 3" },
+  { value: "Item 4", label: "Item 4" },
+  { value: "Item 5", label: "Item 5" },
+  { value: "Item 6", label: "Item 6" },
+  { value: "Item 7", label: "Item 7" },
+];
+const selectDefaults = {
+  large: { state: "default", showPlaceholder: false, showHint: false, showIcon: false, showTrailing: false, showRequired: false, showLabel: true },
+  medium: { state: "default", showPlaceholder: true, showHint: false, showIcon: false, showTrailing: false, showRequired: false, showLabel: true },
+  small: { state: "default", showPlaceholder: false, showHint: false, showIcon: false, showTrailing: false, showRequired: false, showLabel: true },
+  "multiple-values": { state: "default", showPlaceholder: false, showHint: false, showIcon: false, showTrailing: false, showRequired: false, showLabel: true },
+};
+const selectState = {
+  type: "large",
+  ...selectDefaults.large,
+};
+
+function applySelectDefaults() {
+  Object.assign(selectState, selectDefaults[selectState.type]);
+  for (const [key, node] of Object.entries(fieldToggles)) {
+    if (key === "showSuffix") continue;
+    node.setAttribute("aria-pressed", selectState[key] ? "true" : "false");
+  }
+  demoSelect.removeAttribute("open");
+  demoSelect.values = [];
+  if (selectState.type === "small") demoSelect.setAttribute("value", "Value");
+  else demoSelect.setAttribute("value", "");
+}
+
+function selectCaption() {
+  let state = selectState.type === "small" ? "default" : selectState.state;
+  if (state === "default" && demoSelect.hasAttribute("open")) state = "selected";
+  const type = selectTypes.find((item) => item.value === selectState.type);
+  return `${type ? type.label : selectState.type} / ${state}`;
+}
+
+function syncSelectRows() {
+  const type = selectState.type;
+  const small = type === "small";
+  document.querySelector("#field-row-icon").hidden = false;
+  document.querySelector("#field-row-trailing").hidden = false;
+  document.querySelector("#field-row-state").hidden = small;
+  document.querySelector("#field-row-placeholder").hidden = small;
+  document.querySelector("#field-row-hint").hidden = small;
+  document.querySelector("#field-row-label").hidden = type !== "multiple-values";
+  const labeled = type === "large" || (type === "multiple-values" && selectState.showLabel);
+  document.querySelector("#field-row-required").hidden = !labeled;
+}
+
+function syncSelect() {
+  demoButton.hidden = true;
+  demoField.hidden = true;
+  demoSelect.hidden = false;
+  const type = selectState.type;
+  for (const [key, node] of Object.entries(fieldToggles)) {
+    if (key === "showSuffix") continue;
+    node.setAttribute("aria-pressed", selectState[key] ? "true" : "false");
+  }
+  fieldStateSelect.value = type === "small" ? "default" : selectState.state;
+  syncSelectRows();
+  demoSelect.setAttribute("type", type);
+  demoSelect.setAttribute("state", type === "small" ? "default" : selectState.state);
+  setFlag(demoSelect, "show-placeholder", !["small"].includes(type) && selectState.showPlaceholder);
+  setFlag(demoSelect, "show-hint", type !== "small" && selectState.showHint);
+  setFlag(demoSelect, "show-icon", selectState.showIcon);
+  setFlag(demoSelect, "show-trailing", selectState.showTrailing);
+  setFlag(demoSelect, "show-required", selectState.showRequired && (type === "large" || (type === "multiple-values" && selectState.showLabel)));
+  setFlag(demoSelect, "show-label", type === "multiple-values" && selectState.showLabel);
+  demoSelect.setAttribute("add-label", "Add");
+  buttonsCaption.textContent = selectCaption();
+}
+
+function syncPlayground() {
+  const fields = collection === "fields";
+  const selects = collection === "selects";
+  for (const row of document.querySelectorAll(".buttons-only")) row.hidden = fields || selects;
+  for (const row of document.querySelectorAll(".fields-only")) row.hidden = !fields;
+  for (const row of document.querySelectorAll(".demo-only")) row.hidden = !(fields || selects);
+  document.querySelector("#button-label-class").textContent = fields || selects ? "type" : "class";
+  if (fields) {
+    buttonClassSelect.options = fieldTypes;
+    buttonClassSelect.value = fieldState.kind;
+    syncField();
+  } else if (selects) {
+    buttonClassSelect.options = selectTypes;
+    buttonClassSelect.value = selectState.type;
+    syncSelect();
+  } else {
+    buttonClassSelect.options = ["labeled-button", "icon-button"];
+    buttonClassSelect.value = buttonState.kind;
+    syncDemo();
+  }
+  if (buttonState.tab === "spec" || buttonState.tab === "usage") loadDoc(buttonState.tab);
+}
+
 function bindButtonSelect(node, options, key) {
   node.options = options;
   node.value = buttonState[key];
   node.addEventListener("cc-change", (event) => {
+    if (key === "kind" && collection === "fields") {
+      fieldState.kind = event.detail.value;
+      applyFieldDefaults();
+      syncField();
+      return;
+    }
+    if (key === "kind" && collection === "selects") {
+      selectState.type = event.detail.value;
+      applySelectDefaults();
+      syncSelect();
+      if (buttonState.tab === "spec" || buttonState.tab === "usage") loadDoc(buttonState.tab);
+      return;
+    }
     buttonState[key] = event.detail.value;
     if (key === "color" || key === "style") coerceButtonStyle();
     syncDemo();
@@ -1120,24 +1435,26 @@ function renderMarkdown(panel, source) {
 }
 
 async function loadDoc(tab) {
-  const kind = buttonState.kind;
+  const kind = collection === "fields" ? "field" : collection === "selects" ? "select" : buttonState.kind;
   const token = ++docToken;
   const panel = document.querySelector(tab === "spec" ? "#buttons-panel-spec" : "#buttons-panel-usage");
   const file = tab === "spec" ? "spec.md" : "usage.md";
   try {
     const response = await fetch(`components/${kind}/${file}`);
-    if (token !== docToken || buttonState.tab !== tab || buttonState.kind !== kind) return;
+    if (token !== docToken || buttonState.tab !== tab) return;
+    const current = collection === "fields" ? "field" : collection === "selects" ? "select" : buttonState.kind;
+    if (kind !== current) return;
     if (!response.ok) {
       showEmpty(panel);
       return;
     }
     const body = stripFrontmatter(await response.text()).trim();
-    if (token !== docToken || buttonState.tab !== tab || buttonState.kind !== kind) return;
+    if (token !== docToken || buttonState.tab !== tab) return;
     if (!body) showEmpty(panel);
     else renderMarkdown(panel, body);
     syncButtonsScroll();
   } catch {
-    if (token !== docToken || buttonState.tab !== tab || buttonState.kind !== kind) return;
+    if (token !== docToken || buttonState.tab !== tab) return;
     showEmpty(panel);
   }
 }
@@ -1146,9 +1463,15 @@ function tipNode() {
   return document.querySelector("cc-tooltip");
 }
 
+function clearAccessTimer() {
+  window.clearTimeout(accessTimer);
+  accessTimer = 0;
+}
+
 function showNoAccess(anchor) {
   const tip = tipNode();
   if (!tip) return;
+  clearAccessTimer();
   if (accessAnchor === anchor && !tip.hidden) {
     accessAnchor = null;
     tip.hide();
@@ -1158,8 +1481,21 @@ function showNoAccess(anchor) {
   tip.show(anchor, "no access");
 }
 
+function showFigmaDenied() {
+  const tip = tipNode();
+  if (!tip) return;
+  accessAnchor = buttonsFigma;
+  tip.show(buttonsFigma, "access denied");
+  clearAccessTimer();
+  accessTimer = window.setTimeout(() => {
+    if (accessAnchor !== buttonsFigma) return;
+    hideNoAccess();
+  }, accessHold);
+}
+
 function hideNoAccess() {
   if (!accessAnchor) return;
+  clearAccessTimer();
   accessAnchor = null;
   const tip = tipNode();
   if (tip) tip.hide();
@@ -1179,11 +1515,49 @@ bindButtonToggle(buttonShowDisabled, "disabled");
 bindButtonToggle(buttonShowIcon, "showIcon");
 bindButtonToggle(buttonShowBadge, "showBadge");
 
+fieldStateSelect.options = ["default", "error", "disabled"];
+fieldStateSelect.value = fieldState.state;
+fieldStateSelect.addEventListener("cc-change", (event) => {
+  if (collection === "selects") {
+    selectState.state = event.detail.value;
+    syncSelect();
+    return;
+  }
+  fieldState.state = event.detail.value;
+  syncField();
+});
+
+for (const [key, node] of Object.entries(fieldToggles)) {
+  node.addEventListener("click", () => {
+    if (collection === "selects" && key !== "showSuffix") {
+      selectState[key] = !selectState[key];
+      node.setAttribute("aria-pressed", selectState[key] ? "true" : "false");
+      syncSelect();
+      return;
+    }
+    fieldState[key] = !fieldState[key];
+    node.setAttribute("aria-pressed", fieldState[key] ? "true" : "false");
+    syncField();
+  });
+}
+
+demoSelect.options = selectSample;
+demoSelect.addEventListener("cc-toggle", () => {
+  if (collection === "selects") buttonsCaption.textContent = selectCaption();
+});
+new MutationObserver(() => {
+  if (collection === "selects") buttonsCaption.textContent = selectCaption();
+}).observe(demoSelect, { attributes: true, attributeFilter: ["open"] });
+
+demoField.addEventListener("demo-active", () => {
+  if (collection === "fields") buttonsCaption.textContent = fieldCaption();
+});
+
 for (const name of ["settings", "spec", "usage"]) {
   document.querySelector(`#buttons-tab-${name}`).addEventListener("click", () => showButtonTab(name));
 }
 
-buttonsFigma.addEventListener("click", () => showNoAccess(buttonsFigma));
+buttonsFigma.addEventListener("click", () => showFigmaDenied());
 
 for (const id of ["#buttons-panel-spec", "#buttons-panel-usage"]) {
   document.querySelector(id).addEventListener("click", (event) => {

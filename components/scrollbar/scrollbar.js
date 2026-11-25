@@ -9,6 +9,7 @@ class CcScrollbar extends HTMLElement {
   #mutationObserver = null;
   #frame = 0;
   #drag = null;
+  #fadeTimer = 0;
 
   static get observedAttributes() {
     return ["axis"];
@@ -115,6 +116,7 @@ class CcScrollbar extends HTMLElement {
 
   #onScroll = () => {
     this.#refresh();
+    this.#armFade();
   };
 
   #schedule = () => {
@@ -126,9 +128,27 @@ class CcScrollbar extends HTMLElement {
   };
 
   #clearFrame() {
-    if (!this.#frame) return;
-    cancelAnimationFrame(this.#frame);
-    this.#frame = 0;
+    if (this.#frame) {
+      cancelAnimationFrame(this.#frame);
+      this.#frame = 0;
+    }
+    if (!this.#fadeTimer) return;
+    window.clearTimeout(this.#fadeTimer);
+    this.#fadeTimer = 0;
+  }
+
+  #armFade() {
+    if (!this.hasAttribute("fade")) return;
+    this.classList.add("is-shown");
+    window.clearTimeout(this.#fadeTimer);
+    this.#fadeTimer = window.setTimeout(() => {
+      this.#fadeTimer = 0;
+      if (this.#drag) {
+        this.#armFade();
+        return;
+      }
+      this.classList.remove("is-shown");
+    }, 3000);
   }
 
   #length(name) {
@@ -198,6 +218,7 @@ class CcScrollbar extends HTMLElement {
       origin: metrics.vertical ? event.clientY : event.clientX,
       scroll: metrics.scrollPos,
     };
+    this.#armFade();
     this.#thumb.classList.add("is-active");
     this.#capture(event.pointerId);
   };

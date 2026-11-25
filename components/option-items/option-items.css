@@ -1,0 +1,160 @@
+cc-select-option,
+cc-dropdown-action-item,
+cc-checkbox-option,
+cc-option-group {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+.cc-option-group__label {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: var(--spacing-8);
+  padding-bottom: var(--spacing-16);
+  padding-inline: var(--spacing-8);
+  padding-inline-start: calc(var(--spacing-8) + var(--spacing-4));
+  overflow: hidden;
+  border: 0;
+  background-color: transparent;
+  color: var(--color-text-core-tertiary);
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
+  line-height: var(--font-overline-line);
+  letter-spacing: var(--font-overline-tracking);
+  text-align: start;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: default;
+}
+
+cc-option-group:not(:first-child) {
+  margin-top: var(--spacing-24);
+}
+
+.cc-option-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--spacing-40);
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  color: var(--color-text-core-primary);
+  font-family: inherit;
+  font-size: var(--font-body-1-size);
+  font-weight: var(--font-body-1-weight);
+  line-height: var(--font-body-1-line);
+  letter-spacing: var(--font-body-1-tracking);
+  text-align: start;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.cc-option-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.cc-option-row:hover:not(:disabled)::before,
+.cc-option-row:focus-visible:not(:disabled)::before {
+  background-color: var(--color-surface-neutral-transparent-hover);
+}
+
+.cc-option-row:focus,
+.cc-option-row:focus-visible {
+  outline: 0;
+}
+
+.cc-option-row:disabled {
+  color: var(--color-text-core-disabled);
+  cursor: default;
+  opacity: 1;
+}
+
+cc-select-option[data-empty] .cc-option-row,
+cc-dropdown-action-item[data-empty] .cc-option-row {
+  color: var(--color-text-core-tertiary);
+}
+
+.cc-option__cell {
+  display: flex;
+  flex: 0 0 var(--spacing-40);
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: var(--spacing-40);
+}
+
+.cc-option__label {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cc-option__check {
+  display: block;
+  flex: 0 0 auto;
+  width: var(--layout-icon-size);
+  height: var(--layout-icon-size);
+}
+
+.cc-option__check[hidden] {
+  display: none;
+}
+
+.cc-option__box {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--spacing-16);
+  height: var(--spacing-16);
+  border: var(--stroke-1) solid var(--color-border-core-subtle);
+  border-radius: var(--radius-4);
+  background-color: transparent;
+  color: var(--color-icon-shape-core-on-solid);
+}
+
+cc-checkbox-option[selected] .cc-option__box {
+  background-color: var(--color-surface-accent-solid-default);
+}
+
+.cc-option__tick {
+  display: block;
+  width: var(--spacing-16);
+  height: var(--spacing-16);
+}
+
+.cc-option__tick[hidden] {
+  display: none;
+}
+
+cc-dropdown-action-item:not([size="small"]) .cc-option-row {
+  padding-inline: var(--spacing-12);
+}
+
+cc-dropdown-action-item[size="small"] .cc-option-row {
+  height: var(--layout-select-option-height);
+  min-height: var(--layout-select-option-height);
+  padding-inline: var(--spacing-12);
+  padding-inline-start: calc(var(--spacing-8) + var(--spacing-4));
+  font-size: var(--font-body-2-size);
+  font-weight: var(--font-body-2-weight);
+  line-height: var(--font-body-2-line);
+  letter-spacing: var(--font-body-2-tracking);
+}
