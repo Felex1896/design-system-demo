@@ -47,6 +47,47 @@ function readColor(styles, name) {
   return parseColor(styles.getPropertyValue(name));
 }
 
+let pointer = null;
+
+function rememberPointer(event) {
+  if (event.pointerType && event.pointerType !== "mouse") return;
+  pointer = { x: event.clientX, y: event.clientY };
+}
+
+function rowUnderPointer() {
+  if (!pointer) return null;
+  for (const node of document.elementsFromPoint(pointer.x, pointer.y)) {
+    if (!(node instanceof Element)) continue;
+    const row = node.closest("cc-color-row");
+    if (row?.closest(".family-scroll")) return row;
+  }
+  return null;
+}
+
+function settleLifts(animated) {
+  const next = rowUnderPointer();
+  for (const row of document.querySelectorAll("cc-color-row")) {
+    if (!row._lifted || row === next) continue;
+    if (row.classList.contains("is-held") || document.activeElement === row) continue;
+    if (animated) row._drop();
+    else row._finishDrop();
+  }
+  if (next && (!next._lifted || next._dropping)) next._lift();
+}
+
+function watchScroller(scroller) {
+  if (!scroller || scroller.dataset.liftWatch) return;
+  scroller.dataset.liftWatch = "true";
+  scroller.addEventListener("scroll", () => settleLifts(false), { passive: true });
+}
+
+document.addEventListener("pointermove", (event) => {
+  rememberPointer(event);
+  settleLifts(true);
+}, { passive: true });
+
+document.addEventListener("scroll", () => settleLifts(false), true);
+
 class CcColorRow extends HTMLElement {
   static get observedAttributes() {
     return REFLECTED;
@@ -93,8 +134,14 @@ class CcColorRow extends HTMLElement {
   _bindLift() {
     if (this._boundLift) return;
     this._boundLift = true;
-    this.addEventListener("pointerenter", () => this._lift());
-    this.addEventListener("pointerleave", () => this._liftOff());
+    this.addEventListener("pointerenter", (event) => {
+      rememberPointer(event);
+      this._lift();
+    });
+    this.addEventListener("pointerleave", () => {
+      if (this.classList.contains("is-held") || this === document.activeElement) return;
+      this._drop();
+    });
     this.addEventListener("focus", () => this._lift());
     this.addEventListener("blur", () => this._liftOff());
     this._watch = new MutationObserver(() => {
@@ -104,8 +151,15 @@ class CcColorRow extends HTMLElement {
     this._watch.observe(this, { attributes: true, attributeFilter: ["class"] });
   }
 
+  _containsPointer() {
+    if (!pointer) return this.matches(":hover");
+    const rect = this.getBoundingClientRect();
+    return pointer.x >= rect.left && pointer.x <= rect.right && pointer.y >= rect.top && pointer.y <= rect.bottom;
+  }
+
   _lift() {
     if (this._dropping) {
+      if (!this._containsPointer() && this !== document.activeElement && !this.classList.contains("is-held")) return;
       window.clearTimeout(this._dropTimer);
       this._dropping = false;
       this._dropTimer = 0;
@@ -115,6 +169,7 @@ class CcColorRow extends HTMLElement {
     }
     const scroller = this.closest(".family-scroll");
     if (!scroller || this._lifted) return;
+    this._liftGen = (this._liftGen || 0) + 1;
     const swatch = this._swatch;
     const rect = this.getBoundingClientRect();
     this._name.style.color = getComputedStyle(this._name).color;
@@ -130,13 +185,24 @@ class CcColorRow extends HTMLElement {
     this._lifted = true;
     this._scroller = scroller;
     this._pageScroll = this.closest(".page-scroll");
-    this._syncLift = () => this._placeLift();
+    watchScroller(scroller);
+    this._syncLift = () => {
+      if (!this._lifted) return;
+      if (!this.classList.contains("is-held") && this !== document.activeElement && !this._containsPointer()) {
+        const next = rowUnderPointer();
+        this._finishDrop();
+        if (next && next !== this && (!next._lifted || next._dropping)) next._lift();
+        return;
+      }
+      this._placeLift();
+    };
     scroller.addEventListener("scroll", this._syncLift, { passive: true });
     this._pageScroll?.addEventListener("scroll", this._syncLift, { passive: true });
     window.addEventListener("resize", this._syncLift);
     this._placeLift();
+    const gen = this._liftGen;
     const grow = () => {
-      if (!this._lifted || this._dropping) return;
+      if (gen !== this._liftGen || !this._lifted || this._dropping) return;
       swatch.style.transform = "scale(1.05)";
       swatch.style.boxShadow = "var(--shadow-color-row)";
     };
@@ -160,7 +226,8 @@ class CcColorRow extends HTMLElement {
   }
 
   _liftOff() {
-    if (this.classList.contains("is-held") || this.matches(":hover") || this === document.activeElement) return;
+    if (this.classList.contains("is-held") || this === document.activeElement) return;
+    if (this._containsPointer()) return;
     this._drop();
   }
 
