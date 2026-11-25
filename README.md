@@ -1,4 +1,3 @@
-# Token collections
+# Design system demo
 
-Clickable page of color, size, and type tokens. The site is this folder.
-
+Clickable prototype. The site is this folder.
