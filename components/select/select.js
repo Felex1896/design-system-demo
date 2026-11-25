@@ -17,8 +17,10 @@ const INFO = `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
   <path fill="currentColor" d="M12 5C15.864 5 19 8.136 19 12C19 15.864 15.864 19 12 19C8.136 19 5 15.864 5 12C5 8.136 8.136 5 12 5ZM11 16H13V11H11V16ZM11 8V10H13V8H11Z"/>
 </svg>`;
 
-const CHEVRON_PATH =
+const CHEVRON_SMALL =
   "M12 13.2L16.2 8.99998C16.5314 8.6686 17.0686 8.6686 17.4 8.99998C17.7314 9.33135 17.7314 9.8686 17.4 10.2L12 15.6L6.6 10.2C6.26863 9.8686 6.26863 9.33135 6.6 8.99998C6.93137 8.6686 7.46863 8.6686 7.8 8.99998L12 13.2Z";
+const CHEVRON_LARGE =
+  "M12 13.3333L16.9341 8.63417C17.307 8.27903 17.893 8.27903 18.2659 8.63417C18.6654 9.01467 18.6654 9.652 18.2659 10.0325L12 16L5.73413 10.0325C5.3346 9.652 5.3346 9.01467 5.73413 8.63417C6.10702 8.27903 6.69298 8.27903 7.06587 8.63417L12 13.3333Z";
 
 const TYPES = ["large", "medium", "small", "multiple-values"];
 const STATES = ["default", "error", "disabled"];
@@ -41,6 +43,8 @@ class CcSelect extends HTMLElement {
       "show-trailing",
       "show-required",
       "show-label",
+      "icon",
+      "aria-label",
     ];
   }
 
@@ -78,7 +82,9 @@ class CcSelect extends HTMLElement {
   get options() {
     return this._options.map((item) => {
       if (item.kind === "group") return { kind: "group", label: item.label };
-      return { value: item.value, label: item.label };
+      const choice = { value: item.value, label: item.label };
+      if (item.icon != null) choice.icon = item.icon;
+      return choice;
     });
   }
 
@@ -116,7 +122,7 @@ class CcSelect extends HTMLElement {
     }
     this._paint();
     if (name === "open") this._syncOpen();
-    else if (name === "type" || name === "show-placeholder") this._renderMenu();
+    else if (name === "type" || name === "show-placeholder" || name === "placeholder") this._renderMenu();
     else if (name === "value") this._syncSingleSelected();
   }
 
@@ -178,8 +184,9 @@ class CcSelect extends HTMLElement {
     path.setAttribute("fill", "currentColor");
     path.setAttribute("fill-rule", "evenodd");
     path.setAttribute("clip-rule", "evenodd");
-    path.setAttribute("d", CHEVRON_PATH);
+    path.setAttribute("d", CHEVRON_SMALL);
     svg.append(path);
+    this._caretPath = path;
     return svg;
   }
 
@@ -322,7 +329,9 @@ class CcSelect extends HTMLElement {
     this._inlineName.textContent = label;
     this._hint.textContent = this._copy("hint", "Tell me a story");
     this._add.textContent = this._copy("add-label", "Add");
-    this._icon.hidden = !this._on("show-icon");
+    this._caretPath.setAttribute("d", type === "medium" || type === "small" ? CHEVRON_SMALL : CHEVRON_LARGE);
+    this._paintIcon();
+    this._paintName(type);
     this._trail.hidden = !this._on("show-trailing");
     this._hint.hidden = type === "small" || !this._on("show-hint");
     const star = this._on("show-required") && showLabel;
@@ -351,9 +360,60 @@ class CcSelect extends HTMLElement {
       }
       const value = item.value == null ? "" : String(item.value);
       const label = item.label == null ? value : String(item.label);
-      stored.push({ value, label });
+      const choice = { value, label };
+      if (item.icon != null && String(item.icon) !== "") choice.icon = String(item.icon);
+      stored.push(choice);
     }
     return stored;
+  }
+
+  _chosenIcon() {
+    const mode = this.getAttribute("icon");
+    if (mode !== "priority" && mode !== "status") return "";
+    const current = this.getAttribute("value") || "";
+    for (const item of this._options) {
+      if (item.kind === "group") continue;
+      if (item.value === current) return item.icon || "";
+    }
+    return "";
+  }
+
+  _paintIcon() {
+    const mode = this.getAttribute("icon");
+    if (mode === "priority" || mode === "status") {
+      const chosen = this._chosenIcon();
+      const marks = window.CC_MARKS || {};
+      const spec = chosen && marks[chosen] ? marks[chosen] : null;
+      const empty = mode === "status" && !spec;
+      const shown = spec || (empty ? { tone: "muted", html: `<span class="cc-mark"><span class="cc-mark__dot"></span></span>` } : null);
+      const key = spec ? chosen : empty ? "unset" : "";
+      this._icon.hidden = !this._on("show-icon") || !shown;
+      if (!shown) {
+        delete this.dataset.tone;
+        this._icon.dataset.mark = "";
+        return;
+      }
+      this.dataset.tone = shown.tone;
+      if (this._icon.dataset.mark === key) return;
+      this._icon.dataset.mark = key;
+      this._icon.innerHTML = shown.html;
+      return;
+    }
+    delete this.dataset.tone;
+    if (this._icon.dataset.mark === "modules") return;
+    this._icon.dataset.mark = "modules";
+    this._icon.innerHTML = MODULES;
+  }
+
+  _paintName(type) {
+    const named = type === "medium" && this.hasAttribute("aria-label");
+    if (!named) {
+      this._plate.removeAttribute("aria-label");
+      if (this._plate.getAttribute("role") === "button") this._plate.removeAttribute("role");
+      return;
+    }
+    this._plate.setAttribute("role", "button");
+    this._plate.setAttribute("aria-label", this.getAttribute("aria-label") ?? "");
   }
 
   _labelFor(value) {
@@ -399,7 +459,8 @@ class CcSelect extends HTMLElement {
     const source = this._options.slice();
     if (type === "small" || type === "multiple-values" || !this._on("show-placeholder")) return source;
     const rest = source.filter((item) => item.kind === "group" || item.value !== "");
-    return [{ value: "", label: EMPTY_LABEL, empty: true }, ...rest];
+    const label = (this.getAttribute("placeholder") || "").trim() || EMPTY_LABEL;
+    return [{ value: "", label, empty: true }, ...rest];
   }
 
   _renderMenu() {
@@ -429,6 +490,7 @@ class CcSelect extends HTMLElement {
       }
       row.setAttribute("label", item.label);
       row.setAttribute("value", item.value);
+      if (item.icon) row.setAttribute("mark", item.icon);
       if (item.empty) row.setAttribute("data-empty", "");
       fragment.append(row);
     }

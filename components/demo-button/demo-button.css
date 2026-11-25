@@ -7,10 +7,10 @@ demo-button {
   max-width: 100%;
   color: var(--demo-ink);
   font-family: var(--font-family);
-  font-size: var(--font-subtitle-3-size);
-  font-weight: var(--font-subtitle-3-weight);
-  line-height: var(--font-subtitle-3-line);
-  letter-spacing: var(--font-subtitle-3-tracking);
+  font-size: var(--font-button-size);
+  font-weight: var(--font-button-weight);
+  line-height: var(--font-button-line);
+  letter-spacing: var(--font-button-tracking);
 }
 
 demo-button button {
@@ -46,10 +46,10 @@ demo-button:not([kind="icon-button"])[size="medium"] button {
 }
 
 demo-button:not([kind="icon-button"])[size="small"] {
-  font-size: var(--font-caption-medium-size);
-  font-weight: var(--font-caption-medium-weight);
-  line-height: var(--font-caption-medium-line);
-  letter-spacing: var(--font-caption-medium-tracking);
+  font-size: var(--font-button-small-size);
+  font-weight: var(--font-button-small-weight);
+  line-height: var(--font-button-small-line);
+  letter-spacing: var(--font-button-small-tracking);
 }
 
 demo-button:not([kind="icon-button"])[size="small"] button {

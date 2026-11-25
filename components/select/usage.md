@@ -30,9 +30,9 @@ The playground state switch is `default`, `error`, or `disabled`. `open` is sepa
 
 | Extra | When |
 | --- | --- |
-| Hint | Helper text under the plate. Hidden while the switch is off. Not on `small`. |
-| Placeholder | Sample text in an empty plate. A chosen value does not belong here. Not on `small`. On `large` and `medium`, the open list then starts with a gray `Nothing selected` row that clears the choice. |
-| Icon | A leading modules glyph. |
+| Hint | Helper text under the plate. Hidden while the switch is off. Not on `small`. The slot can be on while the text is empty. Several chips say that more than one value can be chosen. |
+| Placeholder | Sample text in an empty plate. A chosen value does not belong here. Not on `small`. On `large` and `medium`, the open list then starts with a gray row whose label is that placeholder. Choosing it clears the value. In a form that row is `Not selected` when the choice may stay empty. A select with no way back to empty is required instead, and it has no such row. A select with no visible label always shows a placeholder. The label says what to choose. The placeholder shows an example, or `Not selected` when the choice may stay empty. |
+| Icon | A leading modules glyph. Priority uses the level glyphs: minor is neutral, medium is accent, high is warning, major is danger. Status uses a `--spacing-12` dot inside a `--layout-icon-size` icon: open is info, watching is warning, closed is success. Until a status is chosen the dot is `icon-shape/core/disabled`. |
 | Trailing button | Side action. Hover says `additional information`. |
 | Required | A star after the label. Hidden when the plate has no label. |
 | Label | On `multiple-values`, the caption above the chips. Off leaves the chips in the 56 plate until they wrap. `large` always shows its label. |

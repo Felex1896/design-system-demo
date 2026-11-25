@@ -58,7 +58,7 @@ function hideTip() {
 }
 
 function showTip(anchor, text) {
-  if (!anchor || !anchor.isConnected || anchor.hasAttribute("disabled")) {
+  if (!anchor || !anchor.isConnected || anchor.hasAttribute("disabled") || anchor.hasAttribute("quiet")) {
     if (tipAnchor === anchor) hideTip();
     return;
   }
@@ -75,7 +75,7 @@ function touchLike(event) {
 
 class DemoButton extends HTMLElement {
   static get observedAttributes() {
-    return ["kind", "size", "label", "show-icon", "show-badge", "disabled"];
+    return ["kind", "size", "label", "show-icon", "show-badge", "disabled", "quiet"];
   }
 
   #button = null;
@@ -147,6 +147,7 @@ class DemoButton extends HTMLElement {
   }
 
   #enter(event) {
+    if (this.hasAttribute("quiet")) return;
     if (event.pointerType !== "mouse") return;
     if (performance.now() < quietMouse) return;
     if (this.hasAttribute("disabled")) return;
@@ -159,12 +160,16 @@ class DemoButton extends HTMLElement {
   }
 
   #down(event) {
-    if (this.hasAttribute("disabled")) return;
+    if (this.hasAttribute("quiet") || this.hasAttribute("disabled")) return;
     if (event.pointerType === "mouse" && event.button !== 0) return;
     showTip(this, "pressed");
   }
 
   #up(event) {
+    if (this.hasAttribute("quiet")) {
+      if (tipAnchor === this) hideTip();
+      return;
+    }
     if (touchLike(event)) {
       quietMouse = performance.now() + 700;
       if (tipAnchor === this) hideTip();

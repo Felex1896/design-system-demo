@@ -4,10 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Token collections</title>
-    <link rel="stylesheet" href="src/page.css?v=42">
+    <link rel="stylesheet" href="src/page.css?v=53">
     <link rel="stylesheet" href="components/select-small/select-small.css?v=5">
-    <link rel="stylesheet" href="components/demo-button/demo-button.css?v=5">
-    <link rel="stylesheet" href="components/field/field.css?v=14">
+    <link rel="stylesheet" href="components/demo-button/demo-button.css?v=6">
+    <link rel="stylesheet" href="components/form-section/form-section.css?v=3">
+    <link rel="stylesheet" href="components/demo-form/demo-form.css?v=4">
+    <link rel="stylesheet" href="components/field/field.css?v=22">
     <link rel="stylesheet" href="components/chip/chip.css?v=3">
     <link rel="stylesheet" href="components/mode-switcher/mode-switcher.css?v=3">
     <link rel="stylesheet" href="components/icon-button/icon-button.css">
@@ -39,6 +41,10 @@
       <cc-scrollbar id="scroll-x" axis="horizontal"></cc-scrollbar>
       <div class="buttons-screen" hidden>
         <div class="buttons-side">
+          <div class="buttons-row" id="form-template-row" hidden>
+            <span class="buttons-label" id="form-template-label">feature-context</span>
+            <cc-select-small id="form-template" aria-labelledby="form-template-label"></cc-select-small>
+          </div>
           <div class="buttons-tabs" role="tablist">
             <button class="buttons-tab" id="buttons-tab-settings" type="button" role="tab" aria-selected="true" aria-controls="buttons-panel-settings">Settings</button>
             <button class="buttons-tab" id="buttons-tab-spec" type="button" role="tab" aria-selected="false" aria-controls="buttons-panel-spec">Spec.md</button>
@@ -115,15 +121,22 @@
           <cc-scrollbar id="buttons-scroll" axis="vertical"></cc-scrollbar>
         </div>
         <div class="buttons-play">
-          <div class="buttons-play__caption" id="buttons-caption"></div>
+          <div class="buttons-play__caption">
+            <span id="buttons-caption"></span>
+            <cc-select-small id="form-lang" hidden></cc-select-small>
+          </div>
           <div class="buttons-play__stage">
             <demo-button id="demo-button" label="Label"></demo-button>
             <demo-field id="demo-field" hidden></demo-field>
             <cc-select id="demo-select" hidden></cc-select>
+            <demo-form id="demo-form" hidden template="booking" lang="en"></demo-form>
           </div>
           <div class="buttons-play__footer">
             <button class="buttons-figma" id="buttons-figma" type="button" tip="above">Open in Figma</button>
-            <span class="buttons-play__mark">Playground</span>
+            <div class="buttons-play__end">
+              <span class="buttons-play__mark">Playground</span>
+              <cc-icon-button class="form-mode" id="form-mode" glyph="caret-up"></cc-icon-button>
+            </div>
           </div>
         </div>
       </div>
@@ -135,15 +148,18 @@
     <span hidden data-copy="theme.dark"></span>
     <span hidden data-copy="theme.light"></span>
     <span hidden data-copy="menu.close"></span>
-    <script src="components/demo-button/demo-button.js?v=4"></script>
+    <script src="components/demo-button/demo-button.js?v=5"></script>
     <script src="components/chip/chip.js?v=1"></script>
-    <script src="components/option-items/option-items.js?v=3"></script>
+    <script src="components/glyphs/glyphs.js?v=2"></script>
+    <script src="components/option-items/option-items.js?v=5"></script>
     <script src="components/dropdown-menu/dropdown-menu.js?v=6"></script>
-    <script src="components/select/select.js?v=5"></script>
-    <script src="components/field/field.js?v=6"></script>
+    <script src="components/select/select.js?v=16"></script>
+    <script src="components/field/field.js?v=14"></script>
+    <script src="components/form-section/form-section.js?v=1"></script>
+    <script src="components/demo-form/demo-form.js?v=6"></script>
     <script src="components/select-small/select-small.js?v=12"></script>
     <script src="components/mode-switcher/mode-switcher.js?v=2"></script>
-    <script src="components/icon-button/icon-button.js?v=2"></script>
+    <script src="components/icon-button/icon-button.js?v=3"></script>
     <script src="components/color-row/color-row.js?v=4"></script>
     <script src="components/subgroup/subgroup.js?v=3"></script>
     <script src="components/color-carousel/color-carousel.js?v=9"></script>
@@ -156,6 +172,6 @@
     <script src="components/type-row/type-row.js?v=3"></script>
     <script src="components/shadow-row/shadow-row.js?v=1"></script>
     <script src="components/switcher-end/switcher-end.js?v=1"></script>
-    <script type="module" src="src/main.js?v=71"></script>
+    <script type="module" src="src/main.js?v=83"></script>
   </body>
 </html>

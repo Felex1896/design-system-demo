@@ -30,23 +30,35 @@ const buttonsScroll = document.querySelector("#buttons-scroll");
 const demoButton = document.getElementById("demo-button");
 const demoField = document.getElementById("demo-field");
 const demoSelect = document.getElementById("demo-select");
+const demoForm = document.getElementById("demo-form");
+const formTemplateSelect = document.querySelector("#form-template");
+const formLangSelect = document.querySelector("#form-lang");
+const formModeButton = document.querySelector("#form-mode");
+const settingsTab = document.querySelector("#buttons-tab-settings");
+const classRow = document.querySelector("#buttons-panel-settings > .buttons-row");
 const fieldStateSelect = document.querySelector("#field-state");
 const buttonsFigma = document.querySelector("#buttons-figma");
 
-const styles = await fetch(new URL("../data/styles.json?v=13", import.meta.url)).then((response) => response.json());
+const styles = await fetch(new URL("../data/styles.json?v=19", import.meta.url)).then((response) => response.json());
 const collections = await fetch(new URL("../data/collections.json?v=9", import.meta.url)).then((response) => response.json());
 const sizeDoc = await fetch(new URL("../data/size.json?v=2", import.meta.url)).then((response) => response.json());
 const typeDoc = await fetch(new URL("../data/typography.json?v=2", import.meta.url)).then((response) => response.json());
 const shadowDoc = await fetch(new URL("../data/shadow.json?v=2", import.meta.url)).then((response) => response.json());
 const copy = await fetch(new URL("../data/copy.json?v=2", import.meta.url)).then((response) => response.json());
+const formCopy = await fetch(new URL("../data/form-copy.json?v=3", import.meta.url)).then((response) => response.json());
+const formsDoc = await fetch(new URL("../data/forms.json?v=4", import.meta.url)).then((response) => response.json());
 
 applyStyles(styles);
 
 let collection = collections.defaults.collection;
 
 function isPlayground() {
-  return collection === "buttons" || collection === "fields" || collection === "selects";
+  return collection === "buttons" || collection === "fields" || collection === "selects" || collection === "form";
 }
+let formTemplate = "booking";
+let formLang = "en";
+let formTab = "spec";
+let formMode = "playground";
 let brand = collections.defaults.brand;
 let theme = collections.defaults.theme;
 let shadowHover = false;
@@ -486,7 +498,11 @@ function syncNarrow() {
 
 function syncStacked() {
   const limit = Number.parseFloat(getComputedStyle(root).getPropertyValue("--layout-buttons-stack"));
-  root.classList.toggle("is-stacked", isPlayground() && window.innerWidth < limit);
+  const stacked = isPlayground() && window.innerWidth < limit;
+  const was = root.classList.contains("is-stacked");
+  root.classList.toggle("is-stacked", stacked);
+  if (was !== stacked) releaseFormSheet();
+  syncFormChrome();
 }
 
 function colorColumns() {
@@ -598,6 +614,7 @@ function stickCarousels() {
 }
 
 function recolor() {
+  root.dataset.theme = theme;
   const playground = isPlayground();
   const chromeBrand = collection === "semantic" || playground ? brand : "brand-blue";
   applyColors(styles, collections, chromeBrand, theme);
@@ -638,7 +655,8 @@ function paint(fade) {
   const draw = () => {
     const playground = isPlayground();
   const chromeBrand = collection === "semantic" || playground ? brand : "brand-blue";
-  const chromeTheme = theme;
+    const chromeTheme = theme;
+    root.dataset.theme = chromeTheme;
     applyColors(styles, collections, chromeBrand, chromeTheme);
     page.dataset.collection = collection;
     buttonsScreen.hidden = !playground;
@@ -838,13 +856,17 @@ collectionSelect.options = [
   { value: "buttons", label: "button" },
   { value: "fields", label: "field" },
   { value: "selects", label: "select" },
+  { kind: "group", label: "templates-demo" },
+  { value: "form", label: "form" },
 ];
 collectionSelect.value = collection;
 brandSelect.options = collections.brandOrder.slice();
 brandSelect.value = brand;
 
 collectionSelect.addEventListener("cc-change", (event) => {
-  collection = event.detail.value;
+  const next = event.detail.value;
+  if (next === "form") formTab = "spec";
+  collection = next;
   if (collection === "semantic" || collection === "effects" || isPlayground()) {
     theme = remembered.theme;
     themeSwitch.setAttribute("mode", theme);
@@ -1047,6 +1069,7 @@ function syncDemo() {
   demoButton.hidden = false;
   demoField.hidden = true;
   demoSelect.hidden = true;
+  demoForm.hidden = true;
   demoButton.setAttribute("kind", buttonState.kind);
   demoButton.setAttribute("size", buttonState.size);
   demoButton.setAttribute("label", "Label");
@@ -1114,6 +1137,7 @@ function syncField() {
   demoButton.hidden = true;
   demoField.hidden = false;
   demoSelect.hidden = true;
+  demoForm.hidden = true;
   fieldStateSelect.value = fieldState.state;
   syncFieldRows();
   demoField.setAttribute("kind", fieldState.kind);
@@ -1190,6 +1214,7 @@ function syncSelect() {
   demoButton.hidden = true;
   demoField.hidden = true;
   demoSelect.hidden = false;
+  demoForm.hidden = true;
   const type = selectState.type;
   for (const [key, node] of Object.entries(fieldToggles)) {
     if (key === "showSuffix") continue;
@@ -1209,10 +1234,167 @@ function syncSelect() {
   buttonsCaption.textContent = selectCaption();
 }
 
+function formString(key) {
+  const entry = formCopy[key];
+  if (!entry || typeof entry !== "object") return "";
+  const value = entry[formLang];
+  return value == null ? "" : String(value);
+}
+
+function currentTemplate() {
+  return formsDoc.templates.find((item) => item.id === formTemplate) || formsDoc.templates[0];
+}
+
+function syncFormChrome() {
+  const form = collection === "form";
+  const stacked = root.classList.contains("is-stacked");
+  const sidebar = formMode === "sidebar";
+  root.classList.toggle("is-form-play", form && stacked && !sidebar);
+  root.classList.toggle("is-form-side", form && stacked && sidebar);
+  const play = buttonsScreen.querySelector(".buttons-play");
+  const side = buttonsScreen.querySelector(".buttons-side");
+  const caption = play && play.querySelector(".buttons-play__caption");
+  const stage = play && play.querySelector(".buttons-play__stage");
+  if (side) side.inert = form && stacked && !sidebar;
+  if (caption) caption.inert = form && stacked && sidebar;
+  if (stage) stage.inert = form && stacked && sidebar;
+  placeButtonsScroll();
+  formLangSelect.hidden = !form;
+  if (!form) return;
+  formModeButton.setAttribute("glyph", sidebar ? "caret-down" : "caret-up");
+  formModeButton.setAttribute("label", formString(sidebar ? "form.mode.showForm" : "form.mode.showSpec"));
+}
+
+let formSheetToken = 0;
+
+function formSheetNodes() {
+  const play = buttonsScreen.querySelector(".buttons-play");
+  const side = buttonsScreen.querySelector(".buttons-side");
+  const footer = play ? play.querySelector(".buttons-play__footer") : null;
+  return { play, side, footer };
+}
+
+function pinFormFooter(on) {
+  const { play, footer } = formSheetNodes();
+  if (!footer) return;
+  if (!on) {
+    footer.style.position = "";
+    footer.style.left = "";
+    footer.style.right = "";
+    footer.style.bottom = "";
+    return;
+  }
+  if (play) play.style.position = "relative";
+  footer.style.position = "absolute";
+  footer.style.left = "0";
+  footer.style.right = "0";
+  footer.style.bottom = "0";
+}
+
+function placeButtonsScroll() {
+  if (collection !== "form") {
+    buttonsScroll.style.top = "";
+    buttonsScroll.style.bottom = "";
+    buttonsScroll.style.height = "";
+    return;
+  }
+  const side = buttonsScreen.querySelector(".buttons-side");
+  const panel = [...side.querySelectorAll(".buttons-panel")].find((node) => !node.hidden);
+  if (!side || !panel) return;
+  const top = panel.offsetTop;
+  const bottom = Math.max(0, side.clientHeight - top - panel.offsetHeight);
+  buttonsScroll.style.top = `${top}px`;
+  buttonsScroll.style.height = "auto";
+  buttonsScroll.style.bottom = `${bottom}px`;
+}
+
+function releaseFormSheet() {
+  formSheetToken += 1;
+  root.classList.remove("is-form-moving");
+  const { play, side } = formSheetNodes();
+  for (const node of [play, side]) {
+    if (!node) continue;
+    node.getAnimations().forEach((item) => item.cancel());
+    node.style.height = "";
+    node.style.flex = "";
+    node.style.boxSizing = "";
+  }
+  if (play) play.style.position = "";
+  pinFormFooter(false);
+  placeButtonsScroll();
+}
+
+function moveFormSheet(next) {
+  const { play, side } = formSheetNodes();
+  const token = ++formSheetToken;
+  const stacked = root.classList.contains("is-stacked");
+  if (!play || !side || !stacked || reduceMotion()) {
+    formMode = next;
+    syncFormChrome();
+    return;
+  }
+  const fromPlay = play.getBoundingClientRect().height;
+  const fromSide = side.getBoundingClientRect().height;
+  for (const node of [play, side]) node.getAnimations().forEach((item) => item.cancel());
+  root.classList.remove("is-form-moving");
+  play.style.height = "";
+  side.style.height = "";
+  formMode = next;
+  syncFormChrome();
+  const toPlay = play.getBoundingClientRect().height;
+  const toSide = side.getBoundingClientRect().height;
+  if (Math.abs(fromPlay - toPlay) < 1 && Math.abs(fromSide - toSide) < 1) return;
+  root.classList.add("is-form-moving");
+  pinFormFooter(true);
+  for (const node of [play, side]) {
+    node.style.boxSizing = "border-box";
+    node.style.flex = "none";
+  }
+  play.style.height = `${fromPlay}px`;
+  side.style.height = `${fromSide}px`;
+  animate(play, { height: [`${fromPlay}px`, `${toPlay}px`] }, calm);
+  animate(side, { height: [`${fromSide}px`, `${toSide}px`] }, calm);
+  whenSettled(side).then(() => {
+    if (token !== formSheetToken) return;
+    releaseFormSheet();
+  });
+}
+
+function syncFormLabels() {
+  const template = currentTemplate();
+  formTemplate = template.id;
+  formTemplateSelect.options = formsDoc.templates.map((item) => ({
+    value: item.id,
+    label: formString(item.titleKey),
+  }));
+  formTemplateSelect.value = formTemplate;
+  formLangSelect.options = [
+    { value: "en", label: "En" },
+    { value: "ru", label: "Ru" },
+  ];
+  formLangSelect.value = formLang;
+  buttonsCaption.textContent = `${formString(formsDoc.productKey)} · ${formString(template.titleKey)}`;
+  demoForm.setAttribute("template", formTemplate);
+  demoForm.setAttribute("lang", formLang);
+  syncFormChrome();
+}
+
+function syncForm() {
+  demoButton.hidden = true;
+  demoField.hidden = true;
+  demoSelect.hidden = true;
+  demoForm.hidden = false;
+  syncFormLabels();
+}
+
 function syncPlayground() {
   const fields = collection === "fields";
   const selects = collection === "selects";
-  for (const row of document.querySelectorAll(".buttons-only")) row.hidden = fields || selects;
+  const form = collection === "form";
+  settingsTab.hidden = form;
+  classRow.hidden = form;
+  document.querySelector("#form-template-row").hidden = !form;
+  for (const row of document.querySelectorAll(".buttons-only")) row.hidden = fields || selects || form;
   for (const row of document.querySelectorAll(".fields-only")) row.hidden = !fields;
   for (const row of document.querySelectorAll(".demo-only")) row.hidden = !(fields || selects);
   document.querySelector("#button-label-class").textContent = fields || selects ? "type" : "class";
@@ -1224,12 +1406,14 @@ function syncPlayground() {
     buttonClassSelect.options = selectTypes;
     buttonClassSelect.value = selectState.type;
     syncSelect();
+  } else if (form) {
+    syncForm();
   } else {
     buttonClassSelect.options = ["labeled-button", "icon-button"];
     buttonClassSelect.value = buttonState.kind;
     syncDemo();
   }
-  if (buttonState.tab === "spec" || buttonState.tab === "usage") loadDoc(buttonState.tab);
+  applyPlaygroundTab();
 }
 
 function bindButtonSelect(node, options, key) {
@@ -1265,8 +1449,19 @@ function bindButtonToggle(node, key) {
   });
 }
 
-function showButtonTab(tab) {
-  buttonState.tab = tab;
+function shownTab() {
+  return collection === "form" ? formTab : buttonState.tab;
+}
+
+function shownKind() {
+  if (collection === "form") return "form";
+  if (collection === "fields") return "field";
+  if (collection === "selects") return "select";
+  return buttonState.kind;
+}
+
+function applyPlaygroundTab() {
+  const tab = shownTab();
   for (const name of ["settings", "spec", "usage"]) {
     const on = name === tab;
     document.querySelector(`#buttons-tab-${name}`).setAttribute("aria-selected", on ? "true" : "false");
@@ -1276,8 +1471,17 @@ function showButtonTab(tab) {
   syncButtonsScroll();
 }
 
+function showButtonTab(tab) {
+  if (collection === "form") {
+    formTab = tab === "settings" ? "spec" : tab;
+  } else {
+    buttonState.tab = tab;
+  }
+  applyPlaygroundTab();
+}
+
 function syncButtonsScroll() {
-  const panel = document.querySelector(`#buttons-panel-${buttonState.tab}`);
+  const panel = document.querySelector(`#buttons-panel-${shownTab()}`);
   if (panel) buttonsScroll.target = panel;
 }
 
@@ -1435,26 +1639,28 @@ function renderMarkdown(panel, source) {
 }
 
 async function loadDoc(tab) {
-  const kind = collection === "fields" ? "field" : collection === "selects" ? "select" : buttonState.kind;
+  const form = collection === "form";
+  const templateId = formTemplate;
+  const kind = shownKind();
   const token = ++docToken;
   const panel = document.querySelector(tab === "spec" ? "#buttons-panel-spec" : "#buttons-panel-usage");
-  const file = tab === "spec" ? "spec.md" : "usage.md";
+  const file = form ? (tab === "spec" ? `${templateId}/spec.md` : "usage.md") : (tab === "spec" ? "spec.md" : "usage.md");
   try {
     const response = await fetch(`components/${kind}/${file}`);
-    if (token !== docToken || buttonState.tab !== tab) return;
-    const current = collection === "fields" ? "field" : collection === "selects" ? "select" : buttonState.kind;
-    if (kind !== current) return;
+    if (token !== docToken || shownTab() !== tab) return;
+    if (kind !== shownKind()) return;
+    if (form && tab === "spec" && templateId !== formTemplate) return;
     if (!response.ok) {
       showEmpty(panel);
       return;
     }
     const body = stripFrontmatter(await response.text()).trim();
-    if (token !== docToken || buttonState.tab !== tab) return;
+    if (token !== docToken || shownTab() !== tab) return;
     if (!body) showEmpty(panel);
     else renderMarkdown(panel, body);
     syncButtonsScroll();
   } catch {
-    if (token !== docToken || buttonState.tab !== tab) return;
+    if (token !== docToken || shownTab() !== tab) return;
     showEmpty(panel);
   }
 }
@@ -1551,6 +1757,28 @@ new MutationObserver(() => {
 
 demoField.addEventListener("demo-active", () => {
   if (collection === "fields") buttonsCaption.textContent = fieldCaption();
+});
+
+formTemplateSelect.addEventListener("cc-change", (event) => {
+  if (collection !== "form") return;
+  const next = event.detail && event.detail.value != null ? String(event.detail.value) : "";
+  if (!formsDoc.templates.some((item) => item.id === next) || next === formTemplate) return;
+  formTemplate = next;
+  syncFormLabels();
+  if (formTab === "spec") loadDoc("spec");
+});
+
+formLangSelect.addEventListener("cc-change", (event) => {
+  if (collection !== "form") return;
+  const next = event.detail && event.detail.value === "ru" ? "ru" : "en";
+  if (next === formLang) return;
+  formLang = next;
+  syncFormLabels();
+});
+
+formModeButton.addEventListener("cc-press", () => {
+  if (collection !== "form" || !root.classList.contains("is-stacked")) return;
+  moveFormSheet(formMode === "sidebar" ? "playground" : "sidebar");
 });
 
 for (const name of ["settings", "spec", "usage"]) {

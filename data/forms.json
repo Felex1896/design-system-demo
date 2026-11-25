@@ -1,0 +1,860 @@
+{
+  "productKey": "form.product",
+  "templates": [
+    {
+      "id": "booking",
+      "titleKey": "form.booking.title",
+      "mode": "create",
+      "sections": [
+        {
+          "titleKey": "form.booking.when",
+          "descriptionKey": "form.booking.whenNote",
+          "rows": [
+            [
+              {
+                "id": "date",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.booking.date",
+                "icon": "date",
+                "mask": "date",
+                "hint": true
+              },
+              {
+                "id": "start",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.booking.start",
+                "icon": "time",
+                "mask": "time",
+                "hint": true
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.booking.event",
+          "rows": [
+            [
+              {
+                "id": "name",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.booking.name",
+                "required": true,
+                "hint": true
+              }
+            ],
+            [
+              {
+                "id": "guests",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.booking.guests",
+                "suffixKey": "form.suffix.guests",
+                "placeholderKey": "form.placeholder.guests",
+                "digits": true,
+                "min": 1,
+                "max": 2000,
+                "hint": true
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.booking.place",
+          "rows": [
+            [
+              {
+                "id": "room",
+                "component": "select",
+                "kind": "large",
+                "labelKey": "form.room",
+                "placeholderKey": "form.placeholder.unset",
+                "hint": true,
+                "options": [
+                  {
+                    "value": "a",
+                    "labelKey": "form.room.a"
+                  },
+                  {
+                    "value": "b",
+                    "labelKey": "form.room.b"
+                  },
+                  {
+                    "value": "c",
+                    "labelKey": "form.room.c"
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "create",
+          "labelKey": "form.action.create",
+          "color": "accent",
+          "style": "solid",
+          "enables": "valid"
+        }
+      ]
+    },
+    {
+      "id": "rider",
+      "titleKey": "form.rider.title",
+      "mode": "create",
+      "sections": [
+        {
+          "titleKey": "form.rider.stage",
+          "rows": [
+            [
+              {
+                "id": "description",
+                "component": "field",
+                "kind": "field-text-area",
+                "labelKey": "form.rider.description",
+                "required": true,
+                "hint": true
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.rider.equipment",
+          "rows": [
+            [
+              {
+                "id": "equipment",
+                "component": "field",
+                "kind": "field-with-chips",
+                "labelKey": "form.rider.equipment",
+                "showLabel": true,
+                "hint": true,
+                "hintKey": "form.hint.enter"
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.rider.contactSection",
+          "rows": [
+            [
+              {
+                "id": "contact",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.rider.contact",
+                "hint": true
+              }
+            ]
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "create",
+          "labelKey": "form.action.create",
+          "color": "accent",
+          "style": "solid",
+          "enables": "valid"
+        }
+      ]
+    },
+    {
+      "id": "catering",
+      "titleKey": "form.catering.title",
+      "mode": "create",
+      "sections": [
+        {
+          "titleKey": "form.catering.menu",
+          "rows": [
+            [
+              {
+                "id": "dish",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.catering.dish",
+                "required": true,
+                "hint": true
+              }
+            ],
+            [
+              {
+                "id": "portions",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.catering.portions",
+                "suffixKey": "form.suffix.portions",
+                "placeholderKey": "form.placeholder.portions",
+                "digits": true,
+                "min": 1,
+                "max": 500,
+                "hint": true
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.catering.service",
+          "rows": [
+            [
+              {
+                "id": "time",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.catering.time",
+                "icon": "time",
+                "mask": "time",
+                "hint": true
+              },
+              {
+                "id": "where",
+                "component": "select",
+                "kind": "large",
+                "labelKey": "form.room",
+                "required": true,
+                "hint": true,
+                "options": [
+                  {
+                    "value": "a",
+                    "labelKey": "form.room.a"
+                  },
+                  {
+                    "value": "b",
+                    "labelKey": "form.room.b"
+                  },
+                  {
+                    "value": "c",
+                    "labelKey": "form.room.c"
+                  }
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.catering.notes",
+          "rows": [
+            [
+              {
+                "id": "note",
+                "component": "field",
+                "kind": "field-text-area",
+                "labelKey": "form.catering.note",
+                "hint": true
+              }
+            ]
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "add",
+          "labelKey": "form.action.add",
+          "color": "accent",
+          "style": "solid",
+          "enables": "valid"
+        },
+        {
+          "id": "save-and-add",
+          "labelKey": "form.action.saveAndAdd",
+          "color": "accent",
+          "style": "no-surface",
+          "enables": "valid",
+          "clears": [
+            "dish",
+            "portions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "incident",
+      "titleKey": "form.incident.title",
+      "mode": "create",
+      "sections": [
+        {
+          "titleKey": "form.incident.report",
+          "rows": [
+            [
+              {
+                "id": "priority",
+                "component": "select",
+                "kind": "large",
+                "labelKey": "form.incident.priority",
+                "icon": "priority",
+                "required": true,
+                "hint": true,
+                "options": [
+                  {
+                    "value": "minor",
+                    "labelKey": "form.priority.minor",
+                    "icon": "minor"
+                  },
+                  {
+                    "value": "medium",
+                    "labelKey": "form.priority.medium",
+                    "icon": "medium"
+                  },
+                  {
+                    "value": "high",
+                    "labelKey": "form.priority.high",
+                    "icon": "high"
+                  },
+                  {
+                    "value": "major",
+                    "labelKey": "form.priority.major",
+                    "icon": "major"
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "id": "description",
+                "component": "field",
+                "kind": "field-text-area",
+                "labelKey": "form.rider.description",
+                "required": true,
+                "hint": true
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.incident.people",
+          "descriptionKey": "form.incident.peopleNote",
+          "rows": [
+            [
+              {
+                "id": "involved",
+                "component": "select",
+                "kind": "large",
+                "labelKey": "form.incident.involved",
+                "required": true,
+                "hint": true,
+                "options": [
+                  {
+                    "value": "no",
+                    "labelKey": "form.choice.no"
+                  },
+                  {
+                    "value": "yes",
+                    "labelKey": "form.choice.yes"
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "id": "contact",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.incident.contact",
+                "hint": true,
+                "trailing": "conditional",
+                "tipKey": "form.tip.depends",
+                "enableWhen": {
+                  "id": "involved",
+                  "equals": "yes"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.incident.follow",
+          "descriptionKey": "form.incident.followNote",
+          "rows": [
+            [
+              {
+                "id": "status",
+                "component": "select",
+                "kind": "large",
+                "labelKey": "form.incident.status",
+                "icon": "status",
+                "placeholderKey": "form.placeholder.unset",
+                "hint": true,
+                "options": [
+                  {
+                    "value": "open",
+                    "labelKey": "form.status.open",
+                    "icon": "open"
+                  },
+                  {
+                    "value": "watching",
+                    "labelKey": "form.status.watching",
+                    "icon": "watching"
+                  },
+                  {
+                    "value": "closed",
+                    "labelKey": "form.status.closed",
+                    "icon": "closed"
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "create",
+          "labelKey": "form.action.create",
+          "color": "accent",
+          "style": "solid",
+          "enables": "valid"
+        }
+      ]
+    },
+    {
+      "id": "staff",
+      "titleKey": "form.staff.title",
+      "mode": "create",
+      "sections": [
+        {
+          "rows": [
+            [
+              {
+                "id": "login",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.staff.login",
+                "required": true,
+                "hint": true
+              },
+              {
+                "id": "password",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.staff.password",
+                "required": true,
+                "hint": true,
+                "input": "password",
+                "trailing": "visibility"
+              }
+            ],
+            [
+              {
+                "id": "role",
+                "component": "select",
+                "kind": "large",
+                "labelKey": "form.staff.role",
+                "placeholderKey": "form.placeholder.unset",
+                "hint": true,
+                "options": [
+                  {
+                    "value": "manager",
+                    "labelKey": "form.role.manager"
+                  },
+                  {
+                    "value": "technician",
+                    "labelKey": "form.role.technician"
+                  },
+                  {
+                    "value": "host",
+                    "labelKey": "form.role.host"
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "create",
+          "labelKey": "form.action.create",
+          "color": "accent",
+          "style": "solid",
+          "enables": "valid"
+        }
+      ]
+    },
+    {
+      "id": "defaults",
+      "titleKey": "form.defaults.title",
+      "mode": "edit",
+      "preset": {
+        "buffer": "30",
+        "room": "a",
+        "types": [
+          "concert"
+        ]
+      },
+      "sections": [
+        {
+          "titleKey": "form.defaults.hours",
+          "descriptionKey": "form.defaults.hoursNote",
+          "rows": [
+            [
+              {
+                "id": "buffer",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.defaults.buffer",
+                "suffixKey": "form.suffix.min",
+                "digits": true,
+                "min": 0,
+                "max": 240,
+                "hint": true,
+                "value": "45"
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.defaults.room",
+          "rows": [
+            [
+              {
+                "id": "room",
+                "component": "select",
+                "kind": "large",
+                "labelKey": "form.defaults.roomLabel",
+                "placeholderKey": "form.placeholder.unset",
+                "hint": true,
+                "value": "b",
+                "options": [
+                  {
+                    "value": "a",
+                    "labelKey": "form.room.a"
+                  },
+                  {
+                    "value": "b",
+                    "labelKey": "form.room.b"
+                  },
+                  {
+                    "value": "c",
+                    "labelKey": "form.room.c"
+                  }
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.defaults.events",
+          "rows": [
+            [
+              {
+                "id": "types",
+                "component": "select",
+                "kind": "multiple-values",
+                "labelKey": "form.defaults.types",
+                "showLabel": true,
+                "hint": true,
+                "hintKey": "form.hint.several",
+                "values": [
+                  "conference"
+                ],
+                "options": [
+                  {
+                    "value": "concert",
+                    "labelKey": "form.type.concert"
+                  },
+                  {
+                    "value": "conference",
+                    "labelKey": "form.type.conference"
+                  },
+                  {
+                    "value": "wedding",
+                    "labelKey": "form.type.wedding"
+                  },
+                  {
+                    "value": "rehearsal",
+                    "labelKey": "form.type.rehearsal"
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "set-default",
+          "labelKey": "form.action.setDefault",
+          "color": "neutral",
+          "style": "outline",
+          "enables": "always",
+          "applies": "preset"
+        },
+        {
+          "id": "reset",
+          "labelKey": "form.action.reset",
+          "color": "neutral",
+          "style": "no-surface",
+          "enables": "dirty"
+        },
+        {
+          "id": "apply",
+          "labelKey": "form.action.apply",
+          "color": "accent",
+          "style": "solid",
+          "enables": "dirty"
+        }
+      ]
+    },
+    {
+      "id": "cancellation",
+      "titleKey": "form.cancel.title",
+      "mode": "create",
+      "sections": [
+        {
+          "rows": [
+            [
+              {
+                "id": "reason",
+                "component": "field",
+                "kind": "field-text-area",
+                "labelKey": "form.cancel.reason",
+                "required": true,
+                "hint": true
+              }
+            ]
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "cancel",
+          "labelKey": "form.action.cancel",
+          "color": "neutral",
+          "style": "no-surface",
+          "enables": "always",
+          "clears": [
+            "reason"
+          ]
+        },
+        {
+          "id": "delete",
+          "labelKey": "form.action.delete",
+          "color": "danger",
+          "style": "solid",
+          "enables": "valid"
+        }
+      ]
+    },
+    {
+      "id": "curfew",
+      "titleKey": "form.curfew.title",
+      "mode": "create",
+      "sections": [
+        {
+          "descriptionKey": "form.curfew.noteSection",
+          "rows": [
+            [
+              {
+                "id": "end",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.curfew.end",
+                "icon": "time",
+                "mask": "time",
+                "required": true,
+                "hint": true
+              }
+            ],
+            [
+              {
+                "id": "level",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.curfew.level",
+                "suffixKey": "form.suffix.db",
+                "placeholderKey": "form.placeholder.level",
+                "digits": true,
+                "min": 30,
+                "max": 120,
+                "hint": true
+              }
+            ],
+            [
+              {
+                "id": "note",
+                "component": "field",
+                "kind": "field-text-area",
+                "labelKey": "form.curfew.note",
+                "hint": true
+              }
+            ]
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "create",
+          "labelKey": "form.action.create",
+          "color": "accent",
+          "style": "solid",
+          "enables": "valid"
+        }
+      ]
+    },
+    {
+      "id": "load-in",
+      "titleKey": "form.loadin.title",
+      "mode": "create",
+      "sections": [
+        {
+          "titleKey": "form.loadin.window",
+          "descriptionKey": "form.loadin.windowNote",
+          "rows": [
+            [
+              {
+                "id": "start",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.loadin.start",
+                "mask": "time",
+                "required": true,
+                "hint": true,
+                "icon": "time"
+              },
+              {
+                "id": "end",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.loadin.end",
+                "mask": "time",
+                "hint": true,
+                "icon": "time"
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.loadin.vehicle",
+          "rows": [
+            [
+              {
+                "id": "vehicle",
+                "component": "select",
+                "kind": "large",
+                "labelKey": "form.loadin.vehicleType",
+                "placeholderKey": "form.placeholder.unset",
+                "hint": true,
+                "options": [
+                  {
+                    "value": "van",
+                    "labelKey": "form.vehicle.van"
+                  },
+                  {
+                    "value": "truck",
+                    "labelKey": "form.vehicle.truck"
+                  },
+                  {
+                    "value": "sprinter",
+                    "labelKey": "form.vehicle.sprinter"
+                  }
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "titleKey": "form.loadin.crew",
+          "descriptionKey": "form.loadin.crewNote",
+          "rows": [
+            [
+              {
+                "id": "count",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.loadin.count",
+                "suffixKey": "form.suffix.people",
+                "placeholderKey": "form.placeholder.people",
+                "digits": true,
+                "min": 1,
+                "max": 40,
+                "hint": true
+              }
+            ]
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "create",
+          "labelKey": "form.action.create",
+          "color": "accent",
+          "style": "solid",
+          "enables": "valid"
+        }
+      ]
+    },
+    {
+      "id": "seating",
+      "titleKey": "form.seating.title",
+      "mode": "create",
+      "sections": [
+        {
+          "descriptionKey": "form.seating.note",
+          "rows": [
+            [
+              {
+                "id": "tables",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.seating.tables",
+                "required": true,
+                "placeholderKey": "form.placeholder.tables",
+                "digits": true,
+                "min": 1,
+                "max": 80,
+                "hint": true
+              },
+              {
+                "id": "seats",
+                "component": "field",
+                "kind": "field-standard",
+                "labelKey": "form.seating.seats",
+                "placeholderKey": "form.placeholder.seats",
+                "digits": true,
+                "min": 1,
+                "max": 16,
+                "hint": true
+              }
+            ],
+            [
+              {
+                "id": "layout",
+                "component": "select",
+                "kind": "large",
+                "labelKey": "form.seating.layout",
+                "placeholderKey": "form.placeholder.unset",
+                "hint": true,
+                "options": [
+                  {
+                    "value": "banquet",
+                    "labelKey": "form.layout.banquet"
+                  },
+                  {
+                    "value": "theater",
+                    "labelKey": "form.layout.theater"
+                  },
+                  {
+                    "value": "classroom",
+                    "labelKey": "form.layout.classroom"
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "create",
+          "labelKey": "form.action.create",
+          "color": "accent",
+          "style": "solid",
+          "enables": "valid"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+form-section {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-24);
+  min-width: 0;
+  max-width: 100%;
+  color: var(--color-text-core-primary);
+  font-family: inherit;
+}
+
+.form-section__title {
+  margin: 0;
+  color: var(--color-text-core-secondary);
+  font-family: inherit;
+  font-size: var(--font-headline-h6-size);
+  font-weight: var(--font-headline-h6-weight);
+  line-height: var(--font-headline-h6-line);
+  letter-spacing: var(--font-headline-h6-tracking);
+}
+
+.form-section__content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-16);
+  min-width: 0;
+}
+
+.form-section__description {
+  margin: 0;
+  color: var(--color-text-core-tertiary);
+  font-family: inherit;
+  font-size: var(--font-body-1-size);
+  font-weight: var(--font-body-1-weight);
+  line-height: var(--font-body-1-line);
+  letter-spacing: var(--font-body-1-tracking);
+}
+
+.form-section__body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
+.form-section__row {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 0;
+}
+
+.form-section__row.is-pair {
+  gap: var(--spacing-16);
+}
+
+.form-section__row.is-pair > demo-field,
+.form-section__row.is-pair > cc-select {
+  flex: 1 1 0;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  margin-inline: 0;
+}

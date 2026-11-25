@@ -64,7 +64,7 @@ A resting label is drawn inline on the value line, body-1, `--color-text-core-se
 | `error` | transparent default | `--color-text-danger-default` | primary | tertiary, disabled while active | `--color-text-danger-default` | default |
 | `disabled` | `--color-surface-neutral-transparent-disabled` | disabled | tertiary | `--color-text-core-disabled` | disabled | `--color-icon-shape-core-disabled` |
 
-An active default plate draws the indicator in `--color-border-accent-solid`. An error plate draws it in `--color-border-danger-default` whether or not the field is active. Hover does not restyle an error plate or a disabled plate. A disabled plate sets `disabled` on the entry, clears `data-active`, and ignores pointer activation.
+An active default plate draws the indicator in `--color-border-accent-solid`. An error plate draws it in `--color-icon-shape-danger-default` whether or not the field is active. Hover does not restyle an error plate or a disabled plate. A disabled plate sets `disabled` on the entry, clears `data-active`, and ignores pointer activation.
 
 The suffix uses tertiary text. It uses disabled text while the field is empty (`data-empty`: no entry text and no chips) or disabled.
 
@@ -73,7 +73,7 @@ The suffix uses tertiary text. It uses disabled text while the field is empty (`
 1. `pointerdown` on the plate focuses the entry and makes the field active.
 2. The handler returns immediately when `state` is `disabled`.
 3. It also returns, without focusing, when the target is the chip clear, the info button, or the entry itself.
-4. Otherwise it calls `preventDefault`, clears a marked chip, unhides the entry, and focuses it.
+4. Otherwise it calls `preventDefault`, clears a marked chip, unhides the entry and its value box when that box is hidden, and focuses the entry.
 5. If focus does not land on the entry, the field repaints and stays inactive.
 6. `focusin` on the host makes the field active. `focusout` whose `relatedTarget` is still inside the host does nothing.
 7. `focusout` that leaves the host clears the marked chip, deactivates, and commits a chip entry.
@@ -83,6 +83,16 @@ The suffix uses tertiary text. It uses disabled text while the field is empty (`
 ## Typing
 
 `input` on the entry copies the text into the internal value and into the other entry widget, clears the marked chip, and repaints. The placeholder attribute is set only while `show-placeholder` is present and the value is empty. On `field-with-chips` the input is hidden until the label is floated. The textarea is hidden unless the kind is `field-text-area`.
+
+## Date and time
+
+A standard field with an 8-slot mask opens a calendar while it is active. A standard field with a 4-slot mask that contains `:` opens a time list. The popover is part of the field. It is not a select. `Escape` or a press outside the plate and the popover closes it. Choosing a value writes the mask, closes the popover, and returns the field to its resting state.
+
+The calendar is the one-day assembly. Width is 256px inside a `--radius-8` popover on `--color-surface-core-top`. One chip, `Today` / `Сегодня`, sits under the day grid. It is pressed, on `--color-surface-accent-faded-default`, when the value is today. Otherwise it is an outline. A month title uses `subtitle/2`. The row pads `--spacing-8` on the block axis and `--spacing-16` on the sides, with both arrows `--spacing-16` in from the popover edges. Weekdays are `caption/regular` and tertiary. Russian weeks start on Monday. English weeks start on Sunday. Six rows stay visible, including days outside the open month in tertiary. A day is 32px. Today draws an accent ring and accent text. The selected day is `--color-surface-accent-solid-default` with `--color-text-core-on-solid`. When today is selected, the ring is `--color-icon-shape-core-on-solid`. One click commits. There is no time row and no footer.
+
+The time list runs from `00:00` to `23:45` in steps of 15 minutes. The popover is at most 400px tall and scrolls. A row is the medium dropdown item: `--spacing-40` tall, body-1, `--spacing-16` on the sides. The current value is `--color-surface-neutral-transparent-default`.
+
+`icon="date"` draws `ic-calendar_with_meeting`. `icon="time"` draws `ic-time`. Any other shown icon stays the modules glyph. The icon color is `--color-icon-shape-core-default`.
 
 ## Chips
 

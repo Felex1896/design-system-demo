@@ -105,6 +105,64 @@ cc-dropdown-action-item[data-empty] .cc-option-row {
   white-space: nowrap;
 }
 
+.cc-option__mark {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--layout-icon-size);
+  height: var(--layout-icon-size);
+  margin-right: var(--spacing-8);
+  color: var(--color-icon-shape-core-default);
+}
+
+.cc-option__mark[hidden] {
+  display: none;
+}
+
+.cc-option__mark svg {
+  display: block;
+  width: var(--layout-icon-size);
+  height: var(--layout-icon-size);
+}
+
+.cc-mark {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--layout-icon-size);
+  height: var(--layout-icon-size);
+}
+
+.cc-mark__dot {
+  display: block;
+  width: var(--spacing-12);
+  height: var(--spacing-12);
+  border-radius: var(--radius-pill);
+  background: currentColor;
+}
+
+.cc-option__mark[data-tone="accent"] {
+  color: var(--color-icon-shape-accent-default);
+}
+
+.cc-option__mark[data-tone="warning"] {
+  color: var(--color-icon-shape-warning-default);
+}
+
+.cc-option__mark[data-tone="danger"] {
+  color: var(--color-icon-shape-danger-default);
+}
+
+.cc-option__mark[data-tone="info"] {
+  color: var(--color-icon-shape-info-default);
+}
+
+.cc-option__mark[data-tone="success"] {
+  color: var(--color-icon-shape-success-default);
+}
+
 .cc-option__check {
   display: block;
   flex: 0 0 auto;

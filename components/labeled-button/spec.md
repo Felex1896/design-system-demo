@@ -32,9 +32,9 @@ The host is `inline-flex`, `max-width: 100%`. The inner control is `type="button
 
 | Size | Height | Min width | Padding inline | Label padding inline | Type |
 | --- | --- | --- | --- | --- | --- |
-| `large` | `--spacing-56` | `80px` | `--spacing-16` | `--spacing-8` | subtitle-3 |
-| `medium` | `--spacing-40` | `80px` | `12px` | `--spacing-4` | subtitle-3 |
-| `small` | `--spacing-32` | `--spacing-64` | `12px` | `--spacing-4` | caption-medium |
+| `large` | `--spacing-56` | `80px` | `--spacing-16` | `--spacing-8` | button |
+| `medium` | `--spacing-40` | `80px` | `12px` | `--spacing-4` | button |
+| `small` | `--spacing-32` | `--spacing-64` | `12px` | `--spacing-4` | button-small |
 
 The glyph is `--spacing-24`. On large and medium it has `--spacing-4` of space before the label. On small the space is a negative `--spacing-4` on the start side. The glyph is hidden unless `show-icon` is set.
 

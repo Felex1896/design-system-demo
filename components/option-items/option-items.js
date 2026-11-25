@@ -48,7 +48,7 @@ function defineElement(name, ctor) {
 
 class CcSelectOption extends HTMLElement {
   static get observedAttributes() {
-    return ["label", "value", "selected", "disabled"];
+    return ["label", "value", "selected", "disabled", "mark"];
   }
 
   constructor() {
@@ -77,9 +77,12 @@ class CcSelectOption extends HTMLElement {
     const cell = document.createElement("span");
     cell.className = "cc-option__cell";
     const check = checkSvg("cc-option__check");
+    const mark = document.createElement("span");
+    mark.className = "cc-option__mark";
+    mark.hidden = true;
     const label = labelNode();
     cell.append(check);
-    button.append(cell, label);
+    button.append(cell, mark, label);
     button.addEventListener("click", () => {
       if (this.hasAttribute("disabled")) return;
       this.dispatchEvent(new CustomEvent("cc-pick", {
@@ -95,6 +98,7 @@ class CcSelectOption extends HTMLElement {
     this._button = button;
     this._label = label;
     this._check = check;
+    this._mark = mark;
   }
 
   _sync() {
@@ -102,6 +106,19 @@ class CcSelectOption extends HTMLElement {
     this._label.textContent = this.getAttribute("label") ?? "";
     this._button.disabled = this.hasAttribute("disabled");
     setHidden(this._check, !this.hasAttribute("selected"));
+    const name = this.getAttribute("mark") || "";
+    const spec = name && window.CC_MARKS ? window.CC_MARKS[name] : null;
+    setHidden(this._mark, !spec);
+    if (!spec) {
+      delete this._mark.dataset.tone;
+      this._mark.dataset.mark = "";
+      return;
+    }
+    this._mark.dataset.tone = spec.tone;
+    if (this._mark.dataset.mark !== name) {
+      this._mark.dataset.mark = name;
+      this._mark.innerHTML = spec.html;
+    }
   }
 }
 

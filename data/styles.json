@@ -17,6 +17,9 @@
     "caption-medium": { "size": 12, "lineHeight": 16, "letterSpacing": 0, "weight": 500 },
     "subtitle-2": { "size": 16, "lineHeight": 20, "letterSpacing": 0.25, "weight": 500 },
     "subtitle-3": { "size": 14, "lineHeight": 20, "letterSpacing": 0.1, "weight": 500 },
+    "headline-h6": { "size": 20, "lineHeight": 24, "letterSpacing": 0.15, "weight": 500 },
+    "button": { "size": 16, "lineHeight": 24, "letterSpacing": 0, "weight": 500 },
+    "button-small": { "size": 14, "lineHeight": 16, "letterSpacing": 0, "weight": 500 },
     "overline": { "size": 10, "lineHeight": 16, "letterSpacing": 1.5, "weight": 500 }
   },
   "spacing": {
@@ -101,7 +104,8 @@
     "field-max-height": 160,
     "field-chip-max": 320,
     "field-entry-min": 200,
-    "tooltip-max": 256
+    "tooltip-max": 256,
+    "toast-max": 600
   },
   "colorRoles": [
     "surface/neutral/transparent/default",
@@ -112,6 +116,8 @@
     "surface/core/scrim",
     "surface/core/raised",
     "border/core/subtle",
+    "border/neutral/default",
+    "border/neutral/disabled",
     "surface/core/inverse-strong",
     "surface/core/inverse-subtle",
     "icon-shape/core/inverse",
@@ -136,6 +142,9 @@
     "surface/accent/solid/default",
     "surface/accent/solid/hover",
     "surface/accent/solid/active",
+    "surface/accent/faded/default",
+    "surface/accent/faded/hover",
+    "text/core/on-solid",
     "icon-shape/core/on-solid",
     "icon-shape/accent/default",
     "border/accent/solid",
@@ -144,7 +153,12 @@
     "surface/accent/transparent/active",
     "text/accent/disabled",
     "text/danger/default",
+    "surface/danger/solid/default",
     "border/danger/default",
+    "icon-shape/danger/default",
+    "icon-shape/warning/default",
+    "icon-shape/success/default",
+    "icon-shape/info/default",
     "surface/neutral/transparent/disabled",
     "text/accent/hover-link",
     "text/accent/active-link"

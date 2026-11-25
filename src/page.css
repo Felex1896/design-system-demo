@@ -14,6 +14,16 @@ body {
   font-family: var(--font-family);
 }
 
+html[data-theme="dark"] {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html[data-theme="dark"] .tone-light {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
 [hidden] {
   display: none;
 }
@@ -440,7 +450,8 @@ cc-subgroup:has(:is(cc-color-row):is(:hover, :focus-visible, .is-held)) {
 
 .page[data-collection="buttons"],
 .page[data-collection="fields"],
-.page[data-collection="selects"] {
+.page[data-collection="selects"],
+.page[data-collection="form"] {
   overflow: hidden;
 }
 
@@ -455,11 +466,16 @@ cc-subgroup:has(:is(cc-color-row):is(:hover, :focus-visible, .is-held)) {
 .page[data-collection="selects"] .menu-button,
 .page[data-collection="selects"] .page-scroll,
 .page[data-collection="selects"] #scroll-y,
-.page[data-collection="selects"] #scroll-x {
+.page[data-collection="selects"] #scroll-x,
+.page[data-collection="form"] .menu-button,
+.page[data-collection="form"] .page-scroll,
+.page[data-collection="form"] #scroll-y,
+.page[data-collection="form"] #scroll-x {
   display: none;
 }
 
-demo-button[hidden] {
+demo-button[hidden],
+demo-form[hidden] {
   display: none;
 }
 
@@ -494,6 +510,7 @@ demo-button[hidden] {
 }
 
 .buttons-play {
+  position: relative;
   overflow: hidden;
   overscroll-behavior: none;
 }
@@ -513,6 +530,12 @@ demo-button[hidden] {
   right: 0;
   bottom: 0;
   width: var(--layout-scrollbar-size);
+  height: auto;
+}
+
+.page[data-collection="form"] #buttons-scroll {
+  top: calc(var(--spacing-8) + var(--layout-select-height) + var(--spacing-16) + var(--spacing-48));
+  bottom: 0;
   height: auto;
 }
 
@@ -539,6 +562,10 @@ demo-button[hidden] {
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
+}
+
+.buttons-tab[hidden] {
+  display: none;
 }
 
 .buttons-tab {
@@ -601,6 +628,11 @@ demo-button[hidden] {
   display: none;
 }
 
+#form-template-row {
+  margin-top: 0;
+  padding: var(--spacing-8) var(--spacing-16) var(--spacing-16);
+}
+
 .buttons-row + .buttons-row {
   margin-top: var(--spacing-24);
 }
@@ -659,6 +691,40 @@ demo-button[hidden] {
   padding-inline: var(--spacing-16);
 }
 
+#buttons-caption {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#form-lang {
+  flex: none;
+  width: var(--spacing-80);
+  margin-inline-start: auto;
+  text-transform: none;
+}
+
+.buttons-play__caption {
+  padding-right: var(--spacing-8);
+}
+
+.is-stacked .buttons-play__caption {
+  padding-right: var(--spacing-16);
+}
+
+#form-lang[hidden] {
+  display: none;
+}
+
+.buttons-play__end {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
 .buttons-play__caption,
 .buttons-play__mark {
   color: var(--color-text-core-tertiary);
@@ -678,6 +744,47 @@ demo-button[hidden] {
   min-height: 0;
   overflow: hidden;
   padding-inline: var(--spacing-16);
+}
+
+.page[data-collection="form"] .buttons-play__stage {
+  align-items: flex-start;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding-top: var(--spacing-24);
+  padding-bottom: var(--spacing-40);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-surface-core-base) var(--spacing-12), var(--color-surface-core-base) calc(100% - var(--spacing-12)), transparent);
+  mask-image: linear-gradient(to bottom, transparent, var(--color-surface-core-base) var(--spacing-12), var(--color-surface-core-base) calc(100% - var(--spacing-12)), transparent);
+}
+
+.page[data-collection="form"] .buttons-play__stage > demo-form {
+  flex: none;
+  width: 100%;
+  max-width: var(--layout-field-max-width);
+}
+
+cc-icon-button.form-mode {
+  display: none;
+}
+
+.is-stacked .page[data-collection="form"] cc-icon-button.form-mode {
+  display: inline-flex;
+}
+
+cc-icon-button.form-mode button {
+  background-color: transparent;
+  color: var(--color-text-core-primary);
+}
+
+cc-icon-button.form-mode button:hover {
+  background-color: var(--color-surface-neutral-transparent-hover);
+}
+
+cc-icon-button.form-mode button:active {
+  background-color: var(--color-surface-neutral-transparent-active);
+}
+
+cc-icon-button.form-mode svg {
+  color: var(--color-icon-shape-core-default);
 }
 
 .buttons-play__footer {
@@ -816,4 +923,52 @@ demo-button[hidden] {
   overflow: hidden;
   border-right: 0;
   border-top: var(--stroke-1) solid var(--color-border-core-subtle);
+}
+
+.is-stacked #form-template-row {
+  padding-top: var(--spacing-16);
+}
+
+.is-stacked.is-form-play .buttons-play {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+}
+
+.is-stacked.is-form-play .buttons-side {
+  flex: none;
+}
+
+.is-stacked.is-form-play .buttons-tabs,
+.is-stacked.is-form-play .buttons-panel,
+.is-stacked.is-form-play #buttons-scroll {
+  display: none;
+}
+
+.is-stacked.is-form-side .buttons-play {
+  flex: none;
+  height: auto;
+}
+
+.is-stacked.is-form-side .buttons-play__caption,
+.is-stacked.is-form-side .buttons-play__stage {
+  display: none;
+}
+
+.is-form-moving.is-stacked.is-form-play .buttons-tabs,
+.is-form-moving.is-stacked.is-form-side .buttons-play__caption,
+.is-form-moving.is-stacked.is-form-side .buttons-play__stage {
+  display: flex;
+}
+
+.is-form-moving.is-stacked.is-form-play .buttons-panel:not([hidden]) {
+  display: block;
+}
+
+.is-form-moving.is-stacked.is-form-play #buttons-scroll {
+  display: block;
+}
+
+.is-stacked .page[data-collection="form"] #buttons-scroll {
+  top: calc(var(--spacing-16) + var(--layout-select-height) + var(--spacing-16) + var(--spacing-48));
 }

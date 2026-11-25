@@ -25,10 +25,11 @@ Use a field for text the person enters. Use a button when the control performs a
 
 | Extra | When |
 | --- | --- |
-| Hint | Helper text under the plate. It appears only while the switch is on. |
-| Placeholder | Sample text in an empty field. A real value, or a rule about what is valid, does not belong here. |
-| Icon | A leading glyph. |
-| Suffix | The unit of the value, such as `Km`. Not on the text area or `multiple-values`. |
+| Hint | Helper text under the plate. The slot can be on while the text is empty. A chip field that takes typed values says to press Enter. |
+| Placeholder | Sample text in an empty field. A real value, or a rule about what is valid, does not belong here. A field with no visible label always shows one. The label says what to enter. The placeholder says the format or shows an example. |
+| Date or time mask | The pattern (`DD.MM.YYYY`, `HH:MM`, and the Russian letters) is drawn in the placeholder color. Characters the person has typed are primary. A date mask also opens a calendar. A time mask opens a list from `00:00` to `23:45`, every 15 minutes. |
+| Icon | A leading glyph. `date` is the calendar. `time` is the clock. |
+| Suffix | The unit of the value, such as `Km`. Not a copy of the label. Not on the text area or `multiple-values`. |
 | Trailing button | A side action, the same pill button as menu and close. Hover says `additional information`. |
 | Required | A star after the label. Hidden when the field has no label. |
 

@@ -42,13 +42,13 @@ Width is `100%`. `max-width` is `--layout-field-max-width` on `large`, `medium`,
 
 ## Plate
 
-Row: optional icon, text stack, caret, optional trail, bottom indicator. Default padding inline is `--spacing-12`. Radius is `--radius-4`. The caret is one chevron. It rotates 180 degrees while `open` is set. `small` padding matches the header select: inline start `--spacing-8` plus `--spacing-4`, gap `--spacing-8`, radius `--radius-4`.
+Row: optional icon, text stack, caret, optional trail, bottom indicator. Default padding inline is `--spacing-12`. Radius is `--radius-4`. The caret frame is `--layout-icon-size`. On `large`, and on an empty `multiple-values` plate, the glyph is the 24 icon. On `medium` and `small` the glyph is the small caret in that same frame. It rotates 180 degrees while `open` is set. `small` padding matches the header select: inline start `--spacing-8` plus `--spacing-4`, gap `--spacing-8`, radius `--radius-4`.
 
 | Type | Plate |
 | --- | --- |
 | `large` | Height `--spacing-56`. Floating label. Placeholder and value are body-1. Chevron is `--layout-icon-size`. Hint can sit under the plate. |
-| `medium` | Height `--spacing-40`. No label. Chevron is `--layout-mode-icon-size`. Hint can sit under the plate. |
-| `small` | Height `--layout-select-height`. Body-2. Chevron is `--layout-mode-icon-size`. No label, hint, placeholder, required star, or error chrome. The current value is always drawn, including when it is empty. |
+| `medium` | Height `--spacing-40`. No label. Chevron is `--layout-icon-size`. Hint can sit under the plate. |
+| `small` | Height `--layout-select-height`. Body-2. Chevron is `--layout-icon-size`. No label, hint, placeholder, required star, or error chrome. The current value is always drawn, including when it is empty. |
 | `multiple-values` | Empty plate matches `large`, including the chevron. With at least one value the chevron hides. A caption (only while `show-label` is set) sits above a wrapping row of `demo-chip` and an Add button. One labeled row matches the field chip plate: caption plus a 40-tall chip row inside the field padding. Without `show-label`, one row stays in the `--spacing-56` plate. The plate grows until `--layout-field-max-height`, then the chip row scrolls. The scrollbar sits on the field's right edge. |
 
 Add is a `button` of type `button`. It is the small no-surface accent control: height `--spacing-32`, min width `--spacing-64`, padding inline `--spacing-12`, pill radius, caption-medium, ink `--color-text-accent-default`, fill transparent, hover `--color-surface-accent-transparent-hover`, pressed `--color-surface-accent-transparent-active`. Disabled ink is `--color-text-accent-disabled` and the fill stays transparent. Add is in the DOM only as a control of this plate. It is hidden unless all three are true: the type is `multiple-values`, `values` is not empty, and `open` is absent.
@@ -61,7 +61,7 @@ Chips are `demo-chip`. The label is the option label for that id, or the raw id 
 
 On `large`, `medium`, and `small`, `value` is the choice id. The plate shows the label of the matching option. If no choice matches, it shows the raw value. Empty means unfilled.
 
-The label uses body-1 on the value line and floats to caption size when the value is non-empty, `show-placeholder` is set, or `open` is set. `medium` and `small` never float. `multiple-values` floats only while `show-label` is set, and then when there is a chip, the list is open, or `show-placeholder` is set.
+The label uses body-1 on the value line and floats to caption size when the value is non-empty, `show-placeholder` is set, or `open` is set. `medium` and `small` never float. An empty closed `multiple-values` plate keeps that same centered body label while `show-label` is set. It floats when a chip is chosen, the list is open, or `show-placeholder` is set. Without `show-label` it never floats.
 
 While the label floats on `large`, or on an empty `multiple-values` plate, the value line stays in the stack even when it has no text (`min-height: var(--font-body-1-line)`). The caption then sits on that line instead of centering in the plate. A `multiple-values` plate that already has chips does not keep an empty value line.
 
@@ -72,8 +72,8 @@ Placeholder text is shown when `show-placeholder` is set and the single value is
 | State | What changes |
 | --- | --- |
 | `default` | Fill `--color-surface-neutral-transparent-default`. Hover uses `--color-surface-neutral-transparent-hover` only while `open` is absent. |
-| `error` | Danger label, danger hint, indicator `--color-border-danger-default`. The plate fill stays the transparent default. `open` does not restyle this into accent. `small` keeps the default plate and still draws the value. Hover on a closed error `small` still uses the neutral hover fill. |
-| `disabled` | Fill `--color-surface-neutral-transparent-disabled`. Placeholder `--color-text-core-disabled`. A shown value `--color-text-core-tertiary`. Icon, trail, and caret `--color-icon-shape-core-disabled`. The plate ignores the pointer and dispatches nothing. |
+| `error` | Danger label, danger hint, indicator `--color-icon-shape-danger-default`. The plate fill stays the transparent default. `open` does not restyle this into accent. `small` keeps the default plate and still draws the value. Hover on a closed error `small` still uses the neutral hover fill. |
+| `disabled` | Fill `--color-surface-neutral-transparent-disabled`. Label and required star `--color-text-core-disabled`. Placeholder `--color-text-core-disabled`. A shown value `--color-text-core-tertiary`. Icon, trail, and caret `--color-icon-shape-core-disabled`. The plate ignores the pointer and dispatches nothing. |
 
 | `open` on | What you see |
 | --- | --- |
@@ -105,9 +105,9 @@ While open, a capture-phase `pointerdown` whose `composedPath` includes neither 
 
 Each choice row gets `label` and `value`.
 
-On `large` and `medium`, while `show-placeholder` is set, the menu starts with one extra row: label `Nothing selected`, value `""`, `data-empty`. It is `selected` while the plate value is empty. Choosing it writes `value=""` and closes the list. `small` and `multiple-values` do not get this row. A stored choice whose value is already `""` is not repeated under it.
+On `large` and `medium`, while `show-placeholder` is set, the menu starts with one extra row: label is the `placeholder` text, or `Nothing selected` when that text is empty, value `""`, `data-empty`. It is `selected` while the plate value is empty. Choosing it writes `value=""` and closes the list. `small` and `multiple-values` do not get this row. A stored choice whose value is already `""` is not repeated under it.
 
-Changing `type` or `show-placeholder` rebuilds the rows. Changing `value` updates `selected` on the single-choice rows without a rebuild. Changing `values` updates `selected` on the checkbox rows.
+Changing `type`, `show-placeholder`, or `placeholder` rebuilds the rows. Changing `value` updates `selected` on the single-choice rows without a rebuild. Changing `values` updates `selected` on the checkbox rows.
 
 ## Picking
 
