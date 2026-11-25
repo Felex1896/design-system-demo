@@ -37,5 +37,5 @@ Footer order is leading to trailing.
 
 | Action | Look | Rule |
 | --- | --- | --- |
-| Save and add | accent, no-surface | Required check. Dish and Room must both be filled. A passing click clears Dish and Portion count. Service time, Room, and Note stay, so the next line keeps the hall. |
-| Add | accent, solid | Same required check. A passing click leaves every field. |
+| Add another | accent, no-surface | Required check. Dish and Room must both be filled. A passing click adds the line and clears Dish and Portion count. Service time, Room, and Note stay, so the next line keeps the hall. |
+| Add | accent, solid | Same required check. A passing click adds the line and leaves every field. |

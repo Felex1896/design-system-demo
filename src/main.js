@@ -39,13 +39,13 @@ const classRow = document.querySelector("#buttons-panel-settings > .buttons-row"
 const fieldStateSelect = document.querySelector("#field-state");
 const buttonsFigma = document.querySelector("#buttons-figma");
 
-const styles = await fetch(new URL("../data/styles.json?v=19", import.meta.url)).then((response) => response.json());
+const styles = await fetch(new URL("../data/styles.json?v=20", import.meta.url)).then((response) => response.json());
 const collections = await fetch(new URL("../data/collections.json?v=9", import.meta.url)).then((response) => response.json());
 const sizeDoc = await fetch(new URL("../data/size.json?v=2", import.meta.url)).then((response) => response.json());
 const typeDoc = await fetch(new URL("../data/typography.json?v=2", import.meta.url)).then((response) => response.json());
 const shadowDoc = await fetch(new URL("../data/shadow.json?v=2", import.meta.url)).then((response) => response.json());
 const copy = await fetch(new URL("../data/copy.json?v=2", import.meta.url)).then((response) => response.json());
-const formCopy = await fetch(new URL("../data/form-copy.json?v=3", import.meta.url)).then((response) => response.json());
+const formCopy = await fetch(new URL("../data/form-copy.json?v=4", import.meta.url)).then((response) => response.json());
 const formsDoc = await fetch(new URL("../data/forms.json?v=4", import.meta.url)).then((response) => response.json());
 
 applyStyles(styles);
@@ -1255,7 +1255,12 @@ function syncFormChrome() {
   const side = buttonsScreen.querySelector(".buttons-side");
   const caption = play && play.querySelector(".buttons-play__caption");
   const stage = play && play.querySelector(".buttons-play__stage");
-  if (side) side.inert = form && stacked && !sidebar;
+  if (side) {
+    side.inert = false;
+    side.querySelectorAll(".buttons-tabs, .buttons-panel, #buttons-scroll").forEach((node) => {
+      node.inert = form && stacked && !sidebar;
+    });
+  }
   if (caption) caption.inert = form && stacked && sidebar;
   if (stage) stage.inert = form && stacked && sidebar;
   placeButtonsScroll();

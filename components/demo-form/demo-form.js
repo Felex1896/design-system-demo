@@ -16,8 +16,8 @@
   function loadBundle() {
     if (bundle) return Promise.resolve(bundle);
     if (!bundleTask) {
-      const formsUrl = new URL("data/forms.json?v=5", document.baseURI);
-      const copyUrl = new URL("data/form-copy.json?v=5", document.baseURI);
+      const formsUrl = new URL("data/forms.json?v=6", document.baseURI);
+      const copyUrl = new URL("data/form-copy.json?v=6", document.baseURI);
       bundleTask = Promise.all([
         fetch(formsUrl).then((response) => response.json()),
         fetch(copyUrl).then((response) => response.json()),
@@ -210,7 +210,10 @@
       }
       const footer = document.createElement("div");
       footer.className = "demo-form__footer";
-      for (const action of this._ranked(template.actions)) footer.append(this._makeButton(action));
+      const actions = this._ranked(template.actions);
+      const dismiss = actions.filter((action) => action.id === "cancel" || action.id === "reset").length;
+      if (actions.length === 2 && dismiss === 1) footer.classList.add("is-pair");
+      for (const action of actions) footer.append(this._makeButton(action));
       this.append(footer);
       if (kept) {
         for (const [id, value] of Object.entries(kept)) this._write(id, value);

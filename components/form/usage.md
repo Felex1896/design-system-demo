@@ -19,14 +19,13 @@ Strings come from `data/form-copy.json`. Each key has `en` and `ru`. The languag
 | --- | --- |
 | One section, no title | The form is a single topic. No contents list. |
 | A title on every section | The form has two or more sections. The title is the name of that topic. |
-| A description under the title | One sentence, and only when the title does not say what to enter. `spacing/16` between that sentence and the controls. The title itself is headline/h6, `text/core/secondary`. |
+| A description under the title | One sentence, and only when the title does not say what to enter. `spacing/16` between that sentence and the controls. The title is headline/h6, `text/core/secondary`. On a stacked page the title is title/1, and the gap from the title to the sentence — or to the controls, when there is no sentence — is `spacing/16`. |
 | A description and no title | One untitled section may still open with that one sentence above the controls. |
 | At least one input | A section with no input is not a section. |
-| Gap from the title to the controls | `spacing/24`, the same gap as `form-section`. |
-| Gap between sections | `spacing/40`, owned by the form, not by the section. |
-| Gap under the playground caption | `spacing/24` before the first section. |
-| Space under the last block | `spacing/40` inside the scrolling stage, so the footer does not sit on the buttons. |
-| Scroll fade | The playground fades the form into the surface at the top and bottom edges while it scrolls. |
+| Gap from the title to the controls | `spacing/24` on a wide page. On a stacked page it is `spacing/16`, the same as the gap from the title to the description. |
+| Gap between sections | `spacing/40` on a wide page, `spacing/24` on a stacked page. Owned by the form, not by the section. On a stacked page the button row uses that same `spacing/24`. |
+| Space above and below the form | `spacing/40` at both ends of the scrolling stage, on a wide page and on a stacked page. |
+| Scroll edge | On a wide page the header and the footer stay on the playground edges. The form scrolls through the whole playground and is clipped by its top and bottom borders. On a stacked page the scrolling stage has a `border/core/subtle` line on the top and the bottom. |
 | Column width | `dimension/form-content-width`. In this prototype that measure is `--layout-field-max-width`. |
 
 ## Which control
@@ -80,7 +79,7 @@ A click that passes shows that action's success snackbar. Fields stay, except wh
 | --- | --- |
 | Create | `Created` |
 | Add | `Added` |
-| Save and add | `Saved` |
+| Add another | `Added` |
 | Apply | `Applied` |
 | Reset | `Reset` |
 | Set default | `Defaults saved` |
@@ -93,6 +92,10 @@ Labels come from the closed set. `Delete` is the one exception, and only the can
 
 The footer sits on the trailing edge. Importance runs back from that edge: the solid action is last, and the quieter actions sit before it.
 
+On a stacked page every button stretches to the column width. A dismiss-and-confirm pair (`Cancel` with `Delete`, `Reset` with `Apply`) stays in one row. Any other set stacks, and the solid action is first.
+
+A disabled form button keeps the same fill, border, and text color. Availability does not change its look.
+
 A form button carries `quiet`, so the button demo tooltip does not appear on hover or press.
 
 A click raises a snackbar, centered, `spacing/24` above the bottom of the form block. A completed action uses the inverse snackbar. An empty required field, or a value outside its range, uses the danger snackbar. The field error stays on the control.
@@ -100,13 +103,13 @@ A click raises a snackbar, centered, `spacing/24` above the bottom of the form b
 | Label | Look | When it is enabled |
 | --- | --- | --- |
 | Create, Add, Apply | accent, solid. One of these per view. | Create and Add stay enabled and run the required check. Apply runs no check. It enables while the editing form differs from the values it opened with, and a click leaves those values in place. |
-| Save and add | accent, no-surface. Never a second solid. | Stays enabled. Same required check as Add. A passing click clears only the fields named in the spec. |
+| Add another | accent, no-surface. Never a second solid. | Stays enabled. Same required check as Add. A passing click adds the line, then clears only the fields named in the spec, so the next line can be entered. |
 | Reset | neutral, no-surface. Editing forms only. | Enables while the form differs from the values it opened with. A click writes those values back. No required check. |
 | Set default | neutral, outline. Not the submit. | Always. Writes the preset from the spec. Does not move the opening baseline. No required check. |
 | Cancel | neutral, no-surface. | Always. Clears the fields named in the spec. No required check. |
 | Delete | danger, solid. The main action of that view. | Stays enabled and runs the required check. |
 
-A button that is permanently unavailable is omitted. Reset and Apply stay visible and disabled until there is something to do. Create, Add, Save and add, and Delete stay enabled.
+A button that is permanently unavailable is omitted. Reset and Apply stay visible and disabled until there is something to do. Create, Add, Add another, and Delete stay enabled.
 
 ## This page
 

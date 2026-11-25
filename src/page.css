@@ -351,6 +351,18 @@ cc-subgroup:has(:is(cc-color-row):is(:hover, :focus-visible, .is-held)) {
   z-index: 1;
 }
 
+html:not(.is-narrow) .page[data-collection="primitives"] .family-row > cc-family:has(cc-color-row:is(:hover, :focus-visible, .is-held)),
+html:not(.is-narrow) .page[data-collection="semantic"] .family-row > cc-family:has(cc-color-row:is(:hover, :focus-visible, .is-held)) {
+  overflow: visible;
+  z-index: 2;
+}
+
+html:not(.is-narrow) .page[data-collection="primitives"] .family-scroll:has(cc-color-row:is(:hover, :focus-visible, .is-held)),
+html:not(.is-narrow) .page[data-collection="semantic"] .family-scroll:has(cc-color-row:is(:hover, :focus-visible, .is-held)) {
+  overflow: visible;
+  z-index: 1;
+}
+
 .page[data-collection="size"] .family-row,
 .page[data-collection="typography"] .family-row,
 .page[data-collection="effects"] .family-row {
@@ -750,10 +762,35 @@ demo-form[hidden] {
   align-items: flex-start;
   overflow: auto;
   overscroll-behavior: contain;
-  padding-top: var(--spacing-24);
+  padding-top: var(--spacing-40);
   padding-bottom: var(--spacing-40);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-surface-core-base) var(--spacing-12), var(--color-surface-core-base) calc(100% - var(--spacing-12)), transparent);
-  mask-image: linear-gradient(to bottom, transparent, var(--color-surface-core-base) var(--spacing-12), var(--color-surface-core-base) calc(100% - var(--spacing-12)), transparent);
+}
+
+html:not(.is-stacked) .page[data-collection="form"] .buttons-play__caption,
+html:not(.is-stacked) .page[data-collection="form"] .buttons-play__footer {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+html:not(.is-stacked) .page[data-collection="form"] .buttons-play__caption {
+  top: 0;
+}
+
+html:not(.is-stacked) .page[data-collection="form"] .buttons-play__footer {
+  bottom: 0;
+}
+
+html:not(.is-stacked) .page[data-collection="form"] .buttons-play__caption > *,
+html:not(.is-stacked) .page[data-collection="form"] .buttons-play__footer > * {
+  pointer-events: auto;
+}
+
+.is-stacked .page[data-collection="form"] .buttons-play__stage {
+  border-top: var(--stroke-1) solid var(--color-border-core-subtle);
+  border-bottom: var(--stroke-1) solid var(--color-border-core-subtle);
 }
 
 .page[data-collection="form"] .buttons-play__stage > demo-form {
@@ -936,7 +973,13 @@ cc-icon-button.form-mode svg {
 }
 
 .is-stacked.is-form-play .buttons-side {
+  z-index: 2;
   flex: none;
+  overflow: visible;
+}
+
+.is-stacked.is-form-play .buttons-play {
+  z-index: 1;
 }
 
 .is-stacked.is-form-play .buttons-tabs,

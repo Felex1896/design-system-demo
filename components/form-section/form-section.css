@@ -64,3 +64,14 @@ form-section {
   min-width: 0;
   margin-inline: 0;
 }
+
+.is-stacked form-section {
+  gap: var(--spacing-16);
+}
+
+.is-stacked .form-section__title {
+  font-size: var(--font-title-1-size);
+  font-weight: var(--font-title-1-weight);
+  line-height: var(--font-title-1-line);
+  letter-spacing: var(--font-title-1-tracking);
+}

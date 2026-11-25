@@ -18,6 +18,7 @@
     "subtitle-2": { "size": 16, "lineHeight": 20, "letterSpacing": 0.25, "weight": 500 },
     "subtitle-3": { "size": 14, "lineHeight": 20, "letterSpacing": 0.1, "weight": 500 },
     "headline-h6": { "size": 20, "lineHeight": 24, "letterSpacing": 0.15, "weight": 500 },
+    "title-1": { "size": 18, "lineHeight": 24, "letterSpacing": 0, "weight": 500 },
     "button": { "size": 16, "lineHeight": 24, "letterSpacing": 0, "weight": 500 },
     "button-small": { "size": 14, "lineHeight": 16, "letterSpacing": 0, "weight": 500 },
     "overline": { "size": 10, "lineHeight": 16, "letterSpacing": 1.5, "weight": 500 }
