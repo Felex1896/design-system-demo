@@ -1248,6 +1248,7 @@ function currentTemplate() {
 function syncFormChrome() {
   const form = collection === "form";
   const stacked = root.classList.contains("is-stacked");
+  if (!(form && stacked)) releaseFormSheet();
   const sidebar = formMode === "sidebar";
   root.classList.toggle("is-form-play", form && stacked && !sidebar);
   root.classList.toggle("is-form-side", form && stacked && sidebar);
@@ -1279,6 +1280,19 @@ function formSheetNodes() {
   return { play, side, footer };
 }
 
+function formFace() {
+  const { play } = formSheetNodes();
+  if (!play) return [];
+  return [...play.querySelectorAll(".buttons-play__caption, .buttons-play__stage")];
+}
+
+function clearFormFace() {
+  for (const node of formFace()) {
+    node.getAnimations().forEach((item) => item.cancel());
+    node.style.opacity = "";
+  }
+}
+
 function pinFormFooter(on) {
   const { play, footer } = formSheetNodes();
   if (!footer) return;
@@ -1287,6 +1301,7 @@ function pinFormFooter(on) {
     footer.style.left = "";
     footer.style.right = "";
     footer.style.bottom = "";
+    footer.style.zIndex = "";
     return;
   }
   if (play) play.style.position = "relative";
@@ -1294,6 +1309,7 @@ function pinFormFooter(on) {
   footer.style.left = "0";
   footer.style.right = "0";
   footer.style.bottom = "0";
+  footer.style.zIndex = "1";
 }
 
 function placeButtonsScroll() {
@@ -1326,6 +1342,7 @@ function releaseFormSheet() {
   }
   if (play) play.style.position = "";
   pinFormFooter(false);
+  clearFormFace();
   placeButtonsScroll();
 }
 
@@ -1341,14 +1358,22 @@ function moveFormSheet(next) {
   const fromPlay = play.getBoundingClientRect().height;
   const fromSide = side.getBoundingClientRect().height;
   for (const node of [play, side]) node.getAnimations().forEach((item) => item.cancel());
+  clearFormFace();
   root.classList.remove("is-form-moving");
   play.style.height = "";
   side.style.height = "";
+  const hiding = next === "sidebar";
+  if (!hiding) {
+    for (const node of formFace()) node.style.opacity = "0";
+  }
   formMode = next;
   syncFormChrome();
   const toPlay = play.getBoundingClientRect().height;
   const toSide = side.getBoundingClientRect().height;
-  if (Math.abs(fromPlay - toPlay) < 1 && Math.abs(fromSide - toSide) < 1) return;
+  if (Math.abs(fromPlay - toPlay) < 1 && Math.abs(fromSide - toSide) < 1) {
+    clearFormFace();
+    return;
+  }
   root.classList.add("is-form-moving");
   pinFormFooter(true);
   for (const node of [play, side]) {
@@ -1357,9 +1382,22 @@ function moveFormSheet(next) {
   }
   play.style.height = `${fromPlay}px`;
   side.style.height = `${fromSide}px`;
-  animate(play, { height: [`${fromPlay}px`, `${toPlay}px`] }, calm);
-  animate(side, { height: [`${fromSide}px`, `${toSide}px`] }, calm);
-  whenSettled(side).then(() => {
+  const playRun = animate(play, { height: [`${fromPlay}px`, `${toPlay}px`] }, calm);
+  const sideRun = animate(side, { height: [`${fromSide}px`, `${toSide}px`] }, calm);
+  const fade = hiding
+    ? { type: "tween", duration: 0.22, ease: "easeOut" }
+    : { type: "tween", duration: 0.24, delay: 0.18, ease: "easeOut" };
+  for (const node of formFace()) {
+    node.style.opacity = hiding ? "1" : "0";
+    animate(node, { opacity: hiding ? [1, 0] : [0, 1] }, fade);
+  }
+  Promise.all([playRun.finished, sideRun.finished]).then(() => {
+    if (token !== formSheetToken) return;
+    requestAnimationFrame(() => {
+      if (token !== formSheetToken) return;
+      releaseFormSheet();
+    });
+  }, () => {
     if (token !== formSheetToken) return;
     releaseFormSheet();
   });
