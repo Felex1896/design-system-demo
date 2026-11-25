@@ -68,6 +68,16 @@ class CcColorRow extends HTMLElement {
     if (this.closest("[data-ghost]")) return;
     this._ensure();
     this._sync();
+    this._bindLift();
+  }
+
+  disconnectedCallback() {
+    window.clearTimeout(this._dropTimer);
+    this._dropTimer = 0;
+    this._dropping = false;
+    if (this._lifted) this._finishDrop();
+    this._watch?.disconnect();
+    this._watch = null;
   }
 
   attributeChangedCallback() {
@@ -78,6 +88,120 @@ class CcColorRow extends HTMLElement {
   _reflect(key, value) {
     if (typeof value === "string") this.setAttribute(key, value);
     else this.removeAttribute(key);
+  }
+
+  _bindLift() {
+    if (this._boundLift) return;
+    this._boundLift = true;
+    this.addEventListener("pointerenter", () => this._lift());
+    this.addEventListener("pointerleave", () => this._liftOff());
+    this.addEventListener("focus", () => this._lift());
+    this.addEventListener("blur", () => this._liftOff());
+    this._watch = new MutationObserver(() => {
+      if (this.classList.contains("is-held")) this._lift();
+      else this._liftOff();
+    });
+    this._watch.observe(this, { attributes: true, attributeFilter: ["class"] });
+  }
+
+  _lift() {
+    if (this._dropping) {
+      window.clearTimeout(this._dropTimer);
+      this._dropping = false;
+      this._dropTimer = 0;
+      this._swatch.style.transform = "scale(1.05)";
+      this._swatch.style.boxShadow = "var(--shadow-color-row)";
+      return;
+    }
+    const scroller = this.closest(".family-scroll");
+    if (!scroller || this._lifted) return;
+    const swatch = this._swatch;
+    const rect = this.getBoundingClientRect();
+    this._name.style.color = getComputedStyle(this._name).color;
+    this._alias.style.color = getComputedStyle(this._alias).color;
+    this.style.height = `${rect.height}px`;
+    swatch.style.position = "fixed";
+    swatch.style.zIndex = "6";
+    swatch.style.margin = "0";
+    swatch.style.pointerEvents = "none";
+    swatch.style.transform = "scale(1)";
+    swatch.style.boxShadow = "none";
+    document.body.append(swatch);
+    this._lifted = true;
+    this._scroller = scroller;
+    this._pageScroll = this.closest(".page-scroll");
+    this._syncLift = () => this._placeLift();
+    scroller.addEventListener("scroll", this._syncLift, { passive: true });
+    this._pageScroll?.addEventListener("scroll", this._syncLift, { passive: true });
+    window.addEventListener("resize", this._syncLift);
+    this._placeLift();
+    const grow = () => {
+      if (!this._lifted || this._dropping) return;
+      swatch.style.transform = "scale(1.05)";
+      swatch.style.boxShadow = "var(--shadow-color-row)";
+    };
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) grow();
+    else requestAnimationFrame(() => requestAnimationFrame(grow));
+  }
+
+  _placeLift() {
+    if (!this._lifted) return;
+    const swatch = this._swatch;
+    const next = this.getBoundingClientRect();
+    const view = this._scroller.getBoundingClientRect();
+    const topCut = Math.max(0, view.top - next.top);
+    const bottomCut = Math.max(0, next.bottom - view.bottom);
+    swatch.style.left = `${next.left}px`;
+    swatch.style.top = `${next.top}px`;
+    swatch.style.width = `${next.width}px`;
+    swatch.style.height = `${next.height}px`;
+    swatch.style.visibility = next.bottom <= view.top || next.top >= view.bottom ? "hidden" : "visible";
+    swatch.style.clipPath = `inset(${topCut}px -24px ${bottomCut}px -24px)`;
+  }
+
+  _liftOff() {
+    if (this.classList.contains("is-held") || this.matches(":hover") || this === document.activeElement) return;
+    this._drop();
+  }
+
+  _drop() {
+    if (!this._lifted || this._dropping) return;
+    this._dropping = true;
+    const swatch = this._swatch;
+    swatch.style.transform = "scale(1)";
+    swatch.style.boxShadow = "none";
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this._dropTimer = window.setTimeout(() => this._finishDrop(), reduce ? 0 : 200);
+  }
+
+  _finishDrop() {
+    if (!this._lifted && !this._dropping) return;
+    this._dropTimer = 0;
+    this._scroller?.removeEventListener("scroll", this._syncLift);
+    this._pageScroll?.removeEventListener("scroll", this._syncLift);
+    window.removeEventListener("resize", this._syncLift);
+    const swatch = this._swatch;
+    swatch.style.position = "";
+    swatch.style.left = "";
+    swatch.style.top = "";
+    swatch.style.width = "";
+    swatch.style.height = "";
+    swatch.style.zIndex = "";
+    swatch.style.margin = "";
+    swatch.style.pointerEvents = "";
+    swatch.style.transform = "";
+    swatch.style.boxShadow = "";
+    swatch.style.visibility = "";
+    swatch.style.clipPath = "";
+    this._name.style.color = "";
+    this._alias.style.color = "";
+    this.append(swatch);
+    this.style.height = "";
+    this._lifted = false;
+    this._dropping = false;
+    this._scroller = null;
+    this._pageScroll = null;
+    this._syncLift = null;
   }
 
   _ensure() {

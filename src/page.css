@@ -351,17 +351,6 @@ cc-subgroup:has(:is(cc-color-row):is(:hover, :focus-visible, .is-held)) {
   z-index: 1;
 }
 
-html:not(.is-narrow) .page[data-collection="primitives"] .family-row > cc-family:has(cc-color-row:is(:hover, :focus-visible, .is-held)),
-html:not(.is-narrow) .page[data-collection="semantic"] .family-row > cc-family:has(cc-color-row:is(:hover, :focus-visible, .is-held)) {
-  overflow: visible;
-  z-index: 2;
-}
-
-html:not(.is-narrow) .page[data-collection="primitives"] .family-scroll:has(cc-color-row:is(:hover, :focus-visible, .is-held)),
-html:not(.is-narrow) .page[data-collection="semantic"] .family-scroll:has(cc-color-row:is(:hover, :focus-visible, .is-held)) {
-  overflow: visible;
-  z-index: 1;
-}
 
 .page[data-collection="size"] .family-row,
 .page[data-collection="typography"] .family-row,

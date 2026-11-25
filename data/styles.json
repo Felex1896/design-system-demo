@@ -143,6 +143,7 @@
     "surface/accent/solid/default",
     "surface/accent/solid/hover",
     "surface/accent/solid/active",
+    "surface/accent/solid/disabled",
     "surface/accent/faded/default",
     "surface/accent/faded/hover",
     "text/core/on-solid",

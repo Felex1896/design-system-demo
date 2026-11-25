@@ -39,7 +39,7 @@ const classRow = document.querySelector("#buttons-panel-settings > .buttons-row"
 const fieldStateSelect = document.querySelector("#field-state");
 const buttonsFigma = document.querySelector("#buttons-figma");
 
-const styles = await fetch(new URL("../data/styles.json?v=20", import.meta.url)).then((response) => response.json());
+const styles = await fetch(new URL("../data/styles.json?v=21", import.meta.url)).then((response) => response.json());
 const collections = await fetch(new URL("../data/collections.json?v=9", import.meta.url)).then((response) => response.json());
 const sizeDoc = await fetch(new URL("../data/size.json?v=2", import.meta.url)).then((response) => response.json());
 const typeDoc = await fetch(new URL("../data/typography.json?v=2", import.meta.url)).then((response) => response.json());

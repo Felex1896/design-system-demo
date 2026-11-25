@@ -211,9 +211,19 @@
       const footer = document.createElement("div");
       footer.className = "demo-form__footer";
       const actions = this._ranked(template.actions);
-      const dismiss = actions.filter((action) => action.id === "cancel" || action.id === "reset").length;
-      if (actions.length === 2 && dismiss === 1) footer.classList.add("is-pair");
-      for (const action of actions) footer.append(this._makeButton(action));
+      const dismiss = actions.filter((action) => action.id === "cancel" || action.id === "reset");
+      const solid = actions.filter((action) => action.style === "solid");
+      const paired = dismiss.length === 1 && solid.length === 1;
+      if (paired && actions.length === 2) footer.classList.add("is-pair");
+      const pairIds = paired && actions.length > 2 ? new Set([dismiss[0].id, solid[0].id]) : null;
+      const pairRow = pairIds ? document.createElement("div") : null;
+      if (pairRow) pairRow.className = "demo-form__actions";
+      for (const action of actions) {
+        const button = this._makeButton(action);
+        if (pairRow && pairIds.has(action.id)) pairRow.append(button);
+        else footer.append(button);
+      }
+      if (pairRow) footer.append(pairRow);
       this.append(footer);
       if (kept) {
         for (const [id, value] of Object.entries(kept)) this._write(id, value);

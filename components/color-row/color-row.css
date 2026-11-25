@@ -48,10 +48,18 @@ cc-color-row.is-held {
   box-shadow: var(--shadow-color-row);
 }
 
+.family-scroll cc-color-row:hover,
+.family-scroll cc-color-row:focus-visible,
+.family-scroll cc-color-row.is-held {
+  transform: none;
+  box-shadow: none;
+}
+
 .cc-color-row__swatch {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  transition: transform 200ms ease, box-shadow 200ms ease;
   box-sizing: border-box;
   width: 100%;
   min-width: 0;

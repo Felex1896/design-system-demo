@@ -23,7 +23,7 @@ Strings come from `data/form-copy.json`. Each key has `en` and `ru`. The languag
 | A description and no title | One untitled section may still open with that one sentence above the controls. |
 | At least one input | A section with no input is not a section. |
 | Gap from the title to the controls | `spacing/24` on a wide page. On a stacked page it is `spacing/16`, the same as the gap from the title to the description. |
-| Gap between sections | `spacing/40` on a wide page, `spacing/24` on a stacked page. Owned by the form, not by the section. On a stacked page the button row uses that same `spacing/24`. |
+| Gap between sections | `spacing/40` on a wide page, `spacing/24` on a stacked page. Owned by the form, not by the section. On a stacked page the gap before the buttons is `spacing/40`. |
 | Space above and below the form | `spacing/40` at both ends of the scrolling stage, on a wide page and on a stacked page. |
 | Scroll edge | On a wide page the header and the footer stay on the playground edges. The form scrolls through the whole playground and is clipped by its top and bottom borders. On a stacked page the scrolling stage has a `border/core/subtle` line on the top and the bottom. |
 | Column width | `dimension/form-content-width`. In this prototype that measure is `--layout-field-max-width`. |
@@ -92,9 +92,9 @@ Labels come from the closed set. `Delete` is the one exception, and only the can
 
 The footer sits on the trailing edge. Importance runs back from that edge: the solid action is last, and the quieter actions sit before it.
 
-On a stacked page every button stretches to the column width. A dismiss-and-confirm pair (`Cancel` with `Delete`, `Reset` with `Apply`) stays in one row. Any other set stacks, and the solid action is first.
+On a stacked page every button stretches to the column width. A dismiss-and-confirm pair (`Cancel` with `Delete`, `Reset` with `Apply`) stays in one row. Other buttons in that view sit above the pair, full width. Any other set stacks, and the solid action is first.
 
-A disabled form button keeps the same fill, border, and text color. Availability does not change its look.
+A disabled button keeps its style and uses that style's disabled color. `Apply` stays a solid accent button: full color while it can be pressed, faded while it cannot.
 
 A form button carries `quiet`, so the button demo tooltip does not appear on hover or press.
 

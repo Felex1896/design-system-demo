@@ -364,10 +364,10 @@ cc-select button.cc-select__add {
   border-radius: var(--radius-pill);
   background: transparent;
   color: var(--color-text-accent-default);
-  font-size: var(--font-caption-medium-size);
-  font-weight: var(--font-caption-medium-weight);
-  line-height: var(--font-caption-medium-line);
-  letter-spacing: var(--font-caption-medium-tracking);
+  font-size: var(--font-button-small-size);
+  font-weight: var(--font-button-small-weight);
+  line-height: var(--font-button-small-line);
+  letter-spacing: var(--font-button-small-tracking);
   white-space: nowrap;
   outline: 0;
 }
